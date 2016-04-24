@@ -3,17 +3,19 @@ package imacstadium.imac;
 public class Imac {
 
 	private float life;
+	private int attack[] = {1,4,3,9};
 	private String catchPhrase;
 	private int level;
 	private float precision;
 	private boolean alive;
-	public Imac(float life, String catchPhrase, int level, float precision, boolean alive) {
+	
+	public Imac(float life, String catchPhrase, int level, float precision) {
 		super();
 		this.life = life;
 		this.catchPhrase = catchPhrase;
 		this.level = level;
 		this.precision = precision;
-		this.alive = alive;
+		this.alive = true;
 	}
 	public float getLife() {
 		return life;
@@ -52,6 +54,48 @@ public class Imac {
 	}
 	
 	public float attack(int idAttack, String type){
-		return (float)15.6;
+		return attack[idAttack];
+	}
+	
+	/* Dream Team Functions */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (alive ? 1231 : 1237);
+		result = prime * result + ((catchPhrase == null) ? 0 : catchPhrase.hashCode());
+		result = prime * result + level;
+		result = prime * result + Float.floatToIntBits(life);
+		result = prime * result + Float.floatToIntBits(precision);
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Imac other = (Imac) obj;
+		if (alive != other.alive)
+			return false;
+		if (catchPhrase == null) {
+			if (other.catchPhrase != null)
+				return false;
+		} else if (!catchPhrase.equals(other.catchPhrase))
+			return false;
+		if (level != other.level)
+			return false;
+		if (Float.floatToIntBits(life) != Float.floatToIntBits(other.life))
+			return false;
+		if (Float.floatToIntBits(precision) != Float.floatToIntBits(other.precision))
+			return false;
+		return true;
+	}
+	@Override
+	public String toString() {
+		return "Imac [\n\tlife=" + life + "\n\tcatchPhrase=" + catchPhrase + "\n\tlevel=" + level + "\n\tprecision=" + precision
+				+ "\n\talive=" + alive + "\n]";
 	}
 }

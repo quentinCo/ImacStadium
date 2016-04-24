@@ -20,8 +20,7 @@ public class PageTest extends Page {
 		
 		keys.add(new Key('a'){
 			public Object action(){
-				Game game = Game.getInstance();
-				game.setExecute(false);
+				Game.getInstance().setExecute(false);
 				return null;
 			}
 		});
@@ -42,14 +41,29 @@ public class PageTest extends Page {
 			key = it.next();
 			if(e.getKeyChar() == key.getKey()) find = true;
 		}
-		if(find) Game.getInstance().setTestSentence((String)key.action());
+		if(find){
+			Game.getInstance().setTestSentence((String)key.action());
+			System.out.println(Game.getInstance().getTestSentence());
+			System.out.println(Game.getInstance());
+		}		
 	}
 
 
 	@Override
-	public void render() {
-		System.out.println(Game.getInstance().getTestSentence() + " -- " + i);
-		i++;
+	public void update() {
+		this.display();
 	}
+	
+	public void display(){
+		/* System.out.println(" -- " + i);
+		 i++;*/
+	}
+	
+	/* Dream Team Functions */
+	@Override
+	public String toString() {
+		return super.toString() + "\n\tPageTest [keys=" + keys + "]";
+	}
+	
 	
 }

@@ -46,6 +46,13 @@ public class Page  extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e) {}
 	
 	/* Functions */
-	public void render(){};
+	public void update(){}
+
+	/* Dream Team Functions */
+	@Override
+	public String toString() {
+		return "Page [panel=" + panel + "]";
+	};
+	
 	
 }

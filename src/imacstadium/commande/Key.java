@@ -13,5 +13,10 @@ public class Key implements Commande {
 	public Object action() {
 		return "La touche actioné est " + key;
 	}
+
+	@Override
+	public String toString() {
+		return "Key [key=" + key + "]";
+	}
 	
 }
