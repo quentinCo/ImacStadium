@@ -24,18 +24,8 @@ public class Game {
 		
 		this.url_imacs = "./data/test.json";
 		this.trainers = new Trainer[2];
-		Trainer player = new Trainer(){
-			public void play(){
-				int idAttack = (int)(Math.random()*3);
-				this.imacAttack(Game.getInstance().getIa(), idAttack);
-			}
-		};
-		Trainer ia = new Trainer(){
-			public void play(){
-				int idAttack = (int)(Math.random()*3);
-				this.imacAttack(Game.getInstance().getPlayer(), idAttack);
-			}
-		};
+		Trainer player = new Trainer();
+		Trainer ia = new IA();
 		
 		trainers[0] = player;
 		trainers[1] = ia;
@@ -60,10 +50,10 @@ public class Game {
 	
 	public Trainer getIa() { return trainers[1]; }
 	
-	public Trainer[] getTrainers(){ return Arrays.copyOf(this.trainers, 2); }
+	public Trainer[] getTrainers(){ return this.trainers; }
 	//public Trainer getTrainer(int id){ return trainers[id]; }
 	
-	//public boolean getPage() { return page; }
+	public Page getPage() { return page; }
 	public void setPage(Page page) { this.page = page; }
 
 	public boolean isExecute() { return execute; }
@@ -82,13 +72,12 @@ public class Game {
 
 	/* Functions */
 	public void execute(){
-		while(execute){
-			update();
-		}
+		//while(execute){ page.update(); }
+		page.display();
 	}
-	private void update(){
+	/*private void update(){
 		page.update();
-	}
+	}*/
 
 		/* - Functions temp - */
 	private void initImacs (){
@@ -103,7 +92,7 @@ public class Game {
 		this.distributeImac(this.trainers[0]);
 		this.distributeImac(this.trainers[1]);
 	}
-	private void distributeImac(Trainer player){
+	public void distributeImac(Trainer player){
 		int idImac = (int)(Math.random()*(imacs.size()-1));
 		Imac imacsPlayer[] = {this.imacs.get(idImac)}; 
 		player.setImacs(imacsPlayer);

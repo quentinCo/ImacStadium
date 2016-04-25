@@ -26,9 +26,9 @@ public class Page  extends JFrame implements KeyListener{
 		super(namePage);
 		this.panel = new JPanel();
 		panel.setLayout(new GridLayout(4, 1));
-		panel.setPreferredSize(new Dimension(100, 100));
+		panel.setPreferredSize(new Dimension(500, 100));
 		panel.setForeground(Color.GREEN);
-		add(panel, BorderLayout.NORTH);
+		add(panel, BorderLayout.EAST);
 		addKeyListener (this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -46,8 +46,8 @@ public class Page  extends JFrame implements KeyListener{
 	public void keyReleased(KeyEvent e) {}
 	
 	/* Functions */
-	public void update(){}
-
+	public void display(){}
+	
 	/* Dream Team Functions */
 	@Override
 	public String toString() {

@@ -2,16 +2,17 @@ package imacstadium.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Observable;
 
 import imacstadium.imac.Imac;
 
-public class Trainer {
+public class Trainer extends Observable{
 
-	private Imac[] imacs;
-	private ArrayList<Imac> validImacs;
-	private String name;
-	private Imac currentImac;
-	private int score;
+	protected Imac[] imacs;
+	protected ArrayList<Imac> validImacs;
+	protected String name;
+	protected Imac currentImac;
+	protected int score;
 	
 	/* Constructor */
 	public Trainer (){
@@ -37,7 +38,7 @@ public class Trainer {
 		this.currentImac = this.validImacs.get(0);
 	}
 	
-	public ArrayList<Imac> getValidImacs(){ return (ArrayList<Imac>)this.validImacs.clone(); }
+	public ArrayList<Imac> getValidImacs(){ return new ArrayList<Imac>(this.validImacs); }
 	public void setValidImacs(ArrayList<Imac> imacs){
 		this.validImacs = imacs;
 		this.currentImac = this.validImacs.get(0);
@@ -57,14 +58,15 @@ public class Trainer {
 	
 	/* Functions */	
 		/* -Play- */
-	public void play(){
-		this.displayChoseMenu();
+	public void play(Trainer opponent){
+		this.displayChoseMenu(opponent);
 	}
 		/*--------*/
 	
 		/* -Choise Attack- */
-	private void displayChoseMenu(){
+	private void displayChoseMenu(Trainer opponent){
 		System.out.println("Choisi attaque entre 1- 2- 3- 4-");
+		this.notify("choice");
 	}
 		/*-----------------*/
 	
@@ -77,28 +79,38 @@ public class Trainer {
 		/* -Imac Attack- */
 	public boolean imacAttack(Trainer otherPlayer, int attackId){
 		this.displaySentenceAction ("L'Imac de "+name+" attaque");
-		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
+		boolean dead = otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
+		this.notify("attack");
+		return dead;
 	}
 		/*----------------*/
 	
 		/* -Imac Damage- */
 	public boolean imacDamage(float damage){
-		this.displaySentenceAction ("La vie de l'Imac de "+name+" diminu de "+damage+". \nIl ne lui reste plus que "+this.currentImac.getLife()+" points de vie.");
 		boolean live;
 		currentImac.damage(damage);
+		
 		live = currentImac.isAlive();
 		if(!live){
 			this.displaySentenceAction ("L'Imac de "+name+" est vaincu");
+			this.notify("dead");
 			validImacs.remove(currentImac);
-			Game.getInstance().setExecute(false);
 		}
+		else{
+			this.displaySentenceAction ("La vie de l'Imac de "+name+" diminu de "+damage+". \nIl ne lui reste plus que "+this.currentImac.getLife()+" points de vie.");
+		}
+		
 		return live;
 	}
 		/*----------------*/
 	
 		/* -Defeated- */
 	public boolean defeated(){
-		return validImacs.size() <= 0;
+		if( validImacs.size() <= 0){
+			this.notify("dead");
+			return true;
+		}
+		return false;
 	}
 		/*------------*/
 	/*public boolean currentAlive(){
@@ -116,6 +128,12 @@ public class Trainer {
 	}
 		/*----------------*/
 	
+		/* -Current Life- */
+	public float currentLife(){
+		return this.currentImac.getLife();
+	}
+		/*----------------*/
+	
 		/* -Change Imac- */
 	/*public void changeImac(Imac imac){
 		if(imac.isAlive())this.currentImac = imac;
@@ -125,6 +143,11 @@ public class Trainer {
 	}
 		/*----------------*/
 	
+	public void notify(String arg){
+		this.setChanged();
+		this.notifyObservers(arg);
+		this.clearChanged();
+	}
 	
 	/* Dream Team Functions */
 	@Override

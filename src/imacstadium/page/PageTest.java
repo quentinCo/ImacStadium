@@ -49,10 +49,10 @@ public class PageTest extends Page {
 	}
 
 
-	@Override
+	@Override/*
 	public void update() {
 		this.display();
-	}
+	}*/
 	
 	public void display(){
 		/* System.out.println(" -- " + i);
