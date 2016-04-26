@@ -20,7 +20,7 @@ public class PageTest extends Page {
 		
 		keys.add(new Key('a'){
 			public Object action(){
-				Game.getInstance().setExecute(false);
+				System.exit(0);
 				return null;
 			}
 		});

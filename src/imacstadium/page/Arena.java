@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import imacstadium.game.Game;
@@ -25,6 +26,8 @@ public class Arena extends Page implements Observer{
 	
 	public Arena(Trainer[] trainers) {
 		super("Arena");
+		this.add(new JLabel("ARENA"));
+		
 		//gameMenu = new ArrayList<GameMenu>();
 		this.trainers = trainers;
 		for(Trainer trainer : trainers) trainer.addObserver(this);
@@ -71,7 +74,8 @@ public class Arena extends Page implements Observer{
 		String event = (String)arg;
 		Trainer source = (Trainer)o;
 
-		this.remove(gameMenu);
+		this.removeGameMenu();
+
 		if(gameMenu instanceof KeyListener){
 			System.out.println("--------------------------------->REMOVE");
 			this.removeKeyListener((KeyListener)gameMenu);
@@ -81,7 +85,7 @@ public class Arena extends Page implements Observer{
 			case "attack":
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" attaque.\n\nLa vie de l'Imac de "+this.trainers[(this.idCurrentTrainer+1)%2].getName()+" n'est plus que de "+this.trainers[(this.idCurrentTrainer+1)%2].currentLife());
 				this.changeCurrentTrainer();
-				if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
+				//if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
 				break;
 			case "dead":
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" est mort.");
@@ -95,11 +99,19 @@ public class Arena extends Page implements Observer{
 				gameMenu = new GameMenu(source.getName()+" à perdu.");
 				break;
 		}
+		
 		this.displayGameMenu();
+		if(event == "attack" && (!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA))) this.fight();
+	
 	}
 	
+	private void removeGameMenu(){
+		this.getContentPane().removeAll();
+		SwingUtilities.updateComponentTreeUI(this);
+	}
 	private void displayGameMenu(){
-		this.add(gameMenu,BorderLayout.NORTH);
+		this.getContentPane().add(gameMenu,BorderLayout.NORTH);
+		//this.getContentPane().revalidate();
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	

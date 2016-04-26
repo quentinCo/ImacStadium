@@ -28,7 +28,7 @@ public class Page  extends JFrame implements KeyListener{
 		panel.setLayout(new GridLayout(4, 1));
 		panel.setPreferredSize(new Dimension(500, 100));
 		panel.setForeground(Color.GREEN);
-		add(panel, BorderLayout.EAST);
+		add(panel);
 		addKeyListener (this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

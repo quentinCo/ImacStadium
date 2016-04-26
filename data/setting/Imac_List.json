@@ -1,0 +1,151 @@
+{
+	"imacs" : [
+		{
+			"name" : "Imac 1",
+			"type" : "Type 1",
+			"life" : "12",
+			"catchPhrase" : "Coucou",
+			"precision" : "0.5",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "1"},
+						{"Type" : "Type 2", "Value" : "2"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "4"}
+					]
+				},
+				{
+					"name" : "attack 2",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "10"},
+						{"Type" : "Type 2", "Value" : "0.5"},
+						{"Type" : "Type 3", "Value" : "4"},
+						{"Type" : "Type 4", "Value" : "2"}
+					]
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "2"},
+						{"Type" : "Type 2", "Value" : "15"},
+						{"Type" : "Type 3", "Value" : "0.95"},
+						{"Type" : "Type 4", "Value" : "1.25"}
+					]
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "12"},
+						{"Type" : "Type 2", "Value" : "1"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "2.5"}
+					]
+				}
+			]
+		},
+		{
+			"name" : "Imac 2",
+			"type" : "Type 2",
+			"life" : "20",
+			"catchPhrase" : "Yop",
+			"precision" : "0.95",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "1"},
+						{"Type" : "Type 2", "Value" : "2"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "4"}
+					]
+				},
+				{
+					"name" : "attack 2",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "10"},
+						{"Type" : "Type 2", "Value" : "0.5"},
+						{"Type" : "Type 3", "Value" : "4"},
+						{"Type" : "Type 4", "Value" : "2"}
+					]
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "2"},
+						{"Type" : "Type 2", "Value" : "15"},
+						{"Type" : "Type 3", "Value" : "0.95"},
+						{"Type" : "Type 4", "Value" : "1.25"}
+					]
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "12"},
+						{"Type" : "Type 2", "Value" : "1"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "2.5"}
+					]
+				}
+			]
+		},
+		{
+			"name" : "Imac 3",
+			"type" : "Type 2",
+			"life" : "100",
+			"catchPhrase" : "Hello World",
+			"precision" : "0.5",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "1"},
+						{"Type" : "Type 2", "Value" : "2"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "4"}
+					]
+				},
+				{
+					"name" : "attack 2",
+					"type" : "Type 1",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "10"},
+						{"Type" : "Type 2", "Value" : "0.5"},
+						{"Type" : "Type 3", "Value" : "4"},
+						{"Type" : "Type 4", "Value" : "2"}
+					]
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "2"},
+						{"Type" : "Type 2", "Value" : "15"},
+						{"Type" : "Type 3", "Value" : "0.95"},
+						{"Type" : "Type 4", "Value" : "1.25"}
+					]
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" :[
+						{"Type" : "Type 1", "Value" : "12"},
+						{"Type" : "Type 2", "Value" : "1"},
+						{"Type" : "Type 3", "Value" : "3"},
+						{"Type" : "Type 4", "Value" : "2.5"}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,6 +1,6 @@
 package imacstadium.imac;
 
-public class Imac {
+public class Imac extends ImacHeader{
 
 	private float life;
 	private int attack[] = {1,4,3,9};
@@ -9,14 +9,15 @@ public class Imac {
 	private float precision;
 	private boolean alive;
 	
-	public Imac(float life, String catchPhrase, int level, float precision) {
-		super();
+	public Imac(String name, String type, int id, float life, String catchPhrase, int level, float precision) {
+		super(name, type, id);
 		this.life = life;
 		this.catchPhrase = catchPhrase;
 		this.level = level;
 		this.precision = precision;
 		this.alive = true;
 	}
+	
 	public float getLife() {
 		return life;
 	}
