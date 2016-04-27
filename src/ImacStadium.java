@@ -5,5 +5,4 @@ public class ImacStadium {
 		Game game = Game.getInstance();
 		game.execute();
 	}
-	
 }

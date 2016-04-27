@@ -11,7 +11,6 @@ import imacstadium.commande.*;
 public class PageTest extends Page {
 
 	private ArrayList<Key> keys;
-	private static int i = 0;
 	
 	public PageTest(){
 		super("PageTest");
@@ -42,8 +41,7 @@ public class PageTest extends Page {
 			if(e.getKeyChar() == key.getKey()) find = true;
 		}
 		if(find){
-			Game.getInstance().setTestSentence((String)key.action());
-			System.out.println(Game.getInstance().getTestSentence());
+			System.out.println((String)key.action());
 			System.out.println(Game.getInstance());
 		}		
 	}

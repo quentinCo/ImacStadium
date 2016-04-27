@@ -15,6 +15,8 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 
 	private ArrayList<Key> keys;
 	
+	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	public ChoiceMenu(Trainer current, Trainer opponnent) {
 		super("Choisissez votre attaque :");
 		this.setLayout(new GridLayout(6, 1));
@@ -28,7 +30,6 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 		
 		keys.add(new Key('1'){
 			public Object action(){
-				System.out.println("OK");
 				current.imacAttack(opponnent, 0);
 				return null;
 			}
@@ -58,6 +59,7 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 			}
 		});
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -73,7 +75,6 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		System.out.println("keyTyped - ");
 		Key key = null;
 		boolean find = false;
 		Iterator<Key> it = keys.iterator();

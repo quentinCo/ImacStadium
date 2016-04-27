@@ -17,6 +17,9 @@ public class Arena extends Page implements Observer{
 	private int idCurrentTrainer;
 	private GameMenu gameMenu;
 	
+	
+	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	public Arena(Trainer[] trainers) {
 		super("Arena");
 		this.add(new JLabel("ARENA"));
@@ -29,16 +32,25 @@ public class Arena extends Page implements Observer{
 		this.gameMenu = new GameMenu("Ouh La La, ça commence.");
 		this.displayGameMenu();
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
+	/*------------SELECT WHO BEGIN-------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	private void selectWhoBegin(){
 		int deltaChoseTrainer = (int)(Math.random()*2);
 		System.out.println("deltaChoseTrainer = "+deltaChoseTrainer);
 		this.idCurrentTrainer = deltaChoseTrainer%2;
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------CHANGE CURRENT TRAINER-------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	private void changeCurrentTrainer(){
 		this.idCurrentTrainer = (this.idCurrentTrainer+1)%2;
 	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*
 	private void displayGamePlayer(){
 		
@@ -48,19 +60,25 @@ public class Arena extends Page implements Observer{
 		
 	}
 	*/
+	
+	/*------------FIGHT------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	private void fight(){
 		System.out.println("------------- TURN OF "+this.trainers[this.idCurrentTrainer].getName()+" -------------");
 		this.trainers[this.idCurrentTrainer].play(this.trainers[(this.idCurrentTrainer+1)%2]);
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------DISPLAY----------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	public void display(){
 		if(this.idCurrentTrainer == -1)this.selectWhoBegin();
 		this.fight();
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println("----------------------------------------------------------------------->OK");
 		String event = (String)arg;
 		Trainer source = (Trainer)o;
 
@@ -72,12 +90,10 @@ public class Arena extends Page implements Observer{
 			case "attack":
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" attaque.");
 				System.out.println("L'Imac de "+source.getName()+" attaque.");
-				//if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
 				break;
 			case "attacked":
 				gameMenu = new GameMenu("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
 				System.out.println("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
-				//if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
 				break;
 			case "dead":
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" est vaincu.");
@@ -86,6 +102,7 @@ public class Arena extends Page implements Observer{
 				break;
 			case "choice":
 				gameMenu = new ChoiceMenu(source, this.trainers[(this.idCurrentTrainer+1)%2]);
+				System.out.println("Choisi attaque entre 1- 2- 3- 4-");
 				this.addKeyListener((KeyListener)gameMenu);
 				break;
 			case "defeat":
@@ -95,6 +112,7 @@ public class Arena extends Page implements Observer{
 			case "changeImac":
 				gameMenu = new GameMenu(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
 				System.out.println(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
+				break;
 		}
 		
 		this.displayGameMenu();
@@ -111,11 +129,10 @@ public class Arena extends Page implements Observer{
 		this.getContentPane().removeAll();
 		SwingUtilities.updateComponentTreeUI(this);
 	}
+	
 	private void displayGameMenu(){
 		this.getContentPane().add(gameMenu,BorderLayout.NORTH);
 		//this.getContentPane().revalidate();
 		SwingUtilities.updateComponentTreeUI(this);
 	}
-	
-	
 }
