@@ -1,20 +1,23 @@
 package imacstadium.imac;
 
+import java.util.Arrays;
+
 public class Imac extends ImacHeader{
 
 	private float life;
-	private int attack[] = {1,4,3,9};
+	private Attack attacks[];
 	private String catchPhrase;
 	private int level;
 	private float precision;
 	private boolean alive;
 	
-	public Imac(String name, String type, int id, float life, String catchPhrase, int level, float precision) {
-		super(name, type, id);
+	public Imac(int id, String name, String type, int level, Attack[] attacks, float life, float precision, String catchPhrase) {
+		super(id, name, type);
 		this.life = life;
 		this.catchPhrase = catchPhrase;
 		this.level = level;
 		this.precision = precision;
+		this.attacks = attacks;
 		this.alive = true;
 	}
 	
@@ -55,15 +58,15 @@ public class Imac extends ImacHeader{
 	}
 	
 	public float attack(int idAttack, String type){
-		return attack[idAttack];
+		return attacks[idAttack].powerAttack(type);
 	}
 	
-	/* Dream Team Functions */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (alive ? 1231 : 1237);
+		result = prime * result + Arrays.hashCode(attacks);
 		result = prime * result + ((catchPhrase == null) ? 0 : catchPhrase.hashCode());
 		result = prime * result + level;
 		result = prime * result + Float.floatToIntBits(life);
@@ -81,6 +84,8 @@ public class Imac extends ImacHeader{
 		Imac other = (Imac) obj;
 		if (alive != other.alive)
 			return false;
+		if (!Arrays.equals(attacks, other.attacks))
+			return false;
 		if (catchPhrase == null) {
 			if (other.catchPhrase != null)
 				return false;
@@ -96,7 +101,7 @@ public class Imac extends ImacHeader{
 	}
 	@Override
 	public String toString() {
-		return "Imac [\n\tlife=" + life + "\n\tcatchPhrase=" + catchPhrase + "\n\tlevel=" + level + "\n\tprecision=" + precision
-				+ "\n\talive=" + alive + "\n]";
+		return "Imac [\n\tlife=" + life + "\n\tattacks=" + Arrays.toString(attacks) + "\n\tcatchPhrase=" + catchPhrase
+				+ "\n\tlevel=" + level + "\n\tprecision=" + precision + "\n\talive=" + alive + "\n]";
 	}
 }

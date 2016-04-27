@@ -2,33 +2,25 @@ package imacstadium.page;
 
 import java.awt.BorderLayout;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import imacstadium.game.Game;
 import imacstadium.game.IA;
 import imacstadium.game.Trainer;
 
 public class Arena extends Page implements Observer{
 
-	//private ArrayList<GameMenu> gameMenu;
-
 	private Trainer trainers[];
 	private int idCurrentTrainer;
 	private GameMenu gameMenu;
-	private boolean turn;
 	
 	public Arena(Trainer[] trainers) {
 		super("Arena");
 		this.add(new JLabel("ARENA"));
 		
-		//gameMenu = new ArrayList<GameMenu>();
 		this.trainers = trainers;
 		for(Trainer trainer : trainers) trainer.addObserver(this);
 		
@@ -36,8 +28,6 @@ public class Arena extends Page implements Observer{
 		
 		this.gameMenu = new GameMenu("Ouh La La, ça commence.");
 		this.displayGameMenu();
-		
-		this.turn = false;
 	}
 	
 	private void selectWhoBegin(){
@@ -49,7 +39,7 @@ public class Arena extends Page implements Observer{
 	private void changeCurrentTrainer(){
 		this.idCurrentTrainer = (this.idCurrentTrainer+1)%2;
 	}
-	
+	/*
 	private void displayGamePlayer(){
 		
 	}
@@ -57,7 +47,7 @@ public class Arena extends Page implements Observer{
 	private void displayTextPart(){
 		
 	}
-	
+	*/
 	private void fight(){
 		System.out.println("------------- TURN OF "+this.trainers[this.idCurrentTrainer].getName()+" -------------");
 		this.trainers[this.idCurrentTrainer].play(this.trainers[(this.idCurrentTrainer+1)%2]);
@@ -76,19 +66,22 @@ public class Arena extends Page implements Observer{
 
 		this.removeGameMenu();
 
-		if(gameMenu instanceof KeyListener){
-			System.out.println("--------------------------------->REMOVE");
-			this.removeKeyListener((KeyListener)gameMenu);
-		}
+		if(gameMenu instanceof KeyListener){ this.removeKeyListener((KeyListener)gameMenu); }
 		
 		switch (event){
 			case "attack":
-				gameMenu = new GameMenu("L'Imac de "+source.getName()+" attaque.\n\nLa vie de l'Imac de "+this.trainers[(this.idCurrentTrainer+1)%2].getName()+" n'est plus que de "+this.trainers[(this.idCurrentTrainer+1)%2].currentLife());
-				this.changeCurrentTrainer();
+				gameMenu = new GameMenu("L'Imac de "+source.getName()+" attaque.");
+				System.out.println("L'Imac de "+source.getName()+" attaque.");
+				//if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
+				break;
+			case "attacked":
+				gameMenu = new GameMenu("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
+				System.out.println("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
 				//if(!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA)) this.fight();
 				break;
 			case "dead":
-				gameMenu = new GameMenu("L'Imac de "+source.getName()+" est mort.");
+				gameMenu = new GameMenu("L'Imac de "+source.getName()+" est vaincu.");
+				System.out.println("L'Imac de "+source.getName()+" est vaincu.");
 				//this.turn = true;
 				break;
 			case "choice":
@@ -97,12 +90,21 @@ public class Arena extends Page implements Observer{
 				break;
 			case "defeat":
 				gameMenu = new GameMenu(source.getName()+" à perdu.");
+				System.out.println(source.getName()+" à perdu.");
 				break;
+			case "changeImac":
+				gameMenu = new GameMenu(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
+				System.out.println(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
 		}
 		
 		this.displayGameMenu();
-		if(event == "attack" && (!this.trainers[this.idCurrentTrainer].defeated() || (this.trainers[this.idCurrentTrainer] instanceof IA))) this.fight();
-	
+		
+		if(event == "attacked" || event == "dead"){
+			if(!source.defeated() || (source instanceof IA)){
+				this.changeCurrentTrainer();
+				this.fight();
+			}
+		}
 	}
 	
 	private void removeGameMenu(){

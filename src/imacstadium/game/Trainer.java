@@ -70,18 +70,19 @@ public class Trainer extends Observable{
 	}
 		/*-----------------*/
 	
+	/*
 	private void displaySentenceAction (String sentence){
 		System.out.println(sentence);
 	}
+	*/
 	
 	//public void removeValidImac()
 	
 		/* -Imac Attack- */
 	public boolean imacAttack(Trainer otherPlayer, int attackId){
-		this.displaySentenceAction ("L'Imac de "+name+" attaque");
-		boolean dead = otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
+		//this.displaySentenceAction ("L'Imac de "+name+" attaque");
 		this.notify("attack");
-		return dead;
+		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
 	}
 		/*----------------*/
 	
@@ -92,14 +93,12 @@ public class Trainer extends Observable{
 		
 		live = currentImac.isAlive();
 		if(!live){
-			this.displaySentenceAction ("L'Imac de "+name+" est vaincu");
-			this.notify("dead");
 			validImacs.remove(currentImac);
+			this.notify("dead");
 		}
 		else{
-			this.displaySentenceAction ("La vie de l'Imac de "+name+" diminu de "+damage+". \nIl ne lui reste plus que "+this.currentImac.getLife()+" points de vie.");
+			this.notify("attacked");
 		}
-		
 		return live;
 	}
 		/*----------------*/
@@ -107,7 +106,7 @@ public class Trainer extends Observable{
 		/* -Defeated- */
 	public boolean defeated(){
 		if( validImacs.size() <= 0){
-			this.notify("dead");
+			this.notify("defeat");
 			return true;
 		}
 		return false;
@@ -121,10 +120,7 @@ public class Trainer extends Observable{
 	}*/
 		/* -Current Type- */
 	public String currentType(){
-		/*
-		 * return currentImac.getType();
-		 */
-		return "Baka";
+		return currentImac.getType();
 	}
 		/*----------------*/
 	
@@ -136,10 +132,16 @@ public class Trainer extends Observable{
 	
 		/* -Change Imac- */
 	/*public void changeImac(Imac imac){
-		if(imac.isAlive())this.currentImac = imac;
+		if(imac.isAlive()){
+			this.currentImac = imac;
+			this.notify("changeImac");
+		}
 	}*/
 	public void changeImac(){
-		if(!this.defeated())this.currentImac = validImacs.get(0);
+		if(!this.defeated()){
+			this.currentImac = validImacs.get(0);
+			this.notify("changeImac");
+		}
 	}
 		/*----------------*/
 	

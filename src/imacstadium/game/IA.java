@@ -16,12 +16,18 @@ public class IA extends Trainer {
 	@Override
 	public boolean defeated() {
 		if( validImacs.size() <= 0){
-			System.out.println("------------- "+this.name+" DEFEAT -------------");
-			Game.getInstance().distributeImac(this);
+			//System.out.println("------------- "+this.name+" DEFEAT -------------");
+			this.changeImac();
 			//System.exit(0);
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void changeImac() {
+		Game.getInstance().distributeImac(this);
+		this.notify("changeImac");
 	}
 	
 	

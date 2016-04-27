@@ -7,8 +7,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -44,7 +42,10 @@ public class Parser {
 			int i = 0;
 			
 			for(JsonObject object : jA.getValuesAs(JsonObject.class)){
-				imacs.add(new ImacHeader(object.getString("name"), object.getString("type"), i++));
+				String type;
+				try{ type = object.getString("type"); }
+				catch(NullPointerException e){ type = ""; }
+				imacs.add(new ImacHeader(i++, object.getString("name"), type));
 			}
 			
 			return imacs;
@@ -66,7 +67,6 @@ public class Parser {
 			JsonObject jO = reader.readObject();
 			JsonArray jA = jO.getJsonArray("imacs");
 			
-			ArrayList<ImacHeader> imacs = new ArrayList<ImacHeader>();
 			JsonObject obj = jA.getValuesAs(JsonObject.class).get(id);
 			
 			return this.newImac(obj, id);
@@ -82,21 +82,24 @@ public class Parser {
 	
 	private Imac newImac(JsonObject obj, int id){
 		String name = obj.getString("name");
-		String type = obj.getString("type");
-
+		String type;
+		try{ type = obj.getString("type"); }
+		catch(NullPointerException e){ type = ""; }
+		
 		float life = Float.parseFloat(obj.getString("life"));
 		String phrase = obj.getString("catchPhrase");
 		//int level = Integer.parseInt(obj.getString("level"));
 		float precision = Float.parseFloat(obj.getString("precision"));
 		
-		ArrayList<Attack> attacks = new ArrayList<Attack>();
+		Attack[] attacks = new Attack[4];
 		JsonArray jA = obj.getJsonArray("attacks");
 
+		int i = 0;
 		for(JsonObject jO : jA.getValuesAs(JsonObject.class)){
-			attacks.add(this.newAttack(jO));
+			attacks[i++] = this.newAttack(jO);
 		}
 		
-		return new Imac(name, type, id, life, phrase, /*level*/1, precision /*,attacks*/);
+		return new Imac(id, name, type, /*level*/ 1, attacks, life, precision, phrase);
 	}
 	
 	private Attack newAttack(JsonObject obj){
@@ -104,21 +107,22 @@ public class Parser {
 		String name = obj.getString("name");
 		
 		Type type;
-		switch(obj.getString("type")){
-			case "Type 1":
-				type = new Type();
-				break;
-			default :
-				type = new Type();
-				break;
+		try{
+			switch(obj.getString("type")){
+				case "Type 1":
+					type = new Type();
+					break;
+				default :
+					type = new Type();
+					break;
+			}
+		}
+		catch(NullPointerException e){
+			type = null;
 		}
 		
-		Map<String, Float> power = new HashMap<String, Float>();
 		
-		JsonArray jA = obj.getJsonArray("power");
-		for(JsonObject jO : jA.getValuesAs(JsonObject.class)){
-			power.put(jO.getString("Type"), Float.parseFloat(jO.getString("Value")));
-		}
+		float power = Float.parseFloat(obj.getString("power"));
 		
 		return new Attack(name, type, power);
 	}

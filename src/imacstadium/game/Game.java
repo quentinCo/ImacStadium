@@ -41,6 +41,9 @@ public class Game {
 		
 		//this.initImacs();
 		this.initPlayer();
+		//System.out.println(trainers[0].getName()+"\n"+trainers[0]+"\n-----------------\n");
+
+		//System.out.println(trainers[1].getName()+"\n"+trainers[1]+"\n-----------------\n");
 	}
 	
 	
