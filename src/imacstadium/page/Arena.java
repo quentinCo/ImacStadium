@@ -20,6 +20,11 @@ public class Arena extends Page implements Observer{
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Initialise a windows and display the different element of the window (imac, action and choice menu).
+	 * @param trainers
+	 * 	An array of trainer.
+	 */
 	public Arena(Trainer[] trainers) {
 		super("Arena");
 		this.add(new JLabel("ARENA"));
@@ -71,12 +76,25 @@ public class Arena extends Page implements Observer{
 	
 	/*------------DISPLAY----------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Select who begin to play and run the fight.
+	 */
 	public void display(){
 		if(this.idCurrentTrainer == -1)this.selectWhoBegin();
 		this.fight();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 
+	
+	/*------------UPDATE-----------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Gestion of the displaying of the different text parts and menus in function of the action. And run the next turn of game.
+	 * @param o
+	 * 	An observable object source of the notification.
+	 * @param arg
+	 * 	The name of the action.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		String event = (String)arg;
@@ -124,6 +142,7 @@ public class Arena extends Page implements Observer{
 			}
 		}
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
 	private void removeGameMenu(){
 		this.getContentPane().removeAll();

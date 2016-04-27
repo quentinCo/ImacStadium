@@ -21,7 +21,13 @@ public class Page  extends JFrame implements KeyListener{
 
 	private JPanel panel;
 	
-	/* Costructor */
+	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Initialise a windows.
+	 * @param namePage
+	 * 	The page name?
+	 */
 	public Page (String namePage){
 		super(namePage);
 		this.panel = new JPanel();
@@ -40,12 +46,15 @@ public class Page  extends JFrame implements KeyListener{
 		setVisible(true);
 	}	
 	
-	/* Event gestion */
+	/*-----KEY FUNCTIONS-----------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	public void keyTyped(KeyEvent e) {}	 
 	public void keyPressed(KeyEvent e) {}
 	public void keyReleased(KeyEvent e) {}
 	
-	/* Functions */
+	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
+	/*------------GET INSTANCE-----------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
 	public void display(){}
 	
 	/* Dream Team Functions */

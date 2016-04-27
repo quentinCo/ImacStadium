@@ -35,7 +35,16 @@ public class Trainer extends Observable{
 	/*-----GETTER - SETTER---------------------------------------------------------------------------*/
 	/*------------GET - SET IMACS--------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the trainer imacs
+	 * @return The array that contains the different trainer imac
+	 */
 	public Imac[] getImacs(){ return Arrays.copyOf(this.imacs, 3); }
+	/**
+	 * Set the trainer imacs, the valids imacs and the current imac used.
+	 * @param imacs
+	 * 	An array of Imac.
+	 */
 	public void setImacs(Imac[] imacs){
 		this.imacs = imacs;
 		this.validImacs = new ArrayList<Imac>(Arrays.asList(imacs));
@@ -45,11 +54,25 @@ public class Trainer extends Observable{
 	
 	/*------------GET - SET VALID IMACS--------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the live trainer imac.
+	 * @return An ArrayLsit that contains the imac who are alive.
+	 */
 	public ArrayList<Imac> getValidImacs(){ return new ArrayList<Imac>(this.validImacs); }
+	/**
+	 * Set the valid imac and initalize the current imac at the first from the valid imac.
+	 * @param imacs
+	 * 	An ArrayList of imac.
+	 */
 	public void setValidImacs(ArrayList<Imac> imacs){
 		this.validImacs = imacs;
 		this.currentImac = this.validImacs.get(0);
 	}
+	/**
+	 * Set the valid imac and initalize the current imac at the first from the valid imac.
+	 * @param imacs
+	 * 	An Array of imac.
+	 */
 	public void setValidImac(Imac[] imacs){
 		this.validImacs = new ArrayList<Imac>(Arrays.asList(imacs));
 		this.currentImac = this.validImacs.get(0);
@@ -58,38 +81,69 @@ public class Trainer extends Observable{
 	
 	/*------------GET - SET NAME---------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the name of the trainer
+	 * @return name
+	 */
 	public String getName(){ return this.name; }
+	/**
+	 * Set the name of the trainer
+	 * @param newName
+	 * 	The new name for the trainer.
+	 */
 	public void setName(String newName){ this.name = newName;} 
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------GET - SET CURRENT IMAC-------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the current imac.
+	 * @return currentImac
+	 * 	The current imac used by the trainer.
+	 */
 	public Imac getCurrentImac(){ return this.currentImac; }
+	/**
+	 * Set the current imac used by the trainer.
+	 * @param imac
+	 * 	The new current imac.
+	 */
 	public void setCurrentImac(Imac imac){ this.currentImac = imac; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------GET SCORE--------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the trainer score.
+	 * @return score
+	 * 	The number of defeated opponent.
+	 */
 	public int getScore(){ return this.score; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
 	/*------------PLAY-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Throw a notification to display the choice menu.
+	 * @param opponent
+	 * 	The trainer who is the opponent.
+	 */
 	public void play(Trainer opponent){
-		this.displayChoseMenu(opponent);
-	}
-	/*-----------------------------------------------------------------------------------------------*/
-	
-	/*------------DISPLAY CHOSE MENU-----------------------------------------------------------------*/
-	/*-----------------------------------------------------------------------------------------------*/
-	private void displayChoseMenu(Trainer opponent){
 		this.notify("choice");
 	}
 	/*-----------------------------------------------------------------------------------------------*/
-
+	
 	/*------------IMAC ATTACK------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Throw a notification to display the attack text.And change the imac life opponent in function of the current imac attack value.
+	 * @param otherPlayer
+	 * 	The opponent.
+	 * @param attackId
+	 * 	The index of the imac attack used.
+	 * @return True if the opponent is not dead, or False in the other case.
+	 * @see Imac#attack(int, String)
+	 */
 	public boolean imacAttack(Trainer otherPlayer, int attackId){
 		this.notify("attack");
 		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
@@ -98,6 +152,12 @@ public class Trainer extends Observable{
 	
 	/*------------IMAC DAMAGE------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Change the life of the current imac in function of the damage, and throw notification to display text for imac death or damage.
+	 * @param damage
+	 * 	The value subtracts to the imac life.
+	 * @return True if the imac is alive after substraction, or False in the other case.
+	 */
 	public boolean imacDamage(float damage){
 		boolean live;
 		currentImac.damage(damage);
@@ -116,6 +176,10 @@ public class Trainer extends Observable{
 	
 	/*------------DEFEATED---------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Verify if there is valid imac and throw notification of defeat.
+	 * @return True if the trainer defeat, and false in the other case.
+	 */
 	public boolean defeated(){
 		if( validImacs.size() <= 0){
 			this.notify("defeat");
@@ -131,11 +195,19 @@ public class Trainer extends Observable{
 	
 	/*------------CURRENT TYPE-----------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the type of the current imac.
+	 * @return The current imac type name.
+	 */
 	public String currentType(){ return currentImac.getType(); }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------CURRENT LIFE-----------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the life of the current imac.
+	 * @return The current imac life.
+	 */
 	public float currentLife(){ return this.currentImac.getLife(); }
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -147,6 +219,9 @@ public class Trainer extends Observable{
 			this.notify("changeImac");
 		}
 	}*/
+	/**
+	 * Change the current imac by the first imac of the valids imac.
+	 */
 	public void changeImac(){
 		if(!this.defeated()){
 			this.currentImac = validImacs.get(0);
@@ -157,6 +232,11 @@ public class Trainer extends Observable{
 	
 	/*------------NOTIFY------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Notify the observer.
+	 * @param arg
+	 * 	The type of notification.
+	 */
 	public void notify(String arg){
 		this.setChanged();
 		this.notifyObservers(arg);

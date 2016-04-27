@@ -17,6 +17,13 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Generate a choice menu with the different attacks and a quite option.
+	 * @param current
+	 * 	The current trainer (player).
+	 * @param opponnent
+	 * 	The opponent (ai).
+	 */
 	public ChoiceMenu(Trainer current, Trainer opponnent) {
 		super("Choisissez votre attaque :");
 		this.setLayout(new GridLayout(6, 1));

@@ -13,6 +13,8 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import imacstadium.game.Game;
+import imacstadium.game.Trainer;
 import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
 import imacstadium.imac.ImacHeader;
@@ -25,18 +27,30 @@ public class Parser {
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * @param path
+	 * 	The relative path to the json file.
+	 */
 	public Parser(String path){ this.pathFile = FileSystems.getDefault().getPath(new File("").getAbsolutePath()+path); }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----GETTER------------------------------------------------------------------------------------*/
 	/*------------GET PATH FILE----------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the path file of the json file.
+	 * @return A Path object to the json file.
+	 */
 	public Path getPathFile(){ return this.pathFile; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
 	/*------------PARSE FILE-------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Generate an ImacHeader ArrayList.
+	 * @return An ImacHeader ArrayList generate from the json file.
+	 */
 	public ArrayList<ImacHeader> parseFile(){
 		
 		InputStream is = null;
@@ -71,6 +85,12 @@ public class Parser {
 	
 	/*------------FIND-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Generate an Imac.
+	 * @param id
+	 * 	Index of the imac in the json file.
+	 * @return An Imac that is at a certain index in json file.
+	 */
 	public Imac find(int id){
 		InputStream is = null;
 		
