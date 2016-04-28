@@ -1,4 +1,4 @@
-package Imac;
+package imacstadium.imac;
 
 abstract class Attack {
 	

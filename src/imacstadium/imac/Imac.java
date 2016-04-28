@@ -1,4 +1,4 @@
-package Imac;
+package imacstadium.imac;
 
 public class Imac extends ImacHeader {
 

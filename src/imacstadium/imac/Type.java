@@ -1,4 +1,4 @@
-package Imac;
+package imacstadium.imac;
 
 import java.util.Map;
 
