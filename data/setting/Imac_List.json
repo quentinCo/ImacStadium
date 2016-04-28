@@ -1,0 +1,91 @@
+{
+	"imacs" : [
+		{
+			"name" : "Imac 1",
+			"type" : "Type 1",
+			"life" : "12",
+			"catchPhrase" : "Coucou",
+			"precision" : "0.5",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" : "12.5"
+				},
+				{
+					"name" : "attack 2",
+					"type" : "Type 1",
+					"power" : "25.75"
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" : "5"
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" : "50"
+				}
+			]
+		},
+		{
+			"name" : "Imac 2",
+			"type" : "Type 2",
+			"life" : "20",
+			"catchPhrase" : "Yop",
+			"precision" : "0.95",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" : "12.5"
+				},
+				{
+					"name" : "attack 2",
+				
+					"power" : "25.75"
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" : "5"
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" : "50"
+				}
+			]
+		},
+		{
+			"name" : "Imac 3",
+			"type" : "Type 2",
+			"life" : "100",
+			"catchPhrase" : "Hello World",
+			"precision" : "0.5",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Type 1",
+					"power" : "12.5"
+				},
+				{
+					"name" : "attack 2",
+					"type" : "Type 1",
+					"power" : "25.75"
+				},
+				{
+					"name" : "attack 3",
+					"type" : "Type 2",
+					"power" : "5"
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Type 4",
+					"power" : "50"
+				}
+			]
+		}
+	]
+}
