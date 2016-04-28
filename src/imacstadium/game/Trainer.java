@@ -203,7 +203,7 @@ public class Trainer extends Observable{
 	 * Return the type of the current imac.
 	 * @return The current imac type name.
 	 */
-	public String currentType(){ return currentImac.getType(); }
+	public String currentType(){ return currentImac.getTypeImac(); }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------CURRENT LIFE-----------------------------------------------------------------------*/

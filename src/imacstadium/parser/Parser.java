@@ -7,14 +7,14 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import imacstadium.game.Game;
-import imacstadium.game.Trainer;
 import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
 import imacstadium.imac.ImacHeader;
@@ -124,8 +124,6 @@ public class Parser {
 		
 		float life = Float.parseFloat(obj.getString("life"));
 		String phrase = obj.getString("catchPhrase");
-		//int level = Integer.parseInt(obj.getString("level"));
-		float precision = Float.parseFloat(obj.getString("precision"));
 		
 		Attack[] attacks = new Attack[4];
 		JsonArray jA = obj.getJsonArray("attacks");
@@ -134,8 +132,8 @@ public class Parser {
 		for(JsonObject jO : jA.getValuesAs(JsonObject.class)){
 			attacks[i++] = this.newAttack(jO);
 		}
-		
-		return new Imac(id, name, type, /*level*/ 1, attacks, life, precision, phrase);
+
+		return new Imac(id, name, type, life, phrase, attacks);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -145,25 +143,34 @@ public class Parser {
 
 		String name = obj.getString("name");
 		
+		
+		/*
+		 * Temp 
+		 */
+		
+		Map<String, Float> bonus = new HashMap <String, Float>();
+		bonus.put("Type 1", (float)10);
+		bonus.put("Type 2", (float)-10);
+		
 		Type type;
 		try{
 			switch(obj.getString("type")){
 				case "Type 1":
-					type = new Type();
+					type = new Type("Type 1",bonus);
 					break;
 				default :
-					type = new Type();
+					type = new Type("Type 1",bonus);
 					break;
 			}
 		}
 		catch(NullPointerException e){
-			type = null;
+			type = new Type("Default",bonus);
 		}
 		
 		
 		float power = Float.parseFloat(obj.getString("power"));
 		
-		return new Attack(name, type, power);
+		return new Attack(power, name, type);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

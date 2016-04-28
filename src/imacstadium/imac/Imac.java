@@ -1,107 +1,170 @@
 package imacstadium.imac;
 
-import java.util.Arrays;
+public class Imac extends ImacHeader {
 
-public class Imac extends ImacHeader{
-
+	/**
+     * The status of the Imac life. True by default.
+     * 
+     * @see Imac#getAlive()
+     */
+	private boolean alive = true;
+	
+	/**
+     * The life of the Imac.
+     * 
+     * @see Imac#getLife()
+     * @see Imac#Imac(int, String, String, float, String, Attack[])
+     */
 	private float life;
-	private Attack attacks[];
-	private String catchPhrase;
-	private int level;
-	private float precision;
-	private boolean alive;
 	
-	public Imac(int id, String name, String type, int level, Attack[] attacks, float life, float precision, String catchPhrase) {
-		super(id, name, type);
-		this.life = life;
-		this.catchPhrase = catchPhrase;
-		this.level = level;
-		this.precision = precision;
-		this.attacks = attacks;
-		this.alive = true;
+	/**
+     * The catch phrase of the Imac.
+     * 
+     * @see Imac#getCatchPhrase()
+     * @see Imac#Imac(int, String, String, float, String, Attack[])
+     */
+	private final String catchPhrase;
+	
+	/**
+     * The id's attack table of the Imac.
+     * 
+     * @see Imac#getAttacks()
+     * @see Imac#Imac(int, String, String, float, String, Attack[])
+     */
+	private final Attack[] attacks;
+
+	
+	
+	/***********
+	 * GETTERS *
+	 ***********/
+
+	/**
+	 * Return the life status of the Imac
+	 * 
+	 * @return	A boolean instance, corresponding to the life status of the Imac
+	 *
+	 */
+	public boolean getAlive() {
+		return alive;
 	}
-	
+	/**
+	 * Return the life of the Imac
+	 * 
+	 * @return	A float instance, corresponding to the life of the Imac
+	 *
+	 */
 	public float getLife() {
 		return life;
 	}
-	public void setLife(float life) {
-		this.life = life;
-	}
+
+	/**
+	 * Return the catch phrase of the Imac
+	 * 
+	 * @return	A String instance, corresponding to the catch phrase of the Imac
+	 *
+	 */
 	public String getCatchPhrase() {
 		return catchPhrase;
 	}
-	public void setCatchPhrase(String catchPhrase) {
+	
+	/**
+	 * Return id's attack table of the Imac
+	 * 
+	 * @return	An Attack table instance, corresponding to the id's attack table of the Imac
+	 *
+	 */
+	public Attack[] getAttacks(){
+		return attacks;
+	}
+	
+
+	
+	/****************
+	 * CONSTRUCTORS *
+	 ****************/
+
+	/**
+	 * Imac constructor
+	 * 
+	 * @param id
+	 * 		The unique identifier of the Imac.
+	 * @param name
+	 * 		The name of the Imac.
+	 * @param typeImac
+	 * 		The type of the Imac.
+	 * @param life
+	 * 		The life of the Imac.
+	 * @param catchPhrase
+	 * 		The catch phrase of the Imac.
+	 * @param attacks
+	 * 		The id's attack table of the Imac.
+	 * 
+	 * @see ImacHeader#id
+	 * @see ImacHeader#name
+	 * @see ImacHeader#typeImac
+	 * @see Imac#life
+	 * @see Imac#catchPhrase
+	 * @see Imac#attacks
+	 */
+	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks) {
+		super(id, name, typeImac);
+		this.life = life;
 		this.catchPhrase = catchPhrase;
+		this.attacks = attacks;
 	}
-	public int getLevel() {
-		return level;
-	}
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	public float getPrecision() {
-		return precision;
-	}
-	public void setPrecision(float precision) {
-		this.precision = precision;
-	}
+
+	
+	
+	/***********
+	 * ACTIONS *
+	 ***********/
+
+	
+	/**
+	 * Return true if the Imac is alive or false if he is dead.
+	 * 
+	 * @return A boolean instance, corresponding to the status of the Imac's life.
+	 */
 	public boolean isAlive() {
-		return alive;
-	}
-	public void setAlive(boolean alive) {
-		this.alive = alive;
-	}
-	
-	public void damage(float damage){
-		this.life-=damage;
-		if(this.life <= 0)this.alive = false;
-	}
-	
-	public float attack(int idAttack, String type){
-		return attacks[idAttack].powerAttack(type);
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (alive ? 1231 : 1237);
-		result = prime * result + Arrays.hashCode(attacks);
-		result = prime * result + ((catchPhrase == null) ? 0 : catchPhrase.hashCode());
-		result = prime * result + level;
-		result = prime * result + Float.floatToIntBits(life);
-		result = prime * result + Float.floatToIntBits(precision);
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
+		if (life > 0) {
 			return true;
-		if (obj == null)
+		}
+		else {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Imac other = (Imac) obj;
-		if (alive != other.alive)
-			return false;
-		if (!Arrays.equals(attacks, other.attacks))
-			return false;
-		if (catchPhrase == null) {
-			if (other.catchPhrase != null)
-				return false;
-		} else if (!catchPhrase.equals(other.catchPhrase))
-			return false;
-		if (level != other.level)
-			return false;
-		if (Float.floatToIntBits(life) != Float.floatToIntBits(other.life))
-			return false;
-		if (Float.floatToIntBits(precision) != Float.floatToIntBits(other.precision))
-			return false;
-		return true;
+		}	
 	}
-	@Override
-	public String toString() {
-		return "Imac [\n\tlife=" + life + "\n\tattacks=" + Arrays.toString(attacks) + "\n\tcatchPhrase=" + catchPhrase
-				+ "\n\tlevel=" + level + "\n\tprecision=" + precision + "\n\talive=" + alive + "\n]";
+	
+	/**
+	 * Substract the damage to the Imac life.
+	 * 
+	 * @param damage
+	 * 		The attack's power of the opponent Imac.
+	 */
+	public void damage(float damage) {
+		if(life > damage) {
+			life -= damage;
+		}
+		else {
+			life = 0;
+		}
 	}
+
+	/**
+	 * 
+	 * 
+	 * @param id
+	 * 		The unique identifier of the Imac attack used.
+	 * @param opponentType
+	 * 		The type name of the opponent Imac.
+	 * 
+	 * @return The damage of the chosen attack that will be inflicted to the opponent Imac.
+	 * 
+	 * @see Type#Type(String, java.util.Map)
+	 * @see Attack#powerAttack(String)
+	 */
+	public float attack(int id, String opponentType){
+		return attacks[id].powerAttack(opponentType);
+	}
+
 }
