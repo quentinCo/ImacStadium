@@ -28,10 +28,10 @@ public class Imac extends ImacHeader {
 	/**
      * The id's attack table of the Imac.
      * 
-     * @see Imac#getIdAttack()
+     * @see Imac#getAttacks()
      * @see Imac#Imac(int, String, String, float, String, Attack[])
      */
-	private final Attack[] idAttack;
+	private final Attack[] attacks;
 
 	
 	
@@ -74,8 +74,8 @@ public class Imac extends ImacHeader {
 	 * @return	An Attack table instance, corresponding to the id's attack table of the Imac
 	 *
 	 */
-	public Attack[] getIdAttack(){
-		return idAttack;
+	public Attack[] getAttacks(){
+		return attacks;
 	}
 	
 
@@ -97,7 +97,7 @@ public class Imac extends ImacHeader {
 	 * 		The life of the Imac.
 	 * @param catchPhrase
 	 * 		The catch phrase of the Imac.
-	 * @param idAttack
+	 * @param attacks
 	 * 		The id's attack table of the Imac.
 	 * 
 	 * @see ImacHeader#id
@@ -105,13 +105,13 @@ public class Imac extends ImacHeader {
 	 * @see ImacHeader#typeImac
 	 * @see Imac#life
 	 * @see Imac#catchPhrase
-	 * @see Imac#idAttack
+	 * @see Imac#attacks
 	 */
-	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] idAttack) {
+	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks) {
 		super(id, name, typeImac);
 		this.life = life;
 		this.catchPhrase = catchPhrase;
-		this.idAttack = idAttack;
+		this.attacks = attacks;
 	}
 
 	
@@ -156,15 +156,15 @@ public class Imac extends ImacHeader {
 	 * @param id
 	 * 		The unique identifier of the Imac attack used.
 	 * @param opponentType
-	 * 		The type of the opponent Imac.
+	 * 		The type name of the opponent Imac.
 	 * 
 	 * @return The damage of the chosen attack that will be inflicted to the opponent Imac.
 	 * 
 	 * @see Type#Type(String, java.util.Map)
 	 * @see Attack#powerAttack(Type)
 	 */
-	public float attack(int id, Type opponentType){
-		return idAttack[id].powerAttack(opponentType);
+	public float attack(int id, String opponentType){
+		return attacks[id].powerAttack(opponentType);
 	}
 
 }

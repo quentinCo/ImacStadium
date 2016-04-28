@@ -1,15 +1,7 @@
 package imacstadium.imac;
 
-abstract class Attack {
-	
-	/**
-     * The unique identifier of the Attack, id is not mutable.
-     * 
-     * @see Attack#getId()
-     * @see Attack#Attack(int, float, String, Type)
-     */
-	private final int id;
-	
+public class Attack {
+
 	/**
      * The power of the Attack.
      * 
@@ -39,16 +31,6 @@ abstract class Attack {
 	/***********
 	 * GETTERS *
 	 ***********/
-	
-	/**
-	 * Return the id of the Attack.
-	 * 
-	 * @return	An integer instance, corresponding to the unique identifier of the Attack.
-	 *
-	 */
-	public int getId() {
-		return id;
-	}
 
 	/**
 	 * Return the power of the Attack.
@@ -89,8 +71,6 @@ abstract class Attack {
 	/**
 	 * Attack constructor
 	 * 
-	 * @param id
-	 * 		The unique identifier of the Attack.
 	 * @param power
 	 * 		The power of the Attack.
 	 * @param name
@@ -98,13 +78,11 @@ abstract class Attack {
 	 * @param typeAttack
 	 * 		The type of the Attack.
 	 * 
-	 * @see Attack#id
 	 * @see Attack#power
 	 * @see Attack#name
 	 * @see Attack#typeAttack
 	 */
-	public Attack(int id, float power, String name, Type typeAttack) {
-		this.id = id;
+	public Attack(float power, String name, Type typeAttack) {
 		this.power = power;
 		this.name = name;
 		this.typeAttack = typeAttack;
@@ -127,7 +105,7 @@ abstract class Attack {
 	 * @see Type#Type(String, java.util.Map)
 	 * @see Type#effect(Type)
 	 */
-	public float powerAttack(Type opponentType ) {
+	public float powerAttack(String opponentType ) {
 		return power + typeAttack.effect(opponentType);
 	}
 

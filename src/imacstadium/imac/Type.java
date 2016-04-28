@@ -2,7 +2,7 @@ package imacstadium.imac;
 
 import java.util.Map;
 
-abstract class Type {
+public class Type {
 	
 	/**
      * The name of the Type, name is not mutable.
@@ -79,15 +79,15 @@ abstract class Type {
 	 * Return the effect of the attack according to the opponent's type.
 	 * 
 	 * @param opponentType
-	 * 		The type of the opponent Imac.
+	 * 		The type name of the opponent Imac.
 	 * 
 	 * @return A Float instance, corresponding to the bonus or the malus of the attack according to the opponent's type.
 	 *
 	 * @see Type#Type(String, Map)
 	 */
-	public float effect(Type opponentType){
-		if (bonus.containsKey(opponentType.name)){
-			return bonus.get(opponentType.name);
+	public float effect(String opponentType){
+		if (bonus.containsKey(opponentType)){
+			return bonus.get(opponentType);
 		}
 		else {
 			return 0;
