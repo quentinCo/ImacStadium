@@ -14,6 +14,10 @@ public class Trainer extends Observable{
 	protected Imac currentImac;
 	protected int score;
 	
+	public static enum State{
+		ATTACK, ATTACKED, DEAD, CHOICE_ATTACK, DEFEAT, CHANGE_IMAC
+	}
+	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	public Trainer (){
@@ -129,7 +133,7 @@ public class Trainer extends Observable{
 	 * 	The trainer who is the opponent.
 	 */
 	public void play(Trainer opponent){
-		this.notify("choice");
+		this.notify(State.CHOICE_ATTACK);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -145,7 +149,7 @@ public class Trainer extends Observable{
 	 * @see Imac#attack(int, String)
 	 */
 	public boolean imacAttack(Trainer otherPlayer, int attackId){
-		this.notify("attack");
+		this.notify(State.ATTACK);
 		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
 	}
 	/*-----------------------------------------------------------------------------------------------*/
@@ -165,10 +169,10 @@ public class Trainer extends Observable{
 		live = currentImac.isAlive();
 		if(!live){
 			validImacs.remove(currentImac);
-			this.notify("dead");
+			this.notify(State.DEAD);
 		}
 		else{
-			this.notify("attacked");
+			this.notify(State.ATTACKED);
 		}
 		return live;
 	}
@@ -182,7 +186,7 @@ public class Trainer extends Observable{
 	 */
 	public boolean defeated(){
 		if( validImacs.size() <= 0){
-			this.notify("defeat");
+			this.notify(State.DEFEAT);
 			return true;
 		}
 		return false;
@@ -216,7 +220,7 @@ public class Trainer extends Observable{
 	/*public void changeImac(Imac imac){
 		if(imac.isAlive()){
 			this.currentImac = imac;
-			this.notify("changeImac");
+			this.notify(State.CHANGE_IMAC);
 		}
 	}*/
 	/**
@@ -225,7 +229,7 @@ public class Trainer extends Observable{
 	public void changeImac(){
 		if(!this.defeated()){
 			this.currentImac = validImacs.get(0);
-			this.notify("changeImac");
+			this.notify(State.CHANGE_IMAC);
 		}
 	}
 	/*-----------------------------------------------------------------------------------------------*/
@@ -237,7 +241,7 @@ public class Trainer extends Observable{
 	 * @param arg
 	 * 	The type of notification.
 	 */
-	public void notify(String arg){
+	public void notify(State arg){
 		this.setChanged();
 		this.notifyObservers(arg);
 		this.clearChanged();

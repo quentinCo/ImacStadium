@@ -54,7 +54,7 @@ public class IA extends Trainer {
 	@Override
 	public void changeImac() {
 		Game.getInstance().distributeImac(this);
-		this.notify("changeImac");
+		this.notify(State.CHANGE_IMAC);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 

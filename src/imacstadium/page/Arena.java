@@ -97,7 +97,7 @@ public class Arena extends Page implements Observer{
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		String event = (String)arg;
+		Trainer.State event = (Trainer.State)arg;
 		Trainer source = (Trainer)o;
 
 		this.removeGameMenu();
@@ -105,29 +105,29 @@ public class Arena extends Page implements Observer{
 		if(gameMenu instanceof KeyListener){ this.removeKeyListener((KeyListener)gameMenu); }
 		
 		switch (event){
-			case "attack":
+			case ATTACK:
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" attaque.");
 				System.out.println("L'Imac de "+source.getName()+" attaque.");
 				break;
-			case "attacked":
+			case ATTACKED:
 				gameMenu = new GameMenu("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
 				System.out.println("La vie de l'Imac de "+source.getName()+" n'est plus que de "+source.currentLife());
 				break;
-			case "dead":
+			case DEAD:
 				gameMenu = new GameMenu("L'Imac de "+source.getName()+" est vaincu.");
 				System.out.println("L'Imac de "+source.getName()+" est vaincu.");
 				//this.turn = true;
 				break;
-			case "choice":
+			case CHOICE_ATTACK:
 				gameMenu = new ChoiceMenu(source, this.trainers[(this.idCurrentTrainer+1)%2]);
 				System.out.println("Choisi attaque entre 1- 2- 3- 4-");
 				this.addKeyListener((KeyListener)gameMenu);
 				break;
-			case "defeat":
+			case DEFEAT:
 				gameMenu = new GameMenu(source.getName()+" à perdu.");
 				System.out.println(source.getName()+" à perdu.");
 				break;
-			case "changeImac":
+			case CHANGE_IMAC:
 				gameMenu = new GameMenu(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
 				System.out.println(source.getName()+ " appelle "+source.getCurrentImac().getName()+" .\n"+source.getCurrentImac().getCatchPhrase());
 				break;
@@ -135,7 +135,7 @@ public class Arena extends Page implements Observer{
 		
 		this.displayGameMenu();
 		
-		if(event == "attacked" || event == "dead"){
+		if(event == Trainer.State.ATTACKED || event == Trainer.State.DEAD){
 			if(!source.defeated() || (source instanceof IA)){
 				this.changeCurrentTrainer();
 				this.fight();
