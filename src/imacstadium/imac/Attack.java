@@ -103,7 +103,7 @@ public class Attack {
 	 * @return A float instance, corresponding to the power of the attack according to the opponent's type.
 	 * 
 	 * @see Type#Type(String, java.util.Map)
-	 * @see Type#effect(Type)
+	 * @see Type#effect(String)
 	 */
 	public float powerAttack(String opponentType ) {
 		return power + typeAttack.effect(opponentType);

@@ -161,7 +161,7 @@ public class Imac extends ImacHeader {
 	 * @return The damage of the chosen attack that will be inflicted to the opponent Imac.
 	 * 
 	 * @see Type#Type(String, java.util.Map)
-	 * @see Attack#powerAttack(Type)
+	 * @see Attack#powerAttack(String)
 	 */
 	public float attack(int id, String opponentType){
 		return attacks[id].powerAttack(opponentType);
