@@ -9,9 +9,11 @@ import imacstadium.game.state.StateAttacked;
 import imacstadium.game.state.StateChoiceAttack;
 import imacstadium.game.state.StateDead;
 import imacstadium.game.state.StateDefeat;
+import imacstadium.game.state.StateFailAttack;
 import imacstadium.game.state.StateTrainer;
 import imacstadium.game.state.StateChangeImac;
 import imacstadium.imac.Imac;
+import imacstadium.imac.exception.AttackFailExeception;
 
 public class Trainer extends Observable{
 
@@ -169,8 +171,15 @@ public class Trainer extends Observable{
 	public boolean imacAttack(Trainer opponent, int attackId){
 		state = new StateAttack(name);
 		this.notifyArena();
-		boolean live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
-		if(!live)this.score++;
+		boolean live = true;
+		try{
+			live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
+			if(!live)this.score++;
+		}
+		catch(AttackFailExeception e){
+			state = new StateFailAttack(name);
+			this.notifyArena();
+		}
 		return live;
 	}
 	/*-----------------------------------------------------------------------------------------------*/

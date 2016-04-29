@@ -17,7 +17,7 @@ public class StateFailAttack  implements StateTrainer{
 
 	@Override
 	public boolean getContinu() {
-		return false;
+		return true;
 	}
 
 	@Override

@@ -122,9 +122,9 @@ public class Parser {
 		try{ type = obj.getString("type"); }
 		catch(NullPointerException e){ type = ""; }
 		
-		/*float precision;
+		float precision;
 		try{ precision = Float.parseFloat(obj.getString("precision")); }
-		catch(NullPointerException e){ precision = 1; }*/
+		catch(NullPointerException e){ precision = 1; }
 		
 		float life = Float.parseFloat(obj.getString("life"));
 		String phrase = obj.getString("catchPhrase");
@@ -137,7 +137,7 @@ public class Parser {
 			attacks[i++] = this.newAttack(jO);
 		}
 
-		return new Imac(id, name, type, life, phrase, attacks);
+		return new Imac(id, name, type, life, phrase, attacks, precision);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -151,9 +151,9 @@ public class Parser {
 		/*
 		 * Temp 
 		 */
-		/*float downPrecision;
+		float downPrecision;
 		try{ downPrecision = Float.parseFloat(obj.getString("downPrecision")); }
-		catch(NullPointerException e){ downPrecision = 1; }*/
+		catch(NullPointerException e){ downPrecision = 0; }
 		
 		
 		Map<String, Float> bonus = new HashMap <String, Float>();
@@ -177,8 +177,8 @@ public class Parser {
 		
 		
 		float power = Float.parseFloat(obj.getString("power"));
-		//return new Attack(power, downPrecision, name, type);
-		return new Attack(power, name, type);
+		return new Attack(power, downPrecision, name, type);
+		//return new Attack(power, name, type);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

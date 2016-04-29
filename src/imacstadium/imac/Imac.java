@@ -1,5 +1,7 @@
 package imacstadium.imac;
 
+import imacstadium.imac.exception.AttackFailExeception;
+
 public class Imac extends ImacHeader {
 
 	/**
@@ -14,7 +16,7 @@ public class Imac extends ImacHeader {
      * 
      * @see Imac#getPrecision()
      */
-	private float precision = 1;
+	private float precision;
 	
 	/**
      * The life of the Imac.
@@ -125,11 +127,12 @@ public class Imac extends ImacHeader {
 	 * @see Imac#catchPhrase
 	 * @see Imac#attacks
 	 */
-	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks) {
+	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks, float precision) {
 		super(id, name, typeImac);
 		this.life = life;
 		this.catchPhrase = catchPhrase;
 		this.attacks = attacks;
+		this.precision = precision;
 	}
 
 	
@@ -159,6 +162,7 @@ public class Imac extends ImacHeader {
 	 * @return A boolean instance, corresponding to the success of the attack according the precision of the Imac.
 	 */
 	public boolean isTouch(){
+		System.out.println("PRECISION : "+precision);
 		if (Math.random() >= (1 - precision)){
 			return true;
 		}
@@ -197,14 +201,18 @@ public class Imac extends ImacHeader {
 	 * @see Attack#getDownPrecision()
 	 * @see Attack#powerAttack(Type)
 	 */
-	public float attack(int id, Imac opponentImac){
+	public float attack(int id, Imac opponentImac) throws AttackFailExeception{
 		if (isTouch()){
-			opponentImac.precision -= attacks[id].getDownPrecision();
+			opponentImac.downPrecision(attacks[id].getDownPrecision());
 			return attacks[id].powerAttack(opponentImac.getTypeImac());
 		}
-		else{
-			return 0;
-		}
+		else throw new AttackFailExeception();
 	}
 
+	
+	private void downPrecision(float down){
+		this.precision -= down;
+		if(this.precision <0.1) this.precision = (float)0.1;
+	}
+	
 }
