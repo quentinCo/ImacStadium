@@ -11,6 +11,14 @@ public class Attack {
 	private float power;
 	
 	/**
+     * The fall of the Imac's attacks precision.
+     * 
+     * @see Attack#getDownPrecision()
+     * @see Attack#Attack(int, float, float, String, Type)
+     */
+	private final float downPrecision;
+	
+	/**
      * The name of the Attack, name is not mutable.
      * 
      * @see Attack#getName()
@@ -40,6 +48,16 @@ public class Attack {
 	 */
 	public float getPower() {
 		return power;
+	}
+	
+	/**
+	 * Return the fall of the Imac's attacks precision.
+	 * 
+	 * @return	A float instance, corresponding to the fall of the Imac's attacks precision.
+	 *
+	 */
+	public float getDownPrecision() {
+		return downPrecision;
 	}
 
 	/**
@@ -73,6 +91,8 @@ public class Attack {
 	 * 
 	 * @param power
 	 * 		The power of the Attack.
+	 * @param downPrecision
+	 * 		The fall of the Imac's attacks precision.
 	 * @param name
 	 * 		The name of the Attack.
 	 * @param typeAttack
@@ -82,8 +102,9 @@ public class Attack {
 	 * @see Attack#name
 	 * @see Attack#typeAttack
 	 */
-	public Attack(float power, String name, Type typeAttack) {
+	public Attack(float power, float downPrecision, String name, Type typeAttack) {
 		this.power = power;
+		this.downPrecision = downPrecision;
 		this.name = name;
 		this.typeAttack = typeAttack;
 	}

@@ -10,6 +10,13 @@ public class Imac extends ImacHeader {
 	private boolean alive = true;
 	
 	/**
+     * The precision of the Imac.
+     * 
+     * @see Imac#getPrecision()
+     */
+	private float precision = 1;
+	
+	/**
      * The life of the Imac.
      * 
      * @see Imac#getLife()
@@ -48,6 +55,17 @@ public class Imac extends ImacHeader {
 	public boolean getAlive() {
 		return alive;
 	}
+	
+	/**
+	 * Return the precision of the Imac
+	 * 
+	 * @return	A float instance, corresponding to the precision of the Imac
+	 *
+	 */
+	public float getPrecision() {
+		return precision;
+	}
+	
 	/**
 	 * Return the life of the Imac
 	 * 
@@ -136,6 +154,20 @@ public class Imac extends ImacHeader {
 	}
 	
 	/**
+	 * Return true if the Imac is touched or false if the Imac is not touched.
+	 * 
+	 * @return A boolean instance, corresponding to the success of the attack according the precision of the Imac.
+	 */
+	public boolean isTouch(){
+		if (Math.random() >= (1 - precision)){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
 	 * Substract the damage to the Imac life.
 	 * 
 	 * @param damage
@@ -151,20 +183,28 @@ public class Imac extends ImacHeader {
 	}
 
 	/**
-	 * 
+	 * Return the damage of the chosen attack that will be inflicted and down the opponent Imac's precisionb. 
 	 * 
 	 * @param id
-	 * 		The unique identifier of the Imac attack used.
-	 * @param opponentType
-	 * 		The type name of the opponent Imac.
+	 * 		The unique identifier of the Imac's attack used.
+	 * @param opponentImac
+	 * 		The opponent Imac.
 	 * 
 	 * @return The damage of the chosen attack that will be inflicted to the opponent Imac.
 	 * 
 	 * @see Type#Type(String, java.util.Map)
-	 * @see Attack#powerAttack(String)
+	 * @see Imac#isTouch()
+	 * @see Attack#getDownPrecision()
+	 * @see Attack#powerAttack(Type)
 	 */
-	public float attack(int id, String opponentType){
-		return attacks[id].powerAttack(opponentType);
+	public float attack(int id, Imac opponentImac){
+		if (isTouch()){
+			opponentImac.precision -= attacks[id].getDownPrecision();
+			return attacks[id].powerAttack(opponentImac.getTypeImac());
+		}
+		else{
+			return 0;
+		}
 	}
 
 }
