@@ -1,6 +1,6 @@
 package imacstadium.game;
 
-import imacstadium.page.StateChangeImac;
+import imacstadium.game.state.StateChangeImac;
 
 public class IA extends Trainer {
 

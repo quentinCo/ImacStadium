@@ -10,8 +10,8 @@ import imacstadium.game.state.StateChoiceAttack;
 import imacstadium.game.state.StateDead;
 import imacstadium.game.state.StateDefeat;
 import imacstadium.game.state.StateTrainer;
+import imacstadium.game.state.StateChangeImac;
 import imacstadium.imac.Imac;
-import imacstadium.page.StateChangeImac;
 
 public class Trainer extends Observable{
 

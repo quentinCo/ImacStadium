@@ -7,7 +7,7 @@ public class StateDefeat implements StateTrainer{
 	private String sentence;
 	
 	public StateDefeat(String name, int score){
-		sentence = name+" à perdu.\nLe score est de :"+score;
+		sentence = name+" à perdu.\nLe score est de : "+score;
 	}
 
 	@Override
