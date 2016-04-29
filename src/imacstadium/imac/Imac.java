@@ -163,8 +163,8 @@ public class Imac extends ImacHeader {
 	 * @see Type#Type(String, java.util.Map)
 	 * @see Attack#powerAttack(String)
 	 */
-	public float attack(int id, String opponentType){
-		return attacks[id].powerAttack(opponentType);
+	public float attack(Imac opponent, int id){
+		return attacks[id].powerAttack(opponent.getTypeImac());
 	}
 
 }

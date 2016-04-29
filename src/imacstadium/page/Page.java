@@ -1,6 +1,9 @@
 package imacstadium.page;
 
 import javax.swing.JPanel;
+
+import imacstadium.game.Game;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -14,8 +17,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import imacstadium.game.Game;
 
 public class Page  extends JFrame implements KeyListener{
 
