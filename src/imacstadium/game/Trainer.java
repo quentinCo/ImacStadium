@@ -169,7 +169,7 @@ public class Trainer extends Observable{
 	public boolean imacAttack(Trainer opponent, int attackId){
 		state = new StateAttack(name);
 		this.notifyArena();
-		boolean live = opponent.imacDamage(currentImac.attack(opponent.getCurrentImac(),attackId));
+		boolean live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
 		if(!live)this.score++;
 		return live;
 	}
