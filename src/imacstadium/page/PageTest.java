@@ -5,8 +5,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import imacstadium.game.Game;
 import imacstadium.commande.*;
+import imacstadium.game.Game;
 
 public class PageTest extends Page {
 

@@ -122,6 +122,10 @@ public class Parser {
 		try{ type = obj.getString("type"); }
 		catch(NullPointerException e){ type = ""; }
 		
+		/*float precision;
+		try{ precision = Float.parseFloat(obj.getString("precision")); }
+		catch(NullPointerException e){ precision = 1; }*/
+		
 		float life = Float.parseFloat(obj.getString("life"));
 		String phrase = obj.getString("catchPhrase");
 		
@@ -147,6 +151,10 @@ public class Parser {
 		/*
 		 * Temp 
 		 */
+		/*float downPrecision;
+		try{ downPrecision = Float.parseFloat(obj.getString("downPrecision")); }
+		catch(NullPointerException e){ downPrecision = 1; }*/
+		
 		
 		Map<String, Float> bonus = new HashMap <String, Float>();
 		bonus.put("Type 1", (float)10);
@@ -169,7 +177,7 @@ public class Parser {
 		
 		
 		float power = Float.parseFloat(obj.getString("power"));
-		
+		//return new Attack(power, downPrecision, name, type);
 		return new Attack(power, name, type);
 	}
 	/*-----------------------------------------------------------------------------------------------*/

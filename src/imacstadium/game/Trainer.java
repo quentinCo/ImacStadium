@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
+import imacstadium.game.state.StateAttack;
+import imacstadium.game.state.StateAttacked;
+import imacstadium.game.state.StateChoiceAttack;
+import imacstadium.game.state.StateDead;
+import imacstadium.game.state.StateDefeat;
+import imacstadium.game.state.StateTrainer;
 import imacstadium.imac.Imac;
+import imacstadium.page.StateChangeImac;
 
 public class Trainer extends Observable{
 
@@ -13,11 +20,13 @@ public class Trainer extends Observable{
 	protected String name;
 	protected Imac currentImac;
 	protected int score;
+	protected StateTrainer state;
 	
+	/*
 	public static enum State{
 		ATTACK, ATTACKED, DEAD, CHOICE_ATTACK, DEFEAT, CHANGE_IMAC
 	}
-	
+	*/
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	public Trainer (){
@@ -118,10 +127,18 @@ public class Trainer extends Observable{
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
 	 * Return the trainer score.
-	 * @return score
-	 * 	The number of defeated opponent.
+	 * @return The number of defeated opponent.
 	 */
 	public int getScore(){ return this.score; }
+	/*-----------------------------------------------------------------------------------------------*/
+	
+	/*------------GET STATE--------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the trainer state.
+	 * @return The current state of the trainer.
+	 */
+	public StateTrainer getState(){ return this.state; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
@@ -133,7 +150,8 @@ public class Trainer extends Observable{
 	 * 	The trainer who is the opponent.
 	 */
 	public void play(Trainer opponent){
-		this.notify(State.CHOICE_ATTACK);
+		state = new StateChoiceAttack(this,opponent);
+		this.notifyArena();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -148,9 +166,12 @@ public class Trainer extends Observable{
 	 * @return True if the opponent is not dead, or False in the other case.
 	 * @see Imac#attack(int, String)
 	 */
-	public boolean imacAttack(Trainer otherPlayer, int attackId){
-		this.notify(State.ATTACK);
-		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
+	public boolean imacAttack(Trainer opponent, int attackId){
+		state = new StateAttack(name);
+		this.notifyArena();
+		boolean live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
+		if(!live)this.score++;
+		return live;
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -169,10 +190,12 @@ public class Trainer extends Observable{
 		live = currentImac.isAlive();
 		if(!live){
 			validImacs.remove(currentImac);
-			this.notify(State.DEAD);
+			state = new StateDead(name);
+			this.notifyArena();
 		}
 		else{
-			this.notify(State.ATTACKED);
+			state = new StateAttacked(name, currentImac.getLife());
+			this.notifyArena();
 		}
 		return live;
 	}
@@ -186,7 +209,8 @@ public class Trainer extends Observable{
 	 */
 	public boolean defeated(){
 		if( validImacs.size() <= 0){
-			this.notify(State.DEFEAT);
+			state = new StateDefeat(name,score);
+			this.notifyArena();
 			return true;
 		}
 		return false;
@@ -229,7 +253,8 @@ public class Trainer extends Observable{
 	public void changeImac(){
 		if(!this.defeated()){
 			this.currentImac = validImacs.get(0);
-			this.notify(State.CHANGE_IMAC);
+			state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
+			this.notifyArena();
 		}
 	}
 	/*-----------------------------------------------------------------------------------------------*/
@@ -241,9 +266,9 @@ public class Trainer extends Observable{
 	 * @param arg
 	 * 	The type of notification.
 	 */
-	public void notify(State arg){
+	public void notifyArena(){
 		this.setChanged();
-		this.notifyObservers(arg);
+		this.notifyObservers();
 		this.clearChanged();
 	}
 	/*-----------------------------------------------------------------------------------------------*/

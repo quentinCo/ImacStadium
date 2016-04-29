@@ -8,8 +8,8 @@ import java.util.Iterator;
 
 import javax.swing.JLabel;
 
-import imacstadium.game.Trainer;
 import imacstadium.commande.Key;
+import imacstadium.game.Trainer;
 
 public class ChoiceMenu extends GameMenu implements KeyListener {
 

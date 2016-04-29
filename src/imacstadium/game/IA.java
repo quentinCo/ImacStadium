@@ -1,5 +1,7 @@
 package imacstadium.game;
 
+import imacstadium.page.StateChangeImac;
+
 public class IA extends Trainer {
 
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
@@ -54,7 +56,8 @@ public class IA extends Trainer {
 	@Override
 	public void changeImac() {
 		Game.getInstance().distributeImac(this);
-		this.notify(State.CHANGE_IMAC);
+		state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
+		this.notifyArena();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 
