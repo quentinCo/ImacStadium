@@ -1,6 +1,6 @@
-package imacstadium.page;
+package imacstadium.game.state;
 
-import imacstadium.game.state.StateTrainer;
+import imacstadium.page.GameMenu;
 
 public class StateChangeImac implements StateTrainer{
 
