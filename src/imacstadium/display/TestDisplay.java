@@ -26,8 +26,8 @@ public class TestDisplay {
 			public void run(){
 				//On crée une instance de JWindow
 				MainScreen screen = new MainScreen();
-				//SelectScreen screen2 = new SelectScreen();
-				//BattleScreen screen3 = new BattleScreen();
+				//SelectScreen screen2 = new SelectScreen("Test");
+				//BattleScreen screen3 = new BattleScreen("Test");
 			}
 		});
 	}

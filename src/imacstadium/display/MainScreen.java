@@ -50,9 +50,9 @@ public class MainScreen extends JFrame{
 		JPanel panel = new JPanel();//Instanciation d'un objet JPanel
 		panel.setLayout(new GridBagLayout());
 		
-		panel.setBackground(Color.orange);//DÃ©finition de sa couleur de fond
+		panel.setBackground(Color.orange);//Définition de sa couleur de fond
 		
-		/* Ajout de ce composant au container en spÃ©cifiant une contrainte de type GridBagConstraints. */
+		/* Ajout de ce composant au container en spécifiant une contrainte de type GridBagConstraints. */
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridwidth=GridBagConstraints.REMAINDER;
 		gbc.insets= new Insets(20,10,10,10);
@@ -75,7 +75,7 @@ public class MainScreen extends JFrame{
 		gbc.ipadx = 50;
 		panel.add(player_name_txtfield, gbc);
 		
-		JButton button = new JButton(new HomeBtnAction(this, "Selectionner son Ã©quipe d'IMAC"));
+		JButton button = new JButton(new HomeBtnAction(this, "Selectionner son équipe d'IMAC"));
 		gbc.ipady = 40;
 		gbc.ipadx = 0;
 		panel.add(button, gbc);

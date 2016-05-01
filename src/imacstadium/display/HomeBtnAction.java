@@ -17,10 +17,9 @@ public class HomeBtnAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		/* Ouvrir nouvelle fenÃªtre */
+		/* Ouvrir nouvelle fenêtre */
 		player_name = main.getName();
 		final SelectScreen frame = new SelectScreen(player_name);
-		frame.getLabel().setText(player_name+", selectionnez vos trois Imacs !");
 		main.dispose();
 	}
 
