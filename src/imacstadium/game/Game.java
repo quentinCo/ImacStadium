@@ -3,8 +3,12 @@ package imacstadium.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.SwingUtilities;
+
 import imacstadium.page.*;
 import imacstadium.parser.Parser;
+import imacstadium.display.MainScreen;
+import imacstadium.display.SplashScreen;
 import imacstadium.imac.Imac;
 import imacstadium.imac.ImacHeader;
 
@@ -51,9 +55,24 @@ public class Game {
 	 */
 	private Parser parser;
 	
+	private SplashScreen splash;
+	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
-	private Game() {		
+	private Game() {
+		
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				//On crée une instance de JWindow
+				splash = new SplashScreen();
+			}
+		});
+		try{
+			Thread.sleep(5000);
+		}catch(InterruptedException e){}
+		
+		splash.dispose(); //????????????????????
+		
 		this.url_imacs = "/data/setting/Imac_List.json";
 		this.trainers = new Trainer[2];
 		Trainer player = new Trainer();
@@ -62,12 +81,14 @@ public class Game {
 		trainers[0] = player;
 		trainers[1] = ia;
 		
-		this.page = new Arena(trainers);
+		//this.page = new Arena(trainers);
 		
 		this.parser = new Parser(this.url_imacs);
 		this.imacs = parser.parseFile();
 		
-		this.initPlayer();
+		this.distributeImac(this.trainers[1]);
+		
+		//this.initPlayer();
 		//System.out.println(trainers[0].getName()+"\n"+trainers[0]+"\n-----------------\n");
 		//System.out.println(trainers[1].getName()+"\n"+trainers[1]+"\n-----------------\n");
 	}
@@ -104,6 +125,16 @@ public class Game {
 	public Trainer getPlayer() { return trainers[0]; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------SET NAME PLAYER--------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Set the name of the player
+	 * @param name
+	 * 	The new name.
+	 */
+	public void setNamePlayer(String name) { trainers[0].setName(name); }
+	/*-----------------------------------------------------------------------------------------------*/
+		
 	/*------------GET IA-----------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
@@ -149,16 +180,15 @@ public class Game {
 	 */
 	public void execute(){
 		//while(execute){ page.update(); }
-		page.display();
-	}
-	/*-----------------------------------------------------------------------------------------------*/
-	
-	/*------------INIT PLAYER------------------------------------------------------------------------*/
-	/*-----------------------------------------------------------------------------------------------*/
-	private void initPlayer(){
-		this.trainers[0].setName("IMAC");
-		this.distributeImac(this.trainers[0]);
-		this.distributeImac(this.trainers[1]);
+		SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				//On crée une instance de JWindow
+				MainScreen screen = new MainScreen();
+				//SelectScreen screen2 = new SelectScreen("Test");
+				//BattleScreen screen3 = new BattleScreen("Test");
+			}
+		});
+		//page.display();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -174,8 +204,32 @@ public class Game {
 	public void distributeImac(Trainer trainer){
 		double random = Math.random()*imacs.size();
 		int idImac = (int)(random);
-		Imac imacsPlayer[] = {this.parser.find(idImac)}; 
-		trainer.setImacs(imacsPlayer);
+		ArrayList<Imac> imacs = new ArrayList<Imac>();
+		imacs.add(this.parser.find(idImac)); 
+		trainer.setImacs(imacs);
+	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
+
+	/*------------RESET IMACS PLAYER-----------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Set the array of imacs of the player at null
+	 *
+	 */
+	public void resetImacsPlayer() { trainers[0].setImacs(null); }
+	/*-----------------------------------------------------------------------------------------------*/
+	
+	/*------------ADD IMACS PLAYER-----------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Add an imac at imacs Player
+	 * @param idImac
+	 * 	The id of the new imac to add at player list imac.
+	 */
+	public void addImacsPlayer(int idImac) {
+		Imac imac = this.parser.find(idImac);
+		trainers[0].addImac(imac); 
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

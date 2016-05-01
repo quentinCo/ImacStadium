@@ -23,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import imacstadium.game.Game;
+
 public class MainScreen extends JFrame{
 	
 	private JTextField player_name_txtfield;
@@ -30,6 +32,7 @@ public class MainScreen extends JFrame{
 	
 	public MainScreen() {
 		super();
+		Game.getInstance().resetImacsPlayer();
 		build();//On initialise notre fenêtre
 	}
 	

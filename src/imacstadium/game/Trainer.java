@@ -17,7 +17,7 @@ import imacstadium.imac.exception.AttackFailExeception;
 
 public class Trainer extends Observable{
 
-	protected Imac[] imacs;
+	protected ArrayList<Imac> imacs;
 	protected ArrayList<Imac> validImacs;
 	protected String name;
 	protected Imac currentImac;
@@ -34,14 +34,7 @@ public class Trainer extends Observable{
 	public Trainer (){
 		this.name = "Esipe";
 		
-		this.imacs = new Imac[3];
-		this.validImacs = new ArrayList<Imac>();
-		score = 0;		
-	}
-	public Trainer (String name){
-		this.name = name;
-		
-		this.imacs = new Imac[3];
+		this.imacs = new ArrayList<Imac>();
 		this.validImacs = new ArrayList<Imac>();
 		score = 0;		
 	}
@@ -54,16 +47,22 @@ public class Trainer extends Observable{
 	 * Return the trainer imacs
 	 * @return The array that contains the different trainer imac
 	 */
-	public Imac[] getImacs(){ return Arrays.copyOf(this.imacs, 3); }
+	public ArrayList<Imac> getImacs(){ return new ArrayList<Imac>(this.imacs); }
 	/**
 	 * Set the trainer imacs, the valids imacs and the current imac used.
 	 * @param imacs
 	 * 	An array of Imac.
 	 */
-	public void setImacs(Imac[] imacs){
+	public void setImacs(ArrayList<Imac> imacs){
 		this.imacs = imacs;
-		this.validImacs = new ArrayList<Imac>(Arrays.asList(imacs));
-		this.currentImac = this.validImacs.get(0);
+		if(imacs != null){
+			this.validImacs = new ArrayList<Imac>(imacs);
+			this.currentImac = this.validImacs.get(0);
+		}
+		else{
+			this.validImacs = null;
+			this.currentImac = null;
+		}
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -144,6 +143,20 @@ public class Trainer extends Observable{
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
+	/*------------ADD IMAC--------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the trainer state.
+	 * @return The current state of the trainer.
+	 */
+	public void addImac(Imac imac){
+		if(this.imacs == null)this.imacs = new ArrayList<Imac>();
+		this.imacs.add(imac);
+		this.validImacs = new ArrayList<Imac>(imacs);
+		if(imacs.size() == 1) this.currentImac = this.validImacs.get(0);
+	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*------------PLAY-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
@@ -282,15 +295,15 @@ public class Trainer extends Observable{
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
-	/* Dream Team Functions */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((currentImac == null) ? 0 : currentImac.hashCode());
-		result = prime * result + Arrays.hashCode(imacs);
+		result = prime * result + ((imacs == null) ? 0 : imacs.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((validImacs == null) ? 0 : validImacs.hashCode());
 		return result;
 	}
@@ -309,7 +322,10 @@ public class Trainer extends Observable{
 				return false;
 		} else if (!currentImac.equals(other.currentImac))
 			return false;
-		if (!Arrays.equals(imacs, other.imacs))
+		if (imacs == null) {
+			if (other.imacs != null)
+				return false;
+		} else if (!imacs.equals(other.imacs))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -317,6 +333,11 @@ public class Trainer extends Observable{
 		} else if (!name.equals(other.name))
 			return false;
 		if (score != other.score)
+			return false;
+		if (state == null) {
+			if (other.state != null)
+				return false;
+		} else if (!state.equals(other.state))
 			return false;
 		if (validImacs == null) {
 			if (other.validImacs != null)
@@ -328,8 +349,8 @@ public class Trainer extends Observable{
 
 	@Override
 	public String toString() {
-		return "Trainer [\n\timacs=" + Arrays.toString(imacs) + "\n\tvalidImacs=" + validImacs + "\n\tname=" + name
-				+ "\n\tcurrentImac=" + currentImac + "\n\tscore=" + score + "\n]";
+		return "Trainer [\n\timacs=" + imacs + "\n\tvalidImacs=" + validImacs + "\n\tname=" + name + "\n\tcurrentImac="
+				+ currentImac + "\n\tscore=" + score + "\n\tstate=" + state + "\n]";
 	}
 	
 	

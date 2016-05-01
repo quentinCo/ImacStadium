@@ -10,7 +10,8 @@ public class IA extends Trainer {
 		super();
 	}
 	public IA(String name) {
-		super(name);
+		super();
+		this.name = name;
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

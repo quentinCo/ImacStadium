@@ -5,23 +5,31 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import imacstadium.commande.Key;
+import imacstadium.game.Game;
+import imacstadium.imac.ImacHeader;
+
 public class SelectScreen extends JFrame {
 	
 	/*JButton[] buttons;
 	JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10,
 			btn11, btn12, btn13, btn14, btn15, valid;*/
-	String player_name;
-	JLabel label;
+	private String player_name;
+	private JLabel label;
+	private int numberImacs;
 
 	public SelectScreen(String name) {
 		super();
 		this.player_name = name;
+		this.numberImacs = 0;
 		build();
 	}
 	
@@ -37,7 +45,7 @@ public class SelectScreen extends JFrame {
 		setVisible(true); //On la rend visible
 	}
 	
-private JPanel buildContentPane(){
+	private JPanel buildContentPane(){
 		
 		JPanel panel = new JPanel();//Instanciation d'un objet JPanel
 		panel.setLayout(new GridBagLayout());
@@ -48,7 +56,7 @@ private JPanel buildContentPane(){
 		
 		this.creatLabel(gbc, panel);
 		this.creatImacList(gbc,panel);
-		this.creatValidButton(gbc, panel);
+		//this.creatValidButton(gbc, panel);
 		
 		return panel;
 	}
@@ -83,17 +91,23 @@ private JPanel buildContentPane(){
 		gbc.ipady = 50;
 		gbc.insets= new Insets(5,5,5,5);
 		
+		
+		ArrayList<ImacHeader> imacs = Game.getInstance().getImacs();
+		Iterator<ImacHeader> it = imacs.iterator();
+		ImacHeader imac;
+		
 		int k = 0;
-		for(int i = 1; k < 15; i++){
-			for(int j = 0; j<5 && k < 15; j++){
-				addImacButton("IMAC n°"+k, j, i, gbc, panel);
+		for(int i = 1; it.hasNext(); i++){
+			for(int j = 0; j<5 && it.hasNext(); j++){
+				imac = it.next();
+				this.addImacButton(imac, j, i, gbc, panel);
 				k++;
 			}
 		}
 	}
 	
-	private void addImacButton(String name, int posX, int posY, GridBagConstraints gbc, JPanel panel){
-		JButton button = new JButton(name);
+	private void addImacButton(ImacHeader imac, int posX, int posY, GridBagConstraints gbc, JPanel panel){
+		JButton button = new JButton(new ImacChoiceBtnAction(imac.getId(),this, imac.getName()));
 		gbc.gridx=posX;
 		gbc.gridy=posY;
 		panel.add(button, gbc);

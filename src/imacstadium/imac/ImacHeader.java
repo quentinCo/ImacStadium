@@ -87,5 +87,10 @@ public class ImacHeader {
 		this.name = name;
 		this.typeImac = typeImac;
 	}
+
+	@Override
+	public String toString() {
+		return "ImacHeader [id=" + id + ", name=" + name + ", typeImac=" + typeImac + "]";
+	}
 	
 }

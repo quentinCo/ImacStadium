@@ -1,5 +1,7 @@
 package imacstadium.imac;
 
+import java.util.Arrays;
+
 import imacstadium.imac.exception.AttackFailExeception;
 
 public class Imac extends ImacHeader {
@@ -213,6 +215,12 @@ public class Imac extends ImacHeader {
 	private void downPrecision(float down){
 		this.precision -= down;
 		if(this.precision <0.1) this.precision = (float)0.1;
+	}
+
+	@Override
+	public String toString() {
+		return "Imac [\n"+super.toString()+", alive=" + alive + ", precision=" + precision + ", life=" + life + ", catchPhrase=" + catchPhrase
+				+ ", attacks=" + Arrays.toString(attacks) + "\n]";
 	}
 	
 }

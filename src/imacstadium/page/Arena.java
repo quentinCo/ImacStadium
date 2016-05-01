@@ -36,7 +36,7 @@ public class Arena extends Page implements Observer{
 		this.idCurrentTrainer = -1;
 		
 		this.gameMenu = new GameMenu("Ouh La La, ça commence.");
-		this.displayGameMenu();
+		//this.displayGameMenu();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -111,7 +111,7 @@ public class Arena extends Page implements Observer{
 		
 		if(gameMenu instanceof KeyListener){ this.addKeyListener((KeyListener)gameMenu);}
 		
-		this.displayGameMenu();
+		//this.displayGameMenu();
 		
 		if(state.getContinu()){
 			if(!source.defeated() || (source instanceof IA)){
