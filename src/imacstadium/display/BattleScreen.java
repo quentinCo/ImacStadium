@@ -8,6 +8,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.awt.event.KeyListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,14 +20,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class BattleScreen extends JFrame {
+import imacstadium.game.Game;
+import imacstadium.game.IA;
+import imacstadium.game.Trainer;
+import imacstadium.game.state.StateTrainer;
+
+public class BattleScreen extends JFrame implements Observer{
 	
 	private String player_name, textAction;
 	private JButton AttackButton1, AttackButton2, AttackButton3, AttackButton4;
+	private Trainer [] trainers;
+	private int idCurrentTrainer;
+	
 
 	public BattleScreen(String name){
 		super();
 		this.player_name = name;
+		this.trainers = Game.getInstance().getTrainers();
+		for(Trainer trainer : trainers) trainer.addObserver(this);
+		
+		this.idCurrentTrainer = -1;
+		
 		build();
 	}
 
@@ -215,4 +231,38 @@ public class BattleScreen extends JFrame {
 		ToolBarPanel.add(AttackButton, TBGbc);
 	}
 	
+	
+	/*------------UPDATE-----------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Gestion of the displaying of the different text parts and menus in function of the action. And run the next turn of game.
+	 * @param o
+	 * 	An observable object source of the notification.
+	 * @param arg
+	 * 	The name of the action.
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		/*
+		Trainer source = (Trainer)o;
+		StateTrainer state = source.getState();
+
+		this.removeGameMenu();
+
+		if(gameMenu instanceof KeyListener){ this.removeKeyListener((KeyListener)gameMenu);}
+		
+		gameMenu = state.getContent();
+		System.out.println(state);
+		
+		if(gameMenu instanceof KeyListener){ this.addKeyListener((KeyListener)gameMenu);}
+		
+		//this.displayGameMenu();
+		
+		if(state.getContinu()){
+			if(!source.defeated() || (source instanceof IA)){
+				this.changeCurrentTrainer();
+				this.fight();
+			}
+		}*/
+	}
 }
