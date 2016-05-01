@@ -18,7 +18,7 @@ public class StartBtnAction extends AbstractAction{
 	public void actionPerformed(ActionEvent arg0) {
 		/* Ouvrir nouvelle fenêtre */
 		player_name = screen.getName();
-		//System.out.println(player_name);
+
 		final BattleScreen frame = new BattleScreen(player_name);
 		frame.setName(player_name);
 		screen.dispose();

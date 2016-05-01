@@ -58,7 +58,7 @@ public class IA extends Trainer {
 	public void changeImac() {
 		Game.getInstance().distributeImac(this);
 		state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
-		this.notifyArena();
+		this.notifyArena(TypeNotification.CHANGE_IMAC);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 

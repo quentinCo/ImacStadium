@@ -24,6 +24,8 @@ import imacstadium.game.Game;
 import imacstadium.game.IA;
 import imacstadium.game.Trainer;
 import imacstadium.game.state.StateTrainer;
+import imacstadium.page.ChoiceMenu;
+import imacstadium.page.ToolBarPanel;
 
 public class BattleScreen extends JFrame implements Observer{
 	
@@ -31,6 +33,9 @@ public class BattleScreen extends JFrame implements Observer{
 	private JButton AttackButton1, AttackButton2, AttackButton3, AttackButton4;
 	private Trainer [] trainers;
 	private int idCurrentTrainer;
+	private JPanel toolBarPanel;
+	private JPanel mainPanel;
+	private GridBagConstraints mainGbc;
 	
 
 	public BattleScreen(String name){
@@ -39,9 +44,11 @@ public class BattleScreen extends JFrame implements Observer{
 		this.trainers = Game.getInstance().getTrainers();
 		for(Trainer trainer : trainers) trainer.addObserver(this);
 		
-		this.idCurrentTrainer = -1;
+		this.selectWhoBegin();
 		
 		build();
+		
+		this.fight();
 	}
 
 	private void build(){
@@ -58,19 +65,20 @@ public class BattleScreen extends JFrame implements Observer{
 	
 	private JPanel buildContentPane(){
 		
-		JPanel MainPanel = new JPanel();//Instanciation d'un objet JPanel
-		MainPanel.setLayout(new GridBagLayout());
+		mainPanel = new JPanel();//Instanciation d'un objet JPanel
+		mainPanel.setLayout(new GridBagLayout());
 		
-		MainPanel.setBackground(Color.orange);//Définition de sa couleur de fond
+		mainPanel.setBackground(Color.orange);//Définition de sa couleur de fond
 		
 		/* Ajout de ce composant au container en spécifiant une contrainte de type GridBagConstraints. */
-		GridBagConstraints MainGbc = new GridBagConstraints();
-		MainGbc.gridwidth=GridBagConstraints.REMAINDER;
+		mainGbc = new GridBagConstraints();
+		mainGbc.gridwidth=GridBagConstraints.REMAINDER;
 		
+		this.toolBarPanel  = new JPanel();
 		
 		//Composants de la zone de combat
-		this.createTrainerInfoZone(MainGbc, MainPanel);
-		this.createTrainerMenu(MainGbc, MainPanel);
+		this.addTrainerInfoZone();
+		this.addTrainerMenu(new ToolBarPanel("Ouh La La, ça commence."));
 		
 		JPanel textActionPanel = new JPanel();
 		textActionPanel.setLayout(new FlowLayout());
@@ -83,9 +91,9 @@ public class BattleScreen extends JFrame implements Observer{
 		
 		textActionPanel.add(labelAction);
 		
-		MainPanel.add(textActionPanel, MainGbc);
+		mainPanel.add(textActionPanel, mainGbc);
 		
-		return MainPanel;
+		return mainPanel;
 	}
 	
 	public String getName(){
@@ -104,12 +112,14 @@ public class BattleScreen extends JFrame implements Observer{
 		textAction = text;
 	}
 
-	private void createTrainerInfoZone(GridBagConstraints MainGbc, JPanel MainPanel){
+	
+	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
+	private void addTrainerInfoZone(){
 
-		MainGbc.fill=GridBagConstraints.HORIZONTAL;
-		MainGbc.anchor=GridBagConstraints.PAGE_END;
-		MainGbc.weightx=1;
-		MainGbc.ipady = 0;
+		mainGbc.fill=GridBagConstraints.HORIZONTAL;
+		mainGbc.anchor=GridBagConstraints.PAGE_END;
+		mainGbc.weightx=1;
+		mainGbc.ipady = 0;
 		
 		JPanel BattlePanel = new JPanel();
 		
@@ -120,12 +130,19 @@ public class BattleScreen extends JFrame implements Observer{
 		BGbc.fill=GridBagConstraints.HORIZONTAL;
 		BGbc.anchor=GridBagConstraints.FIRST_LINE_END;
 		
-		this.createTrainerLabel("Adversaire", 1, "ia.png", BGbc, BattlePanel);
-		this.createTrainerLabel(player_name, 0, "player.png", BGbc, BattlePanel);
+		BGbc.gridx=0;
+		BattlePanel.add(new TrainerLabelInfo(trainers[0]), BGbc);
 
-		MainPanel.add(BattlePanel, MainGbc);
+		BGbc.gridx=1;
+		BattlePanel.add(new TrainerLabelInfo(trainers[1]), BGbc);
+		
+		/*
+		this.createTrainerLabel(player_name, 0, "player.png", BGbc, BattlePanel);
+		this.createTrainerLabel("Adversaire", 1, "ia.png", BGbc, BattlePanel);
+		 */
+		mainPanel.add(BattlePanel, mainGbc);
 	}
-	
+	/*
 	private void createTrainerLabel(String name, int posX, String url_image, GridBagConstraints BGbc, JPanel panel){
 		JLabel label_name = new JLabel(name);
 		Font font_Name = label_name.getFont();
@@ -155,82 +172,40 @@ public class BattleScreen extends JFrame implements Observer{
 		BGbc.gridy=2;
 		panel.add(icon, BGbc);
 	}
-	
-	private void createTrainerMenu(GridBagConstraints MainGbc, JPanel MainPanel){
-		MainGbc.fill=GridBagConstraints.HORIZONTAL;
-		MainGbc.weightx=1;
-		MainGbc.ipady = 0;
+	*/
+	private void addTrainerMenu(JPanel panel){
+		mainGbc.fill=GridBagConstraints.HORIZONTAL;
+		mainGbc.weightx=1;
+		mainGbc.ipady = 0;
 		
-		//Composants de la barre d'actions
-		JPanel ToolBarPanel = new JPanel();
-		
-		ToolBarPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		
-		ToolBarPanel.setLayout(new GridBagLayout());
-		
-		GridBagConstraints TBGbc = new GridBagConstraints();
-		TBGbc.fill=GridBagConstraints.HORIZONTAL;
-		TBGbc.anchor=GridBagConstraints.PAGE_END;
-		TBGbc.weightx=1;
-		TBGbc.ipady = 80;
-		TBGbc.insets= new Insets(5,5,5,5);
-		TBGbc.gridx=0;
-		TBGbc.gridheight=3;
-		JButton QuitButton = new JButton(new ReturnAction(this, "Quitter"));
-		ToolBarPanel.add(QuitButton, TBGbc);
-		
-		
-		this.createImacListe(ToolBarPanel, TBGbc);
-		this.createImacAttack(ToolBarPanel, TBGbc);
-		
-		
-		MainPanel.add(ToolBarPanel, MainGbc);
-	}
-	
-	private void createImacListe(JPanel ToolBarPanel, GridBagConstraints TBGbc){
-		TBGbc.gridheight=1;
-		TBGbc.ipady = 10;
-		TBGbc.ipadx = 10;
-		
+		this.toolBarPanel.add(panel);
+		//this.toolBarPanel.add(new ChoiceMenu(trainers[0], trainers[1]));
 
-		this.addImacListeLabel("Imacs de "+player_name, 0, ToolBarPanel, TBGbc);
-		
-		for(int i = 1; i<3; i++){
-			this.addImacListeLabel("Imac "+i+" : épuisé", i, ToolBarPanel, TBGbc);
-		}
+		mainPanel.add(toolBarPanel, mainGbc);
 	}
 	
-	private void addImacListeLabel(String text, int posY, JPanel ToolBarPanel, GridBagConstraints TBGbc){
-		TBGbc.gridx=1;
-		TBGbc.gridy=posY;
-		JLabel TitleTeam = new JLabel(text);
-		TitleTeam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		ToolBarPanel.add(TitleTeam, TBGbc);
+	/*------------SELECT WHO BEGIN-------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	private void selectWhoBegin(){
+		int deltaChoseTrainer = (int)(Math.random()*2);
+		this.idCurrentTrainer = deltaChoseTrainer%2;
 	}
-	
-	private void createImacAttack(JPanel ToolBarPanel, GridBagConstraints TBGbc){
-		TBGbc.gridx=2;
-		TBGbc.gridy=0;
-		TBGbc.gridwidth=2;
-		JLabel TitleAttack = new JLabel("Attaques de l'Imac");
-		TitleAttack.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-		ToolBarPanel.add(TitleAttack, TBGbc);
-		
-		for(int i = 1; i <3; i++){
-			for(int j = 2; j<4; j++){
-				this.addAttack("Attaque "+(i+j-2), j ,i, ToolBarPanel, TBGbc);
-			}
-		}
+	/*-----------------------------------------------------------------------------------------------*/
+
+	/*------------CHANGE CURRENT TRAINER-------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	private void changeCurrentTrainer(){
+		this.idCurrentTrainer = (this.idCurrentTrainer+1)%2;
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
-	private void addAttack(String name, int posX, int posY, JPanel ToolBarPanel, GridBagConstraints TBGbc){
-		TBGbc.gridx=posX;
-		TBGbc.gridy=posY;
-		TBGbc.gridwidth=1;
-		JButton AttackButton = new JButton(name);
-		ToolBarPanel.add(AttackButton, TBGbc);
+	/*------------FIGHT------------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	private void fight(){
+		System.out.println("------------- TURN OF "+this.trainers[this.idCurrentTrainer].getName()+" -------------");
+		this.trainers[this.idCurrentTrainer].play(this.trainers[(this.idCurrentTrainer+1)%2]);
 	}
-	
+	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------UPDATE-----------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -243,26 +218,25 @@ public class BattleScreen extends JFrame implements Observer{
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		/*
+		
 		Trainer source = (Trainer)o;
 		StateTrainer state = source.getState();
-
-		this.removeGameMenu();
-
-		if(gameMenu instanceof KeyListener){ this.removeKeyListener((KeyListener)gameMenu);}
-		
-		gameMenu = state.getContent();
+/*
+		if(!(state instanceof ChoiceMenu)){
+			long t1 = System.currentTimeMillis(); 
+			while(System.currentTimeMillis()<t1+2000); 
+		}
 		System.out.println(state);
-		
-		if(gameMenu instanceof KeyListener){ this.addKeyListener((KeyListener)gameMenu);}
-		
-		//this.displayGameMenu();
+*/
+		toolBarPanel.removeAll();
+		this.addTrainerMenu(state.getContent());
+		toolBarPanel.revalidate();
 		
 		if(state.getContinu()){
 			if(!source.defeated() || (source instanceof IA)){
 				this.changeCurrentTrainer();
 				this.fight();
 			}
-		}*/
+		}
 	}
 }

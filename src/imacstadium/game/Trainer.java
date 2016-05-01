@@ -12,6 +12,7 @@ import imacstadium.game.state.StateDefeat;
 import imacstadium.game.state.StateFailAttack;
 import imacstadium.game.state.StateTrainer;
 import imacstadium.game.state.StateChangeImac;
+import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
 import imacstadium.imac.exception.AttackFailExeception;
 
@@ -24,11 +25,11 @@ public class Trainer extends Observable{
 	protected int score;
 	protected StateTrainer state;
 	
-	/*
-	public static enum State{
-		ATTACK, ATTACKED, DEAD, CHOICE_ATTACK, DEFEAT, CHANGE_IMAC
+	
+	public static enum TypeNotification{
+		ATTACKED, CHANGE_IMAC
 	}
-	*/
+	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	public Trainer (){
@@ -124,6 +125,16 @@ public class Trainer extends Observable{
 	public void setCurrentImac(Imac imac){ this.currentImac = imac; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------GET CURRENT IMAC ATTACK------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the current imac attack at an index.
+	 * @return attack at index id
+	 * 	The current imac attack at the id.
+	 */
+	public Attack getCurrentImacAttack(int id){ return this.currentImac.getAttack(id); }
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*------------GET SCORE--------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
@@ -213,11 +224,11 @@ public class Trainer extends Observable{
 		if(!live){
 			validImacs.remove(currentImac);
 			state = new StateDead(name);
-			this.notifyArena();
+			this.notifyArena(TypeNotification.ATTACKED);
 		}
 		else{
 			state = new StateAttacked(name, currentImac.getLife());
-			this.notifyArena();
+			this.notifyArena(TypeNotification.ATTACKED);
 		}
 		return live;
 	}
@@ -230,10 +241,14 @@ public class Trainer extends Observable{
 	 * @return True if the trainer defeat, and false in the other case.
 	 */
 	public boolean defeated(){
+		System.out.println("DEFEATED --> "+name);
 		if( validImacs.size() <= 0){
 			state = new StateDefeat(name,score);
 			this.notifyArena();
 			return true;
+		}
+		else if(validImacs.size() > 0 && !this.currentImac.isAlive()){
+			this.changeImac();
 		}
 		return false;
 	}
@@ -273,11 +288,9 @@ public class Trainer extends Observable{
 	 * Change the current imac by the first imac of the valids imac.
 	 */
 	public void changeImac(){
-		if(!this.defeated()){
-			this.currentImac = validImacs.get(0);
-			state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
-			this.notifyArena();
-		}
+		this.currentImac = validImacs.get(0);
+		state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
+		this.notifyArena(TypeNotification.CHANGE_IMAC);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -288,9 +301,19 @@ public class Trainer extends Observable{
 	 * @param arg
 	 * 	The type of notification.
 	 */
-	public void notifyArena(){
+	public void notifyArena(TypeNotification arg){
+
+		System.out.println(state);
 		this.setChanged();
-		this.notifyObservers();
+		this.notifyObservers(arg);
+		this.clearChanged();
+	}
+	
+	public void notifyArena(){
+
+		System.out.println(state);
+		this.setChanged();
+		this.notifyObservers(null);
 		this.clearChanged();
 	}
 	/*-----------------------------------------------------------------------------------------------*/

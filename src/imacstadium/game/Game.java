@@ -3,6 +3,7 @@ package imacstadium.game;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import imacstadium.page.*;
@@ -48,7 +49,7 @@ public class Game {
 	 * It's the page displayed.
 	 * @see Page
 	 */
-	private Page page;
+	private JFrame page;
 	/**
 	 * It's an object that allow to parse the json file and generate the imacHeader list and the imac.
 	 * @see Parser
@@ -160,14 +161,14 @@ public class Game {
 	 * Return the current Page.
 	 * @return The page that corresponds at the current page (Arena, ...).
 	 */
-	public Page getPage() { return page; }
+	public JFrame getPage() { return page; }
 	/**
 	 * Set the value of the Game page
 	 * @param page
 	 * 	Page that corresponds at the new current page.
 	 * @see Page
 	 */
-	public void setPage(Page page) { this.page = page; }
+	public void setPage(JFrame page) { this.page = page; }
 	/*-----------------------------------------------------------------------------------------------*/
 
 
@@ -183,7 +184,7 @@ public class Game {
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
 				//On crée une instance de JWindow
-				MainScreen screen = new MainScreen();
+				page = new MainScreen();
 				//SelectScreen screen2 = new SelectScreen("Test");
 				//BattleScreen screen3 = new BattleScreen("Test");
 			}

@@ -1,19 +1,35 @@
 package imacstadium.page;
 
 import java.awt.event.KeyListener;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import imacstadium.commande.Key;
+import imacstadium.display.AttackButtonAction;
+import imacstadium.display.ReturnAction;
+import imacstadium.game.Game;
 import imacstadium.game.Trainer;
+import imacstadium.imac.Imac;
 
-public class ChoiceMenu extends GameMenu implements KeyListener {
+public class ChoiceMenu extends ToolBarPanel {
 
-	private ArrayList<Key> keys;
+	private Trainer current;
+	private Trainer opponnent;
+	private ArrayList<JLabel> imacList;
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -25,74 +41,96 @@ public class ChoiceMenu extends GameMenu implements KeyListener {
 	 * 	The opponent (ai).
 	 */
 	public ChoiceMenu(Trainer current, Trainer opponnent) {
-		super("Choisissez votre attaque :");
-		this.setLayout(new GridLayout(6, 1));
-		this.add(new JLabel("1 - attaque 1"));
-		this.add(new JLabel("2 - attaque 2"));
-		this.add(new JLabel("3 - attaque 3"));
-		this.add(new JLabel("4 - attaque 4"));
-		this.add(new JLabel("q - quitte"));
+		super("");
+		this.current = current;
+		this.opponnent = opponnent;
+		this.imacList = new ArrayList<JLabel>();
 		
-		keys = new ArrayList<Key>();
+		//Composants de la barre d'actions
+		this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		
-		keys.add(new Key('1'){
-			public Object action(){
-				current.imacAttack(opponnent, 0);
-				return null;
-			}
-		});
-		keys.add(new Key('2'){
-			public Object action(){
-				current.imacAttack(opponnent, 1);
-				return null;
-			}
-		});
-		keys.add(new Key('3'){
-			public Object action(){
-				current.imacAttack(opponnent, 2);
-				return null;
-			}
-		});
-		keys.add(new Key('4'){
-			public Object action(){
-				current.imacAttack(opponnent, 3);
-				return null;
-			}
-		});
-		keys.add(new Key('q'){
-			public Object action(){
-				System.exit(0);
-				return null;
-			}
-		});
+		this.setLayout(new GridBagLayout());
+		
+		this.TBGbc = new GridBagConstraints();
+		this.TBGbc.fill=GridBagConstraints.HORIZONTAL;
+		this.TBGbc.anchor=GridBagConstraints.PAGE_END;
+		this.TBGbc.weightx=1;
+		this.TBGbc.ipady = 80;
+		this.TBGbc.insets= new Insets(5,5,5,5);
+		this.TBGbc.gridx=0;
+		this.TBGbc.gridheight=3;
+		JButton QuitButton = new JButton(new ReturnAction(Game.getInstance().getPage(), "Quitter"));
+		this.add(QuitButton, this.TBGbc);
+		
+		
+		this.createImacListe();
+		this.createImacAttack();
+		
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
+	private void createImacListe(){
+		this.TBGbc.gridheight=1;
+		this.TBGbc.ipady = 10;
+		this.TBGbc.ipadx = 10;
 		
-	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		this.addImacListeLabel("Imacs de "+current.getName(), 0);
 		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		Key key = null;
-		boolean find = false;
-		Iterator<Key> it = keys.iterator();
+		ArrayList<Imac> imacs = this.current.getImacs();
+		Iterator<Imac> it = imacs.iterator();
+		Imac imac;
+		int i = 1;
 		
-		while(!find && it.hasNext()){
-			key = it.next();
-			if(e.getKeyChar() == key.getKey()) find = true;
+		while(it.hasNext()){
+			imac = it.next();
+			if(this.current.getCurrentImac() != imac){
+				String text = imacState(imac);
+				this.imacList.add(this.addImacListeLabel(text, i));
+				i++;
+			}
 		}
-		if(find) key.action();
 	}
 	
+	private String imacState(Imac imac){
+		String text;
+		if(imac.isAlive()) text = imac.getName()+ " - state : " + imac.getLife() + " / " + imac.getLifeTotal();
+		else text = imac.getName() + " - state : épuisé";
+		return text;
+	}
 	
-
+	private JLabel addImacListeLabel(String text, int posY){
+		this.TBGbc.gridx=1;
+		this.TBGbc.gridy=posY;
+		JLabel titleTeam = new JLabel(text);
+		titleTeam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		this.add(titleTeam, this.TBGbc);
+		return titleTeam;
+	}
+	
+	private void createImacAttack(){
+		this.TBGbc.gridx=2;
+		this.TBGbc.gridy=0;
+		this.TBGbc.gridwidth=2;
+		JLabel TitleAttack = new JLabel("Attaques de l'Imac");
+		TitleAttack.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+		this.add(TitleAttack, this.TBGbc);
+		
+		int id = 0;
+		
+		for(int i = 1; i <3; i++){
+			for(int j = 2; j<4; j++){
+				this.addAttack(current.getCurrentImacAttack(id).getName(), id, j ,i, this.TBGbc);
+				id++;
+			}
+		}
+	}
+	
+	private void addAttack(String attack, int idAttack, int posX, int posY, GridBagConstraints TBGbc){
+		TBGbc.gridx=posX;
+		TBGbc.gridy=posY;
+		TBGbc.gridwidth=1;
+		JButton AttackButton = new JButton(new AttackButtonAction(this.current, this.opponnent, attack, idAttack));
+		this.add(AttackButton, TBGbc);
+	}
 }

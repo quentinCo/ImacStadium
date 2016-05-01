@@ -10,7 +10,7 @@ public class ReturnAction extends AbstractAction {
 	
 	private JFrame screen;
 
-	public ReturnAction(BattleScreen screen, String name) {
+	public ReturnAction(JFrame screen, String name) {
 		super(name);
 		this.screen = screen;
 	}

@@ -16,7 +16,7 @@ public class Arena extends Page implements Observer{
 
 	private Trainer trainers[];
 	private int idCurrentTrainer;
-	private GameMenu gameMenu;
+	private ToolBarPanel gameMenu;
 	
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
@@ -35,7 +35,7 @@ public class Arena extends Page implements Observer{
 		
 		this.idCurrentTrainer = -1;
 		
-		this.gameMenu = new GameMenu("Ouh La La, ça commence.");
+		this.gameMenu = new ToolBarPanel("Ouh La La, ça commence.");
 		//this.displayGameMenu();
 	}
 	/*-----------------------------------------------------------------------------------------------*/

@@ -26,16 +26,15 @@ public class ImacChoiceBtnAction extends AbstractAction{
 		
 		if(nbClic >= 3){
 			this.nbClic = 0;
-			System.out.println(Game.getInstance().getPlayer());
+
 			/* Ouvrir nouvelle fenêtre */
 			String player_name = screen.getName();
-			//System.out.println(player_name);
+
 			final BattleScreen frame = new BattleScreen(player_name);
 			frame.setName(player_name);
+			Game.getInstance().setPage(frame);
 			screen.dispose();
 		}
-		
-		System.out.println("this.nbClic = "+this.nbClic);
 	}
 
 }

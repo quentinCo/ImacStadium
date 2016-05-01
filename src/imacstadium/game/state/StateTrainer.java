@@ -1,9 +1,9 @@
 package imacstadium.game.state;
 
-import imacstadium.page.GameMenu;
+import imacstadium.page.ToolBarPanel;
 
 public interface StateTrainer {
 
-	public GameMenu getContent();
+	public ToolBarPanel getContent();
 	public boolean getContinu();
 }

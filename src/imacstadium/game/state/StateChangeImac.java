@@ -1,6 +1,6 @@
 package imacstadium.game.state;
 
-import imacstadium.page.GameMenu;
+import imacstadium.page.ToolBarPanel;
 
 public class StateChangeImac implements StateTrainer{
 
@@ -11,8 +11,8 @@ public class StateChangeImac implements StateTrainer{
 	}
 
 	@Override
-	public GameMenu getContent() {
-		return new GameMenu(sentence);
+	public ToolBarPanel getContent() {
+		return new ToolBarPanel(sentence);
 	}
 
 	@Override

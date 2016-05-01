@@ -2,7 +2,7 @@ package imacstadium.game.state;
 
 import imacstadium.game.Trainer;
 import imacstadium.page.ChoiceMenu;
-import imacstadium.page.GameMenu;
+import imacstadium.page.ToolBarPanel;
 
 public class StateChoiceAttack implements StateTrainer{
 
@@ -15,7 +15,7 @@ public class StateChoiceAttack implements StateTrainer{
 	}
 
 	@Override
-	public GameMenu getContent() {
+	public ToolBarPanel getContent() {
 		return new ChoiceMenu(current, opponent);
 	}
 

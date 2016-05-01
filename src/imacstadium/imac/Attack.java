@@ -130,4 +130,47 @@ public class Attack {
 		return power + typeAttack.effect(opponentType);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Float.floatToIntBits(downPrecision);
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + Float.floatToIntBits(power);
+		result = prime * result + ((typeAttack == null) ? 0 : typeAttack.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Attack other = (Attack) obj;
+		if (Float.floatToIntBits(downPrecision) != Float.floatToIntBits(other.downPrecision))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (Float.floatToIntBits(power) != Float.floatToIntBits(other.power))
+			return false;
+		if (typeAttack == null) {
+			if (other.typeAttack != null)
+				return false;
+		} else if (!typeAttack.equals(other.typeAttack))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Attack [power=" + power + ", downPrecision=" + downPrecision + ", name=" + name + ", typeAttack="
+				+ typeAttack + "]";
+	}
+
 }

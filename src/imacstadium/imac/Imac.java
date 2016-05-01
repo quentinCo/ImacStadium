@@ -29,6 +29,13 @@ public class Imac extends ImacHeader {
 	private float life;
 	
 	/**
+     * The life totalt of the Imac.
+     * 
+     * @see Imac#getLifeTotal()
+     */
+	private final float lifeTotal;
+	
+	/**
      * The catch phrase of the Imac.
      * 
      * @see Imac#getCatchPhrase()
@@ -81,6 +88,16 @@ public class Imac extends ImacHeader {
 	}
 
 	/**
+	 * Return the life total of the Imac
+	 * 
+	 * @return	A float instance, corresponding to the total life of the Imac
+	 *
+	 */
+	public float getLifeTotal() {
+		return lifeTotal;
+	}
+	
+	/**
 	 * Return the catch phrase of the Imac
 	 * 
 	 * @return	A String instance, corresponding to the catch phrase of the Imac
@@ -100,6 +117,15 @@ public class Imac extends ImacHeader {
 		return attacks;
 	}
 	
+	/**
+	 * Return an attack table of the Imac
+	 * 
+	 * @return	An Attack table instance, corresponding to the id's attack table of the Imac
+	 *
+	 */
+	public Attack getAttack(int id){
+		return attacks[id];
+	}
 
 	
 	/****************
@@ -132,6 +158,7 @@ public class Imac extends ImacHeader {
 	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks, float precision) {
 		super(id, name, typeImac);
 		this.life = life;
+		this.lifeTotal = life;
 		this.catchPhrase = catchPhrase;
 		this.attacks = attacks;
 		this.precision = precision;
@@ -164,7 +191,6 @@ public class Imac extends ImacHeader {
 	 * @return A boolean instance, corresponding to the success of the attack according the precision of the Imac.
 	 */
 	public boolean isTouch(){
-		System.out.println("PRECISION : "+precision);
 		if (Math.random() >= (1 - precision)){
 			return true;
 		}
@@ -180,10 +206,8 @@ public class Imac extends ImacHeader {
 	 * 		The attack's power of the opponent Imac.
 	 */
 	public void damage(float damage) {
-		if(life > damage) {
-			life -= damage;
-		}
-		else {
+		life -= damage;
+		if(life < damage) {
 			life = 0;
 		}
 	}
@@ -215,6 +239,46 @@ public class Imac extends ImacHeader {
 	private void downPrecision(float down){
 		this.precision -= down;
 		if(this.precision <0.1) this.precision = (float)0.1;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + (alive ? 1231 : 1237);
+		result = prime * result + Arrays.hashCode(attacks);
+		result = prime * result + ((catchPhrase == null) ? 0 : catchPhrase.hashCode());
+		result = prime * result + Float.floatToIntBits(life);
+		result = prime * result + Float.floatToIntBits(lifeTotal);
+		result = prime * result + Float.floatToIntBits(precision);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Imac other = (Imac) obj;
+		if (alive != other.alive)
+			return false;
+		if (!Arrays.equals(attacks, other.attacks))
+			return false;
+		if (catchPhrase == null) {
+			if (other.catchPhrase != null)
+				return false;
+		} else if (!catchPhrase.equals(other.catchPhrase))
+			return false;
+		if (Float.floatToIntBits(life) != Float.floatToIntBits(other.life))
+			return false;
+		if (Float.floatToIntBits(lifeTotal) != Float.floatToIntBits(other.lifeTotal))
+			return false;
+		if (Float.floatToIntBits(precision) != Float.floatToIntBits(other.precision))
+			return false;
+		return true;
 	}
 
 	@Override
