@@ -135,6 +135,16 @@ public class Trainer extends Observable{
 	public Attack getCurrentImacAttack(int id){ return this.currentImac.getAttack(id); }
 	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------GET CURRENT IMAC IMAGE-------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the current imac url image at an index.
+	 * @return The url of the image that illustrate the current imac
+	 * 	A Strin, that is the url of the image that illustrate the current imac.
+	 */
+	public String getCurrentImacImage(){ return this.currentImac.getUrlImg(); }
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*------------GET SCORE--------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**

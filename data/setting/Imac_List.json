@@ -4,6 +4,7 @@
 			"name" : "Imac TEST",
 			"type" : "Type 1",
 			"life" : "12",
+			"image" : "ia.png",
 			"catchPhrase" : "Coucou",
 			"precision" : "0.1",
 			"attacks" :[
@@ -34,6 +35,7 @@
 			"name" : "Imac 2",
 			"type" : "Type 2",
 			"life" : "20",
+			"image" : "ia.png",
 			"catchPhrase" : "Yop",
 			"precision" : "0.95",
 			"attacks" :[
@@ -64,6 +66,7 @@
 			"name" : "Imac 3",
 			"type" : "Type 2",
 			"life" : "100",
+			"image" : "player.png",
 			"catchPhrase" : "Hello World",
 			"attacks" :[
 				{

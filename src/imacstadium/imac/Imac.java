@@ -24,7 +24,6 @@ public class Imac extends ImacHeader {
      * The life of the Imac.
      * 
      * @see Imac#getLife()
-     * @see Imac#Imac(int, String, String, float, String, Attack[])
      */
 	private float life;
 	
@@ -36,10 +35,16 @@ public class Imac extends ImacHeader {
 	private final float lifeTotal;
 	
 	/**
+     * The illustation of Imac
+     * 
+     * @see Imac#getUrlImg()
+     */
+	private final String url_img;
+	
+	/**
      * The catch phrase of the Imac.
      * 
      * @see Imac#getCatchPhrase()
-     * @see Imac#Imac(int, String, String, float, String, Attack[])
      */
 	private final String catchPhrase;
 	
@@ -47,7 +52,6 @@ public class Imac extends ImacHeader {
      * The id's attack table of the Imac.
      * 
      * @see Imac#getAttacks()
-     * @see Imac#Imac(int, String, String, float, String, Attack[])
      */
 	private final Attack[] attacks;
 
@@ -95,6 +99,16 @@ public class Imac extends ImacHeader {
 	 */
 	public float getLifeTotal() {
 		return lifeTotal;
+	}
+	
+	/**
+	 * Return the url of the imac image
+	 * 
+	 * @return	A String instance, corresponding to url imac image
+	 *
+	 */
+	public String getUrlImg() {
+		return url_img;
 	}
 	
 	/**
@@ -155,10 +169,11 @@ public class Imac extends ImacHeader {
 	 * @see Imac#catchPhrase
 	 * @see Imac#attacks
 	 */
-	public Imac(int id, String name, String typeImac, float life, String catchPhrase, Attack[] attacks, float precision) {
+	public Imac(int id, String name, String typeImac, float life, String url_img, String catchPhrase, Attack[] attacks, float precision) {
 		super(id, name, typeImac);
 		this.life = life;
 		this.lifeTotal = life;
+		this.url_img = url_img;
 		this.catchPhrase = catchPhrase;
 		this.attacks = attacks;
 		this.precision = precision;

@@ -24,6 +24,7 @@ import imacstadium.imac.Type;
 public class Parser {
 
 	private Path pathFile;
+	private String absolutePath;
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -31,7 +32,10 @@ public class Parser {
 	 * @param path
 	 * 	The relative path to the json file.
 	 */
-	public Parser(String path){ this.pathFile = FileSystems.getDefault().getPath(new File("").getAbsolutePath()+path); }
+	public Parser(String path){
+		this.absolutePath = new File("").getAbsolutePath();
+		this.pathFile = FileSystems.getDefault().getPath(this.absolutePath + path);
+	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----GETTER------------------------------------------------------------------------------------*/
@@ -122,6 +126,10 @@ public class Parser {
 		try{ type = obj.getString("type"); }
 		catch(NullPointerException e){ type = ""; }
 		
+		String url_img = this.absolutePath + "/data/picture/imacs/";
+		try{ url_img += obj.getString("image"); }
+		catch(NullPointerException e){ url_img += "default.png"; }
+		
 		float precision;
 		try{ precision = Float.parseFloat(obj.getString("precision")); }
 		catch(NullPointerException e){ precision = 1; }
@@ -137,7 +145,7 @@ public class Parser {
 			attacks[i++] = this.newAttack(jO);
 		}
 
-		return new Imac(id, name, type, life, phrase, attacks, precision);
+		return new Imac(id, name, type, life, url_img, phrase, attacks, precision);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

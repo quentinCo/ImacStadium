@@ -12,6 +12,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -60,7 +62,9 @@ public class MainScreen extends JFrame{
 		gbc.gridwidth=GridBagConstraints.REMAINDER;
 		gbc.insets= new Insets(20,10,10,10);
 		
-		ImageIcon logo = new ImageIcon("LOGO_IMAC_STADIUM_icon.png");
+		Path path = FileSystems.getDefault().getPath(new File("").getAbsolutePath() + "/data/picture/logo/LOGO_IMAC_STADIUM_icon.png");
+	    
+		ImageIcon logo = new ImageIcon(path.toString());
 		JLabel image_icon = new JLabel(logo, JLabel.CENTER);
 		panel.add(image_icon, gbc);
 		
