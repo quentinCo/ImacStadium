@@ -41,7 +41,7 @@ public class ChoiceMenu extends ToolBarPanel {
 	 * 	The opponent (ai).
 	 */
 	public ChoiceMenu(Trainer current, Trainer opponnent) {
-		super("");
+		super(null);
 		this.current = current;
 		this.opponnent = opponnent;
 		this.imacList = new ArrayList<JLabel>();
@@ -52,13 +52,13 @@ public class ChoiceMenu extends ToolBarPanel {
 		this.setLayout(new GridBagLayout());
 		
 		this.TBGbc = new GridBagConstraints();
-		this.TBGbc.fill=GridBagConstraints.HORIZONTAL;
-		this.TBGbc.anchor=GridBagConstraints.PAGE_END;
-		this.TBGbc.weightx=1;
+		this.TBGbc.fill = GridBagConstraints.HORIZONTAL;
+		this.TBGbc.anchor = GridBagConstraints.PAGE_END;
+		this.TBGbc.weightx = 1;
 		this.TBGbc.ipady = 80;
 		this.TBGbc.insets= new Insets(5,5,5,5);
-		this.TBGbc.gridx=0;
-		this.TBGbc.gridheight=3;
+		this.TBGbc.gridx = 0;
+		this.TBGbc.gridheight = 3;
 		JButton QuitButton = new JButton(new ReturnAction(Game.getInstance().getPage(), "Quitter"));
 		this.add(QuitButton, this.TBGbc);
 		
@@ -73,7 +73,6 @@ public class ChoiceMenu extends ToolBarPanel {
 		this.TBGbc.gridheight=1;
 		this.TBGbc.ipady = 10;
 		this.TBGbc.ipadx = 10;
-		
 
 		this.addImacListeLabel("Imacs de "+current.getName(), 0);
 		
@@ -94,8 +93,8 @@ public class ChoiceMenu extends ToolBarPanel {
 	
 	private String imacState(Imac imac){
 		String text;
-		if(imac.isAlive()) text = imac.getName()+ " - state : " + imac.getLife() + " / " + imac.getLifeTotal();
-		else text = imac.getName() + " - state : épuisé";
+		if(imac.isAlive()) text = imac.getName()+ " - PV : " + imac.getLife() + " / " + imac.getLifeTotal();
+		else text = imac.getName() + " - K.O.";
 		return text;
 	}
 	
@@ -103,6 +102,7 @@ public class ChoiceMenu extends ToolBarPanel {
 		this.TBGbc.gridx=1;
 		this.TBGbc.gridy=posY;
 		JLabel titleTeam = new JLabel(text);
+		titleTeam.setHorizontalAlignment(JLabel.CENTER);
 		titleTeam.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		this.add(titleTeam, this.TBGbc);
 		return titleTeam;
@@ -112,7 +112,9 @@ public class ChoiceMenu extends ToolBarPanel {
 		this.TBGbc.gridx=2;
 		this.TBGbc.gridy=0;
 		this.TBGbc.gridwidth=2;
-		JLabel TitleAttack = new JLabel("Attaques de l'Imac");
+		this.TBGbc.anchor=GridBagConstraints.CENTER;
+		JLabel TitleAttack = new JLabel("Attaques");
+		TitleAttack.setHorizontalAlignment(JLabel.CENTER);
 		TitleAttack.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		this.add(TitleAttack, this.TBGbc);
 		

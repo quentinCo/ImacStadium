@@ -35,7 +35,7 @@ public class SelectScreen extends JFrame {
 	
 	private void build(){
 		setTitle("Imac Stadium"); //On donne un titre à l'application
-		setSize(800, 600); //On donne une taille à notre fenêtre
+		setSize(840, 680); //On donne une taille à notre fenêtre
 		setLocationRelativeTo(null);//On centre la fenêtre sur l'écran
 		setResizable(true);//On interdit le redimensionnement de la fenêtre
 		
@@ -84,10 +84,10 @@ public class SelectScreen extends JFrame {
 	}
 	
 	private void creatImacList(GridBagConstraints gbc, JPanel panel){
-		//Caract�ristiques des boutons
+		//Caract�ristiques des boutons
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.gridwidth=1;
-		gbc.weightx = 1;//1=Couvre l'�cran, 0=Ne s'�tend que sur la longueur de la chaine de caract�res.
+		gbc.weightx = 1;//1=Couvre l'�cran, 0=Ne s'�tend que sur la longueur de la chaine de caract�res.
 		gbc.ipady = 50;
 		gbc.insets= new Insets(5,5,5,5);
 		

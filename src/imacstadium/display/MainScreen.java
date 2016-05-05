@@ -40,7 +40,7 @@ public class MainScreen extends JFrame{
 	
 	private void build(){
 		setTitle("Imac Stadium"); //On donne un titre à l'application
-		setSize(800, 600); //On donne une taille à notre fenêtre
+		setSize(840, 680); //On donne une taille à notre fenêtre
 		setLocationRelativeTo(null);//On centre la fenêtre sur l'écran
 		setResizable(true);//On interdit le redimensionnement de la fenêtre
 		
@@ -55,9 +55,9 @@ public class MainScreen extends JFrame{
 		JPanel panel = new JPanel();//Instanciation d'un objet JPanel
 		panel.setLayout(new GridBagLayout());
 		
-		panel.setBackground(Color.orange);//D�finition de sa couleur de fond
+		panel.setBackground(Color.orange);//D�finition de sa couleur de fond
 		
-		/* Ajout de ce composant au container en sp�cifiant une contrainte de type GridBagConstraints. */
+		/* Ajout de ce composant au container en sp�cifiant une contrainte de type GridBagConstraints. */
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridwidth=GridBagConstraints.REMAINDER;
 		gbc.insets= new Insets(20,10,10,10);
@@ -82,7 +82,7 @@ public class MainScreen extends JFrame{
 		gbc.ipadx = 50;
 		panel.add(player_name_txtfield, gbc);
 		
-		JButton button = new JButton(new HomeBtnAction(this, "Selectionner son �quipe d'IMAC"));
+		JButton button = new JButton(new HomeBtnAction(this, "Selectionner son équipe d'IMAC"));
 		gbc.ipady = 40;
 		gbc.ipadx = 0;
 		panel.add(button, gbc);

@@ -2,6 +2,7 @@ package imacstadium.display;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.Observable;
 import java.util.Observer;
@@ -26,36 +27,40 @@ public class TrainerLabelInfo extends JPanel implements Observer {
 		
 		this.trainer.addObserver(this);
 		
-		GridBagConstraints BGbc = new GridBagConstraints();
+		this.setLayout(new GridBagLayout());
 		
-		BGbc.fill=GridBagConstraints.HORIZONTAL;
-		BGbc.anchor=GridBagConstraints.FIRST_LINE_END;
-		BGbc.gridwidth=GridBagConstraints.REMAINDER;
+		GridBagConstraints Gbc = new GridBagConstraints();
+		
+		Gbc.fill=GridBagConstraints.HORIZONTAL;
+		Gbc.anchor=GridBagConstraints.FIRST_LINE_END;
+		Gbc.gridwidth=GridBagConstraints.REMAINDER;
 		
 		label_name = new JLabel(trainer.getName());
 		Font font_Name = label_name.getFont();
 		font_Name = new Font("Arial", Font.BOLD, 15);
 		label_name.setFont(font_Name);
-		BGbc.fill=GridBagConstraints.REMAINDER;
-		BGbc.anchor=GridBagConstraints.CENTER;
-		BGbc.weightx=0.2;
-		BGbc.insets= new Insets(5,5,5,5);
-		BGbc.gridy=0;
-		this.add(label_name, BGbc);
+		Gbc.fill=GridBagConstraints.REMAINDER;
+		Gbc.anchor=GridBagConstraints.CENTER;
+		Gbc.weightx=0.2;
+		Gbc.insets= new Insets(5,5,5,5);
+		Gbc.gridy=0;
+		this.add(label_name, Gbc);
 		
 		life_point = new JLabel(trainer.getCurrentImac().getLife()+"/"+total_life);
 		Font font_LifePoints = label_name.getFont();
 		font_LifePoints = new Font("Arial", Font.BOLD, 10);
 		life_point.setFont(font_LifePoints);
-		BGbc.anchor=GridBagConstraints.PAGE_START;
-		BGbc.gridy=1;
-		this.add(life_point, BGbc);
+		Gbc.anchor=GridBagConstraints.PAGE_START;
+		Gbc.gridy=1;
+		this.add(life_point, Gbc);
 		
-		ImageIcon img = new ImageIcon("ai.png");
+		//ImageIcon img = new ImageIcon("ia.png");
+		ImageIcon img = new ImageIcon(trainer.getCurrentImac().getUrlImg());
 		icon = new JLabel(img, JLabel.CENTER);
-		BGbc.anchor=GridBagConstraints.PAGE_START;
-		BGbc.gridy=2;
-		this.add(icon, BGbc);
+		System.out.println(trainer.getCurrentImac().getUrlImg());
+		Gbc.anchor=GridBagConstraints.PAGE_START;
+		Gbc.gridy=2;
+		this.add(icon, Gbc);
 	}
 
 	@Override
@@ -69,7 +74,8 @@ public class TrainerLabelInfo extends JPanel implements Observer {
 					break;
 				case CHANGE_IMAC:
 					total_life = trainer.getCurrentImac().getLifeTotal();
-					icon.setIcon(new ImageIcon("ai.png"));
+					//icon.setIcon(new ImageIcon("ia.png"));
+					icon.setIcon(new ImageIcon(trainer.getCurrentImac().getUrlImg()));
 					icon.revalidate();
 					life_point.setText(trainer.getCurrentImac().getLife()+"/"+total_life);
 					life_point.revalidate();

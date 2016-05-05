@@ -32,9 +32,8 @@ public class ToolBarPanel extends JPanel{
 		this.TBGbc.anchor=GridBagConstraints.PAGE_END;
 		this.TBGbc.weightx=1;
 		this.TBGbc.ipady = 80;
-		this.TBGbc.insets= new Insets(5,5,5,5);
 		this.TBGbc.gridx=0;
-		this.TBGbc.gridheight=3;
+		this.TBGbc.gridheight=0;
 		
 		this.add(principaleLabel);
 	}

@@ -18,7 +18,7 @@ public class HomeBtnAction extends AbstractAction {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		/* Ouvrir nouvelle fenêtre */
+		/* Ouvrir nouvelle fenÃªtre */
 		String player_name = main.getName();
 		Game.getInstance().setNamePlayer(player_name);
 		final SelectScreen frame = new SelectScreen(player_name);

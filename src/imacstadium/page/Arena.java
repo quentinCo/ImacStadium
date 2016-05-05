@@ -35,7 +35,7 @@ public class Arena extends Page implements Observer{
 		
 		this.idCurrentTrainer = -1;
 		
-		this.gameMenu = new ToolBarPanel("Ouh La La, �a commence.");
+		this.gameMenu = new ToolBarPanel("Ouh là là, ça commence.");
 		//this.displayGameMenu();
 	}
 	/*-----------------------------------------------------------------------------------------------*/

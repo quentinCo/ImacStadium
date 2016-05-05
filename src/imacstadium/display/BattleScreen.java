@@ -53,7 +53,7 @@ public class BattleScreen extends JFrame implements Observer{
 
 	private void build(){
 		setTitle("Imac Stadium"); //On donne un titre à l'application
-		setSize(800, 600); //On donne une taille à notre fenêtre
+		setSize(840, 680); //On donne une taille à notre fenêtre
 		setLocationRelativeTo(null);//On centre la fenêtre sur l'écran
 		setResizable(true);//On interdit le redimensionnement de la fenêtre
 		
@@ -68,9 +68,9 @@ public class BattleScreen extends JFrame implements Observer{
 		mainPanel = new JPanel();//Instanciation d'un objet JPanel
 		mainPanel.setLayout(new GridBagLayout());
 		
-		mainPanel.setBackground(Color.orange);//D�finition de sa couleur de fond
+		mainPanel.setBackground(Color.orange);//D�finition de sa couleur de fond
 		
-		/* Ajout de ce composant au container en sp�cifiant une contrainte de type GridBagConstraints. */
+		/* Ajout de ce composant au container en sp�cifiant une contrainte de type GridBagConstraints. */
 		mainGbc = new GridBagConstraints();
 		mainGbc.gridwidth=GridBagConstraints.REMAINDER;
 		
@@ -78,9 +78,9 @@ public class BattleScreen extends JFrame implements Observer{
 		
 		//Composants de la zone de combat
 		this.addTrainerInfoZone();
-		this.addTrainerMenu(new ToolBarPanel("Ouh La La, �a commence."));
+		this.addTrainerMenu(new ToolBarPanel("Ouh là la, ça commence."));
 		
-		JPanel textActionPanel = new JPanel();
+		/*JPanel textActionPanel = new JPanel();
 		textActionPanel.setLayout(new FlowLayout());
 		
 		JLabel labelAction = new JLabel(this.textAction);
@@ -91,7 +91,7 @@ public class BattleScreen extends JFrame implements Observer{
 		
 		textActionPanel.add(labelAction);
 		
-		mainPanel.add(textActionPanel, mainGbc);
+		mainPanel.add(textActionPanel, mainGbc);*/
 		
 		return mainPanel;
 	}
@@ -117,7 +117,6 @@ public class BattleScreen extends JFrame implements Observer{
 	private void addTrainerInfoZone(){
 
 		mainGbc.fill=GridBagConstraints.HORIZONTAL;
-		mainGbc.anchor=GridBagConstraints.PAGE_END;
 		mainGbc.weightx=1;
 		mainGbc.ipady = 0;
 		
@@ -128,12 +127,15 @@ public class BattleScreen extends JFrame implements Observer{
 		
 		GridBagConstraints BGbc = new GridBagConstraints();
 		BGbc.fill=GridBagConstraints.HORIZONTAL;
-		BGbc.anchor=GridBagConstraints.FIRST_LINE_END;
 		
 		BGbc.gridx=0;
+		BGbc.gridy=1;
+		BGbc.anchor=GridBagConstraints.LAST_LINE_START;
 		BattlePanel.add(new TrainerLabelInfo(trainers[0]), BGbc);
 
 		BGbc.gridx=1;
+		BGbc.gridy=0;
+		BGbc.anchor=GridBagConstraints.FIRST_LINE_END;
 		BattlePanel.add(new TrainerLabelInfo(trainers[1]), BGbc);
 		
 		/*
@@ -175,8 +177,8 @@ public class BattleScreen extends JFrame implements Observer{
 	*/
 	private void addTrainerMenu(JPanel panel){
 		mainGbc.fill=GridBagConstraints.HORIZONTAL;
-		mainGbc.weightx=1;
-		mainGbc.ipady = 0;
+		mainGbc.weightx=0;
+		mainGbc.insets = new Insets(10,0,0,0);
 		
 		this.toolBarPanel.add(panel);
 		//this.toolBarPanel.add(new ChoiceMenu(trainers[0], trainers[1]));
