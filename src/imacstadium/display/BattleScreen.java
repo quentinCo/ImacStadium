@@ -8,7 +8,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 import imacstadium.game.Game;
 import imacstadium.game.IA;
@@ -27,7 +31,7 @@ import imacstadium.game.state.StateTrainer;
 import imacstadium.page.ChoiceMenu;
 import imacstadium.page.ToolBarPanel;
 
-public class BattleScreen extends JFrame implements Observer{
+public class BattleScreen extends JFrame implements Observer, KeyListener{
 	
 	private String player_name, textAction;
 	private JButton AttackButton1, AttackButton2, AttackButton3, AttackButton4;
@@ -36,6 +40,8 @@ public class BattleScreen extends JFrame implements Observer{
 	private JPanel toolBarPanel;
 	private JPanel mainPanel;
 	private GridBagConstraints mainGbc;
+	
+	private boolean next;
 	
 
 	public BattleScreen(String name){
@@ -47,6 +53,8 @@ public class BattleScreen extends JFrame implements Observer{
 		this.selectWhoBegin();
 		
 		build();
+
+		this.next = false;
 		
 		this.fight();
 	}
@@ -56,10 +64,17 @@ public class BattleScreen extends JFrame implements Observer{
 		setSize(840, 680); //On donne une taille Ã  notre fenÃªtre
 		setLocationRelativeTo(null);//On centre la fenÃªtre sur l'Ã©cran
 		setResizable(true);//On interdit le redimensionnement de la fenÃªtre
-		
+
+		addKeyListener (this);
+		addWindowListener(new WindowAdapter() {
+			public void windowOpened(WindowEvent e) { 
+				requestFocus();	
+			}
+		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//Termine le processus lorsqu'on clique sur la croix rouge
 		
 		setContentPane(buildContentPane());//On prÃ©vient notre JFrame que notre JPanel sera son content pane
+		
 		setVisible(true); //On la rend visible
 	}
 	
@@ -177,19 +192,74 @@ public class BattleScreen extends JFrame implements Observer{
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		
+
+	//	while(!this.next){
+	/*	BattleScreen temp = this;
+
+
 		Trainer source = (Trainer)o;
 		StateTrainer state = source.getState();
 
-		toolBarPanel.removeAll();
-		this.addTrainerMenu(state.getContent());
-		toolBarPanel.revalidate();
-		
-		if(state.getContinu()){
-			if(!source.defeated() || (source instanceof IA)){
-				this.changeCurrentTrainer();
-				this.fight();
+		System.out.println(state);
+		SwingWorker worker = new SwingWorker() {
+			 
+			// Ce traitement sera exécuté dans un autre thread :
+			protected Object doInBackground() throws Exception {
+
+				Thread.sleep(5000);
+				
+				return null;
 			}
-		}
+
+			// Ce traitement sera exécuté à la fin dans l'EDT 
+			protected void done() {
+
+				toolBarPanel.removeAll();
+				temp.addTrainerMenu(state.getContent());
+				toolBarPanel.revalidate();
+				
+				if(state.getContinu()){
+					if(!source.defeated() || (source instanceof IA)){
+						temp.changeCurrentTrainer();
+						temp.fight();
+					}
+				}
+			}
+		};
+
+		// On lance l'exécution de la tâche:
+		worker.execute();*/
+				
+		
+			Trainer source = (Trainer)o;
+			StateTrainer state = source.getState();
+	
+			toolBarPanel.removeAll();
+			this.addTrainerMenu(state.getContent());
+			toolBarPanel.revalidate();
+			
+			if(state.getContinu()){
+				if(!source.defeated() || (source instanceof IA)){
+					this.changeCurrentTrainer();
+					this.fight();
+				}
+			}
+		//}
+		//this.next = false;*/
 	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		System.out.println("pressed");}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		System.out.println("released");}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		System.out.println("typed");
+		this.next = true;
+	}
+	
 }

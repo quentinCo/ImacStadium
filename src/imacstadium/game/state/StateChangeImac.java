@@ -7,7 +7,7 @@ public class StateChangeImac implements StateTrainer{
 	private String sentence;
 	
 	public StateChangeImac(String name, String imacName, String catchPhrase){
-		sentence = name+" appelle "+imacName+" .\n"+catchPhrase;
+		sentence = "<html>"+name+" appelle "+imacName+" .<br/>"+catchPhrase+"</html>";
 	}
 
 	@Override

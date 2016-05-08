@@ -8,7 +8,6 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,12 +24,10 @@ public class SelectScreen extends JFrame {
 			btn11, btn12, btn13, btn14, btn15, valid;*/
 	private String player_name;
 	private JLabel label;
-	private int numberImacs;
 
 	public SelectScreen(String name) {
 		super();
 		this.player_name = name;
-		this.numberImacs = 0;
 		build();
 	}
 	

@@ -7,7 +7,7 @@ public class StateDead implements StateTrainer{
 	private String sentence;
 	
 	public StateDead(String name){
-		sentence = "L'Imac de "+name+" est vaincu.";
+		sentence = "<html>L'Imac de "+name+" est vaincu.</html>";
 	}
 
 	@Override

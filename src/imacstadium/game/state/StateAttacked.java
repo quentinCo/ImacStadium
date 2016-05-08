@@ -7,7 +7,7 @@ public class StateAttacked implements StateTrainer{
 	private String sentence;
 	
 	public StateAttacked(String name, float life){
-		sentence = "La vie de l'Imac de "+name+" n'est plus que de "+life;
+		sentence = "<html>La vie de l'Imac de "+name+" n'est plus que de "+life+"</html>";
 	}
 
 	@Override

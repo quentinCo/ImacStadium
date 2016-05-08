@@ -312,16 +312,12 @@ public class Trainer extends Observable{
 	 * 	The type of notification.
 	 */
 	public void notifyArena(TypeNotification arg){
-
-		System.out.println(state);
 		this.setChanged();
 		this.notifyObservers(arg);
 		this.clearChanged();
 	}
 	
 	public void notifyArena(){
-
-		System.out.println(state);
 		this.setChanged();
 		this.notifyObservers(null);
 		this.clearChanged();

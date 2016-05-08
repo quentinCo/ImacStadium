@@ -7,7 +7,7 @@ public class StateFailAttack  implements StateTrainer{
 	private String sentence;
 	
 	public StateFailAttack(String name){
-		sentence = "L'imac de "+name+" a raté son attaque.";
+		sentence = "<html>L'imac de "+name+" a raté son attaque.</html>";
 	}
 
 	@Override

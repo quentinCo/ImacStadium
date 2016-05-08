@@ -82,16 +82,11 @@ public class Game {
 		trainers[0] = player;
 		trainers[1] = ia;
 		
-		//this.page = new Arena(trainers);
-		
 		this.parser = new Parser(this.url_imacs);
 		this.imacs = parser.parseFile();
 		
 		this.distributeImac(this.trainers[1]);
-		
-		//this.initPlayer();
-		//System.out.println(trainers[0].getName()+"\n"+trainers[0]+"\n-----------------\n");
-		//System.out.println(trainers[1].getName()+"\n"+trainers[1]+"\n-----------------\n");
+	
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
