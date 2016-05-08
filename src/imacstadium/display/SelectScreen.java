@@ -96,12 +96,10 @@ public class SelectScreen extends JFrame {
 		Iterator<ImacHeader> it = imacs.iterator();
 		ImacHeader imac;
 		
-		int k = 0;
 		for(int i = 1; it.hasNext(); i++){
 			for(int j = 0; j<5 && it.hasNext(); j++){
 				imac = it.next();
 				this.addImacButton(imac, j, i, gbc, panel);
-				k++;
 			}
 		}
 	}

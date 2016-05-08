@@ -103,7 +103,7 @@ public class Game {
 	 * @return The Game instance. If it doesn't exist, it is create.
 	 */
 	public static Game getInstance() {
-		if(instance == null) instance = new Game();
+		if(instance == null)instance = new Game();
 		return instance; 
 	}
 	/*-----------------------------------------------------------------------------------------------*/
