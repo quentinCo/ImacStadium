@@ -115,9 +115,6 @@ public class SelectScreen extends JFrame {
 		gbc.gridx=posX;
 		gbc.gridy=posY;
 		
-		button.setVerticalTextPosition(AbstractButton.BOTTOM);
-	    button.setHorizontalTextPosition(AbstractButton.CENTER);
-		
 		panel.add(button, gbc);
 	}
 }
