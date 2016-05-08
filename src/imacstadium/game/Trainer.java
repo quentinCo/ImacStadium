@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
+import javax.swing.SwingWorker;
+
 import imacstadium.game.state.StateAttack;
 import imacstadium.game.state.StateAttacked;
 import imacstadium.game.state.StateChoiceAttack;
@@ -24,6 +26,8 @@ public class Trainer extends Observable{
 	protected Imac currentImac;
 	protected int score;
 	protected StateTrainer state;
+	
+	protected static final int waitTime = 1000;
 	
 	
 	public static enum TypeNotification{
@@ -202,21 +206,42 @@ public class Trainer extends Observable{
 	 * @return True if the opponent is not dead, or False in the other case.
 	 * @see Imac#attack(int, String)
 	 */
-	public boolean imacAttack(Trainer opponent, int attackId){
+	public void imacAttack(Trainer opponent, int attackId){
 		state = new StateAttack(name);
-		this.notifyArena();
+
+		SwingWorker worker = new SwingWorker() {
+			// Ce traitement sera exécuté dans un autre thread :
+			protected Object doInBackground() throws Exception {
+				notifyArena();
+				Thread.sleep(waitTime);
+				
+				return null;
+			}
+
+			// Ce traitement sera exécuté à la fin dans l'EDT 
+			protected void done() {
+				continu(opponent, attackId);
+			}
+		};
+
+		// On lance l'exécution de la tâche:
+		worker.execute();
+	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
+	private boolean continu(Trainer opponent, int attackId){
 		boolean live = true;
 		try{
 			live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
-			if(!live)this.score++;
+			if(!live)score++;
 		}
 		catch(AttackFailExeception e){
 			state = new StateFailAttack(name);
-			this.notifyArena();
+			notifyArena();
 		}
 		return live;
 	}
-	/*-----------------------------------------------------------------------------------------------*/
+	
 	
 	/*------------IMAC DAMAGE------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/

@@ -12,6 +12,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -41,7 +44,7 @@ public class BattleScreen extends JFrame implements Observer, KeyListener{
 	private JPanel mainPanel;
 	private GridBagConstraints mainGbc;
 	
-	private boolean next;
+	private List next;
 	
 
 	public BattleScreen(String name){
@@ -54,7 +57,7 @@ public class BattleScreen extends JFrame implements Observer, KeyListener{
 		
 		build();
 
-		this.next = false;
+		this.next = Collections.synchronizedList(new LinkedList());;
 		
 		this.fight();
 	}
@@ -229,11 +232,13 @@ public class BattleScreen extends JFrame implements Observer, KeyListener{
 
 		// On lance l'exécution de la tâche:
 		worker.execute();*/
-				
+	
 		
 			Trainer source = (Trainer)o;
 			StateTrainer state = source.getState();
 	
+			System.out.println(state);
+			
 			toolBarPanel.removeAll();
 			this.addTrainerMenu(state.getContent());
 			toolBarPanel.revalidate();
@@ -259,7 +264,17 @@ public class BattleScreen extends JFrame implements Observer, KeyListener{
 	@Override
 	public void keyTyped(KeyEvent e) {
 		System.out.println("typed");
-		this.next = true;
+		synchronized (next) {
+	
+		   // add an element and notify all that an element exists
+			next.add(true);
+		   System.out.println("New Element:'" + true + "'");
+	
+		   next.notifyAll();
+		   System.out.println("notifyAll called!");
+		   }
+		   System.out.println("Closing...");
+
 	}
 	
 }
