@@ -1,5 +1,6 @@
-package imacstadium.imac;
+package imacstadium.imac.type;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Type {
@@ -10,7 +11,7 @@ public class Type {
      * @see Type#getName()
      * @see Type#Type(String, Map<String, Float>)
      */
-	private final String name;
+	protected final String name;
 	
 	/**
      * The bonus of the Type, bonus is not mutable.
@@ -18,7 +19,7 @@ public class Type {
      * @see Type#getBonus()
      * @see Type#Type(String, Map<String, Float>)
      */
-	private final Map<String, Float> bonus;
+	protected final Map<String, Float> bonus;
 
 	
 	
@@ -68,7 +69,31 @@ public class Type {
 		this.name = name;
 		this.bonus = bonus;
 	}
+	
+	/**
+	 * Type constructor
+	 * 
+	 * @param name
+	 * 		The name of the Type.
+	 * 
+	 * @see Type#name
+	 * @see Type#bonus
+	 */
+	public Type(String name) {
+		this.name = name;
+		this.bonus = new HashMap <String, Float>();
+	}
 
+	/**
+	 * Type constructor
+	 * 
+	 * @see Type#name
+	 * @see Type#bonus
+	 */
+	public Type() {
+		this.name = "Default";
+		this.bonus = new HashMap <String, Float>();
+	}
 	
 
 	/***********

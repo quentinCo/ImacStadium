@@ -1,5 +1,7 @@
 package imacstadium.imac;
 
+import imacstadium.imac.type.Type;
+
 public class Attack {
 
 	/**

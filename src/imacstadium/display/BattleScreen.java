@@ -80,19 +80,6 @@ public class BattleScreen extends JFrame implements Observer{
 		this.addTrainerInfoZone();
 		this.addTrainerMenu(new ToolBarPanel("Ouh là la, ça commence."));
 		
-		/*JPanel textActionPanel = new JPanel();
-		textActionPanel.setLayout(new FlowLayout());
-		
-		JLabel labelAction = new JLabel(this.textAction);
-		
-		Font font_labelAction = labelAction.getFont();
-		font_labelAction = new Font("Arial", Font.BOLD, 20);
-		labelAction.setFont(font_labelAction);
-		
-		textActionPanel.add(labelAction);
-		
-		mainPanel.add(textActionPanel, mainGbc);*/
-		
 		return mainPanel;
 	}
 	
@@ -144,37 +131,7 @@ public class BattleScreen extends JFrame implements Observer{
 		 */
 		mainPanel.add(BattlePanel, mainGbc);
 	}
-	/*
-	private void createTrainerLabel(String name, int posX, String url_image, GridBagConstraints BGbc, JPanel panel){
-		JLabel label_name = new JLabel(name);
-		Font font_Name = label_name.getFont();
-		font_Name = new Font("Arial", Font.BOLD, 15);
-		label_name.setFont(font_Name);
-		BGbc.fill=GridBagConstraints.REMAINDER;
-		BGbc.anchor=GridBagConstraints.CENTER;
-		BGbc.weightx=0.2;
-		BGbc.insets= new Insets(5,5,5,5);
-		BGbc.gridx=posX;
-		BGbc.gridy=0;
-		panel.add(label_name, BGbc);
-		
-		JLabel LifePoints = new JLabel("25/30");
-		Font font_LifePoints = label_name.getFont();
-		font_LifePoints = new Font("Arial", Font.BOLD, 10);
-		LifePoints.setFont(font_LifePoints);
-		BGbc.anchor=GridBagConstraints.PAGE_START;
-		BGbc.gridx=posX;
-		BGbc.gridy=1;
-		panel.add(LifePoints, BGbc);
-		
-		ImageIcon img = new ImageIcon(url_image);		
-		JLabel icon = new JLabel(img, JLabel.CENTER);
-		BGbc.anchor=GridBagConstraints.PAGE_START;
-		BGbc.gridx=posX;
-		BGbc.gridy=2;
-		panel.add(icon, BGbc);
-	}
-	*/
+	
 	private void addTrainerMenu(JPanel panel){
 		mainGbc.fill=GridBagConstraints.HORIZONTAL;
 		mainGbc.weightx=0;
@@ -223,13 +180,7 @@ public class BattleScreen extends JFrame implements Observer{
 		
 		Trainer source = (Trainer)o;
 		StateTrainer state = source.getState();
-/*
-		if(!(state instanceof ChoiceMenu)){
-			long t1 = System.currentTimeMillis(); 
-			while(System.currentTimeMillis()<t1+2000); 
-		}
-		System.out.println(state);
-*/
+
 		toolBarPanel.removeAll();
 		this.addTrainerMenu(state.getContent());
 		toolBarPanel.revalidate();

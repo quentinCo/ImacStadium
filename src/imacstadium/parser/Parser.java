@@ -18,7 +18,14 @@ import javax.json.JsonReader;
 import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
 import imacstadium.imac.ImacHeader;
-import imacstadium.imac.Type;
+import imacstadium.imac.type.Atchoum;
+import imacstadium.imac.type.Dormeur;
+import imacstadium.imac.type.Grincheux;
+import imacstadium.imac.type.Joyeux;
+import imacstadium.imac.type.Prof;
+import imacstadium.imac.type.Simplet;
+import imacstadium.imac.type.Timide;
+import imacstadium.imac.type.Type;
 
 
 public class Parser {
@@ -163,24 +170,37 @@ public class Parser {
 		try{ downPrecision = Float.parseFloat(obj.getString("downPrecision")); }
 		catch(NullPointerException e){ downPrecision = 0; }
 		
-		
-		Map<String, Float> bonus = new HashMap <String, Float>();
-		bonus.put("Type 1", (float)10);
-		bonus.put("Type 2", (float)-10);
-		
 		Type type;
 		try{
 			switch(obj.getString("type")){
-				case "Type 1":
-					type = new Type("Type 1",bonus);
+				case "Atcoum":
+					type = new Atchoum();
+					break;
+				case "Prof":
+					type = new Prof();
+					break;
+				case "Dormeur":
+					type = new Dormeur();
+					break;
+				case "Grincheux":
+					type = new Grincheux();
+					break;
+				case "Joyeux":
+					type = new Joyeux();
+					break;
+				case "Timide":
+					type = new Timide();
+					break;
+				case "Simplet":
+					type = new Simplet();
 					break;
 				default :
-					type = new Type("Type 1",bonus);
+					type = new Type();
 					break;
 			}
 		}
 		catch(NullPointerException e){
-			type = new Type("Default",bonus);
+			type = new Type();
 		}
 		
 		

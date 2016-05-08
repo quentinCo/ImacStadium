@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -56,7 +57,6 @@ public class SelectScreen extends JFrame {
 		
 		this.creatLabel(gbc, panel);
 		this.creatImacList(gbc,panel);
-		//this.creatValidButton(gbc, panel);
 		
 		return panel;
 	}
@@ -107,20 +107,17 @@ public class SelectScreen extends JFrame {
 	}
 	
 	private void addImacButton(ImacHeader imac, int posX, int posY, GridBagConstraints gbc, JPanel panel){
-		JButton button = new JButton(new ImacChoiceBtnAction(imac.getId(),this, imac.getName()));
+		String textButton;
+		if(imac.getTypeImac() == "") textButton = "<html>"+imac.getName()+"<br>Type : NO TYPE </html>";
+		else textButton = "<html>"+imac.getName()+"<br>Type : "+imac.getTypeImac()+"</html>";
+		
+		JButton button = new JButton(new ImacChoiceBtnAction(imac.getId(),this, textButton));
 		gbc.gridx=posX;
 		gbc.gridy=posY;
+		
+		button.setVerticalTextPosition(AbstractButton.BOTTOM);
+	    button.setHorizontalTextPosition(AbstractButton.CENTER);
+		
 		panel.add(button, gbc);
-	}
-	
-	private void creatValidButton(GridBagConstraints gbc, JPanel panel){
-		JButton valid = new JButton(new StartBtnAction(this , "Commencer"));
-		gbc.gridwidth=5;
-		gbc.anchor = GridBagConstraints.PAGE_END; 
-		gbc.insets= new Insets(30,5,5,5);
-		gbc.ipady = 20;
-		gbc.gridx=0;
-		gbc.gridy=4;
-		panel.add(valid, gbc);
 	}
 }

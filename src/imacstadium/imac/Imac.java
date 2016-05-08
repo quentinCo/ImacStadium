@@ -3,6 +3,7 @@ package imacstadium.imac;
 import java.util.Arrays;
 
 import imacstadium.imac.exception.AttackFailExeception;
+import imacstadium.imac.type.Type;
 
 public class Imac extends ImacHeader {
 
