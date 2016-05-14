@@ -134,7 +134,8 @@ public class Imac extends ImacHeader {
 	
 	/**
 	 * Return an attack table of the Imac
-	 * 
+	 * @param id
+	 * 	The index of the imac's attack.
 	 * @return	An Attack table instance, corresponding to the id's attack table of the Imac
 	 *
 	 */
@@ -158,17 +159,23 @@ public class Imac extends ImacHeader {
 	 * 		The type of the Imac.
 	 * @param life
 	 * 		The life of the Imac.
+	 * @param url_img
+	 * 		The url of the imac image.
 	 * @param catchPhrase
 	 * 		The catch phrase of the Imac.
 	 * @param attacks
 	 * 		The id's attack table of the Imac.
+	 * @param precision
+	 * 		The global precision of the imac.
 	 * 
 	 * @see ImacHeader#id
 	 * @see ImacHeader#name
 	 * @see ImacHeader#typeImac
 	 * @see Imac#life
+	 * @see Imac#url_img
 	 * @see Imac#catchPhrase
 	 * @see Imac#attacks
+	 * @see Imac#precision
 	 */
 	public Imac(int id, String name, String typeImac, float life, String url_img, String catchPhrase, Attack[] attacks, float precision) {
 		super(id, name, typeImac);
@@ -223,7 +230,7 @@ public class Imac extends ImacHeader {
 	 */
 	public void damage(float damage) {
 		life -= damage;
-		if(life < damage) {
+		if(life < 0) {
 			life = 0;
 		}
 	}
@@ -241,7 +248,11 @@ public class Imac extends ImacHeader {
 	 * @see Type#Type(String, java.util.Map)
 	 * @see Imac#isTouch()
 	 * @see Attack#getDownPrecision()
-	 * @see Attack#powerAttack(Type)
+	 * @see Attack#powerAttack(String)
+	 * @see AttackFailExeception
+	 * 
+	 * @throws AttackFailExeception
+	 * 	Throws an execption if the imac fail its attack.
 	 */
 	public float attack(int id, Imac opponentImac) throws AttackFailExeception{
 		if (isTouch()){

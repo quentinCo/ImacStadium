@@ -6,7 +6,6 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import imacstadium.page.*;
 import imacstadium.parser.Parser;
 import imacstadium.display.MainScreen;
 import imacstadium.display.SplashScreen;
@@ -21,8 +20,10 @@ import imacstadium.imac.ImacHeader;
  * It initialise the Imacs, run the game and manage the Page.
  * </p>
  * @see ImacHeader
+ * @see Imac
  * @see Trainer
- * @see Page
+ * @see SplashScreen
+ * @see MainScreen
  * @see Parser
  */
 public class Game {
@@ -47,7 +48,7 @@ public class Game {
 	private Trainer trainers[];
 	/**
 	 * It's the page displayed.
-	 * @see Page
+	 * @see JFrame
 	 */
 	private JFrame page;
 	/**
@@ -72,7 +73,7 @@ public class Game {
 			Thread.sleep(5000);
 		}catch(InterruptedException e){}
 		
-		splash.dispose(); //????????????????????
+		splash.dispose();
 		
 		this.url_imacs = "/data/setting/Imac_List.json";
 		this.trainers = new Trainer[2];
@@ -147,21 +148,19 @@ public class Game {
 	 * @return The array of Trainer contains the player at index 0, and the ai at index 1.
 	 */
 	public Trainer[] getTrainers(){ return this.trainers; }
-	//public Trainer getTrainer(int id){ return trainers[id]; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*------------GET - SET PAGE---------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
-	 * Return the current Page.
-	 * @return The page that corresponds at the current page (Arena, ...).
+	 * Return the current screen.
+	 * @return The screen that corresponds at the current page (Arena, ...).
 	 */
 	public JFrame getPage() { return page; }
 	/**
 	 * Set the value of the Game page
 	 * @param page
-	 * 	Page that corresponds at the new current page.
-	 * @see Page
+	 * 	Screen that corresponds at the new current page.
 	 */
 	public void setPage(JFrame page) { this.page = page; }
 	/*-----------------------------------------------------------------------------------------------*/
@@ -171,20 +170,16 @@ public class Game {
 	/*------------EXECUTE----------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
-	 * Execute the program and call the page display function.
-	 * @see Page#display()
+	 * Execute the program and create the first screen (main screen).
+	 * @see MainScreen
 	 */
 	public void execute(){
-		//while(execute){ page.update(); }
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
 				//On crée une instance de JWindow
 				page = new MainScreen();
-				//SelectScreen screen2 = new SelectScreen("Test");
-				//BattleScreen screen3 = new BattleScreen("Test");
 			}
 		});
-		//page.display();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	

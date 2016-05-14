@@ -1,10 +1,10 @@
 {
 	"imacs" : [
 		{
-			"name" : "Imac TEST",
+			"name" : "DorianB",
 			"type" : "Atchoum",
 			"life" : "150",
-			"image" : "ia.png",
+			"image" : "DorianB.png",
 			"catchPhrase" : "Coucou",
 			"precision" : "0.6",
 			"attacks" :[
@@ -30,10 +30,10 @@
 			]
 		},
 		{
-			"name" : "Imac 2",
+			"name" : "QuentinG",
 			"type" : "Timide",
 			"life" : "100",
-			"image" : "ia.png",
+			"image" : "QuentinG.png",
 			"catchPhrase" : "Yop",
 			"precision" : "0.95",
 			"attacks" :[
@@ -60,31 +60,31 @@
 			]
 		},
 		{
-			"name" : "Imac 3",
+			"name" : "QuentinC",
 			"life" : "125",
-			"image" : "player.png",
-			"catchPhrase" : "Hello World",
+			"image" : "QuentinC.png",
+			"catchPhrase" : "J'ai pas de phrase à mettre.",
+			"type" : "Grincheux",
 			"attacks" :[
 				{
-					"name" : "attack 1",
-					"type" : "Prof",
+					"name" : "Charge",
 					"power" : "12.5"
 				},
 				{
-					"name" : "attack 2",
-					"type" : "Dormeur",
+					"name" : "Matin",
+					"type" : "Grincheux",
 					"power" : "25.75"
 				},
 				{
-					"name" : "attack 3",
+					"name" : "Manger",
 					"type" : "Joyeux",
 					"power" : "25"
 				},
 				{
-					"name" : "attack 4",
-					"type" : "Simplet",
+					"name" : "Rendu de projet",
+					"type" : "Grincheux",
 					"downPrecision" : "0.3",
-					"power" : "50"
+					"power" : "100"
 				}
 			]
 		}

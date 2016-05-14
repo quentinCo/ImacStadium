@@ -7,8 +7,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -162,10 +160,6 @@ public class Parser {
 
 		String name = obj.getString("name");
 		
-		
-		/*
-		 * Temp 
-		 */
 		float downPrecision;
 		try{ downPrecision = Float.parseFloat(obj.getString("downPrecision")); }
 		catch(NullPointerException e){ downPrecision = 0; }
@@ -214,17 +208,4 @@ public class Parser {
 	public String toString(){
 		return "Parser : [ pathFile = "+this.pathFile+" ]";
 	}
-	/*
-	public static void main(String[] args) {
-		String path = "/data/setting/Imac_List.json";
-		Parser parse = new Parser(path);
-		
-		System.out.println(parse);
-		ArrayList<ImacHeader> imacs = parse.parseFile();
-		System.out.println(imacs);
-		
-		System.out.println(parse.find(1));
-		
-	}
-	*/
 }

@@ -1,37 +1,43 @@
 package imacstadium.display;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
+import imacstadium.display.button.HomeBtnAction;
 import imacstadium.game.Game;
+import imacstadium.game.Trainer;
 
+/**
+ * <b>MainScreen</b>
+ * <p>
+ * This class display a screen that permit to enter the player's name.
+ * </p>
+ * @see Game
+ * @see Trainer
+ * @see HomeBtnAction
+ */
 public class MainScreen extends JFrame{
 	
 	private JTextField player_name_txtfield;
-	private String player_name;
 	
+	/**
+	 * Generate the main screen.
+	 * The screen have a button that create the next screen.
+	 */
 	public MainScreen() {
 		super();
 		Game.getInstance().resetImacsPlayer();
@@ -55,7 +61,7 @@ public class MainScreen extends JFrame{
 		JPanel panel = new JPanel();//Instanciation d'un objet JPanel
 		panel.setLayout(new GridBagLayout());
 		
-		panel.setBackground(Color.orange);//D�finition de sa couleur de fond
+		panel.setBackground(Color.white);//D�finition de sa couleur de fond
 		
 		/* Ajout de ce composant au container en sp�cifiant une contrainte de type GridBagConstraints. */
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -83,17 +89,30 @@ public class MainScreen extends JFrame{
 		panel.add(player_name_txtfield, gbc);
 		
 		JButton button = new JButton(new HomeBtnAction(this, "Selectionner son équipe d'IMAC"));
+		button.setBackground(Color.WHITE);
+		button.setForeground(Color.BLACK);
+		button.setFocusPainted(false);
+		button.setBorder(new LineBorder(Color.BLACK));
+		
 		gbc.ipady = 40;
-		gbc.ipadx = 0;
+		gbc.ipadx = 30;
 		panel.add(button, gbc);
 		
 		return panel;
 	}
 	
+	/**
+	 * Return the name write in the text field.
+	 * @return The string that the player have wrote.
+	 */
 	public String getName(){
 		return player_name_txtfield.getText();
 	}
 	
+	/**
+	 * Return the text field where the player can write its name.
+	 * @return The text field
+	 */
 	public JTextField getNameTextfield(){
 		return player_name_txtfield;
 	}

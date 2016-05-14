@@ -1,11 +1,19 @@
 package imacstadium.game.state;
 
-import imacstadium.page.ToolBarPanel;
-
+import imacstadium.display.elements.ToolBarPanel;
+/**
+ * <b>StateDead</b>
+ * <p>This state is use when the trainer imac is dead.</p>
+ * @see StateTrainer
+ */
 public class StateDead implements StateTrainer{
 
 	private String sentence;
 	
+	/**
+	 * @param name
+	 * 	The current trainer name.
+	 */
 	public StateDead(String name){
 		sentence = "<html>L'Imac de "+name+" est vaincu.</html>";
 	}

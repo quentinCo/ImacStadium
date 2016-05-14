@@ -133,6 +133,9 @@ public class Trainer extends Observable{
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
 	 * Return the current imac attack at an index.
+	 * 
+	 * @param id
+	 * 	The index of the current imac attack.
 	 * @return attack at index id
 	 * 	The current imac attack at the id.
 	 */
@@ -171,8 +174,9 @@ public class Trainer extends Observable{
 	/*------------ADD IMAC--------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
-	 * Return the trainer state.
-	 * @return The current state of the trainer.
+	 * Add an imac at the imac list trainer.
+	 * @param imac
+	 * 	The new imac to add at the imac trainer list.
 	 */
 	public void addImac(Imac imac){
 		if(this.imacs == null)this.imacs = new ArrayList<Imac>();
@@ -199,16 +203,14 @@ public class Trainer extends Observable{
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
 	 * Throw a notification to display the attack text.And change the imac life opponent in function of the current imac attack value.
-	 * @param otherPlayer
+	 * @param opponent
 	 * 	The opponent.
 	 * @param attackId
 	 * 	The index of the imac attack used.
-	 * @return True if the opponent is not dead, or False in the other case.
-	 * @see Imac#attack(int, String)
+	 * @see Imac#attack(int, Imac)
 	 */
 	public void imacAttack(Trainer opponent, int attackId){
 		state = new StateAttack(name);
-
 		SwingWorker worker = new SwingWorker() {
 			// Ce traitement sera exécuté dans un autre thread :
 			protected Object doInBackground() throws Exception {
@@ -220,7 +222,7 @@ public class Trainer extends Observable{
 
 			// Ce traitement sera exécuté à la fin dans l'EDT 
 			protected void done() {
-				continu(opponent, attackId);
+				continuAttackPhase(opponent, attackId);
 			}
 		};
 
@@ -229,7 +231,10 @@ public class Trainer extends Observable{
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
-	private boolean continu(Trainer opponent, int attackId){
+	
+	/*------------CONTINU ATTACK PHASE---------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	private boolean continuAttackPhase(Trainer opponent, int attackId){
 		boolean live = true;
 		try{
 			live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
@@ -241,6 +246,7 @@ public class Trainer extends Observable{
 		}
 		return live;
 	}
+	/*-----------------------------------------------------------------------------------------------*/
 	
 	
 	/*------------IMAC DAMAGE------------------------------------------------------------------------*/
@@ -253,6 +259,7 @@ public class Trainer extends Observable{
 	 */
 	public boolean imacDamage(float damage){
 		boolean live;
+		
 		currentImac.damage(damage);
 		
 		live = currentImac.isAlive();
@@ -276,7 +283,7 @@ public class Trainer extends Observable{
 	 * @return True if the trainer defeat, and false in the other case.
 	 */
 	public boolean defeated(){
-		System.out.println("DEFEATED --> "+name);
+		//System.out.println("DEFEATED --> "+name);
 		if( validImacs.size() <= 0){
 			state = new StateDefeat(name,score);
 			this.notifyArena();
@@ -288,10 +295,6 @@ public class Trainer extends Observable{
 		return false;
 	}
 	/*-----------------------------------------------------------------------------------------------*/
-	
-	/*public boolean currentAlive(){
-		return currentImac.isAlive();
-	}*/
 	
 	/*------------CURRENT TYPE-----------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -313,12 +316,6 @@ public class Trainer extends Observable{
 	
 	/*------------CHANGE IMAC------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
-	/*public void changeImac(Imac imac){
-		if(imac.isAlive()){
-			this.currentImac = imac;
-			this.notify(State.CHANGE_IMAC);
-		}
-	}*/
 	/**
 	 * Change the current imac by the first imac of the valids imac.
 	 */
@@ -342,6 +339,9 @@ public class Trainer extends Observable{
 		this.clearChanged();
 	}
 	
+	/**
+	 * Notify the observer.
+	 */
 	public void notifyArena(){
 		this.setChanged();
 		this.notifyObservers(null);

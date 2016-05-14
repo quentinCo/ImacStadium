@@ -12,19 +12,32 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
-import imacstadium.commande.Key;
+import imacstadium.display.button.ImacChoiceBtnAction;
 import imacstadium.game.Game;
+import imacstadium.game.Trainer;
 import imacstadium.imac.ImacHeader;
 
+/**
+ * <b>SelectScreen</b>
+ * <p>
+ * This class display the screen of imac's selection. This class display a button list of all imac present in the Game imacHeader list.
+ * </p>
+ * @see Game
+ * @see Trainer
+ * @see ImacHeader
+ * @see ImacChoiceBtnAction
+ */
 public class SelectScreen extends JFrame {
 	
-	/*JButton[] buttons;
-	JButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10,
-			btn11, btn12, btn13, btn14, btn15, valid;*/
 	private String player_name;
-	private JLabel label;
 
+	/**
+	 * 
+	 * @param name
+	 * 	The name of the player. The value is transmit whit validation of the MainScreen.
+	 */
 	public SelectScreen(String name) {
 		super();
 		this.player_name = name;
@@ -48,7 +61,7 @@ public class SelectScreen extends JFrame {
 		JPanel panel = new JPanel();//Instanciation d'un objet JPanel
 		panel.setLayout(new GridBagLayout());
 		
-		panel.setBackground(Color.orange);//Définition de sa couleur de fond
+		panel.setBackground(Color.white);//Définition de sa couleur de fond
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -57,11 +70,11 @@ public class SelectScreen extends JFrame {
 		
 		return panel;
 	}
-
-	public JLabel getLabel(){
-		return label;
-	}
 	
+	/**
+	 * Return the player's name.
+	 * @return The player's name.
+	 */
 	public String getName(){
 		return player_name;
 	}
@@ -107,6 +120,11 @@ public class SelectScreen extends JFrame {
 		else textButton = "<html>"+imac.getName()+"<br>Type : "+imac.getTypeImac()+"</html>";
 		
 		JButton button = new JButton(new ImacChoiceBtnAction(imac.getId(),this, textButton));
+		button.setBackground(Color.WHITE);
+		button.setForeground(Color.BLACK);
+		button.setFocusPainted(false);
+		button.setBorder(new LineBorder(Color.BLACK));
+		
 		gbc.gridx=posX;
 		gbc.gridy=posY;
 		
