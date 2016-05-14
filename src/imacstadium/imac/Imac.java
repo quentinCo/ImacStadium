@@ -2,7 +2,7 @@ package imacstadium.imac;
 
 import java.util.Arrays;
 
-import imacstadium.imac.exception.AttackFailExeception;
+import imacstadium.imac.exception.AttackFailException;
 import imacstadium.imac.type.Type;
 
 public class Imac extends ImacHeader {
@@ -12,7 +12,7 @@ public class Imac extends ImacHeader {
      * 
      * @see Imac#getAlive()
      */
-	private boolean alive = true;
+	private boolean alive;
 	
 	/**
      * The precision of the Imac.
@@ -179,6 +179,7 @@ public class Imac extends ImacHeader {
 	 */
 	public Imac(int id, String name, String typeImac, float life, String url_img, String catchPhrase, Attack[] attacks, float precision) {
 		super(id, name, typeImac);
+		this.alive= true;
 		this.life = life;
 		this.lifeTotal = life;
 		this.url_img = url_img;
@@ -254,12 +255,12 @@ public class Imac extends ImacHeader {
 	 * @throws AttackFailExeception
 	 * 	Throws an execption if the imac fail its attack.
 	 */
-	public float attack(int id, Imac opponentImac) throws AttackFailExeception{
+	public float attack(int id, Imac opponentImac) throws AttackFailException{
 		if (isTouch()){
 			opponentImac.downPrecision(attacks[id].getDownPrecision());
 			return attacks[id].powerAttack(opponentImac.getTypeImac());
 		}
-		else throw new AttackFailExeception();
+		else throw new AttackFailException();
 	}
 
 	
