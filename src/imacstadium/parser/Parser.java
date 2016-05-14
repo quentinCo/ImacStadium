@@ -7,8 +7,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -18,12 +16,20 @@ import javax.json.JsonReader;
 import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
 import imacstadium.imac.ImacHeader;
-import imacstadium.imac.Type;
+import imacstadium.imac.type.Atchoum;
+import imacstadium.imac.type.Dormeur;
+import imacstadium.imac.type.Grincheux;
+import imacstadium.imac.type.Joyeux;
+import imacstadium.imac.type.Prof;
+import imacstadium.imac.type.Simplet;
+import imacstadium.imac.type.Timide;
+import imacstadium.imac.type.Type;
 
 
 public class Parser {
 
 	private Path pathFile;
+	private String absolutePath;
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -31,7 +37,10 @@ public class Parser {
 	 * @param path
 	 * 	The relative path to the json file.
 	 */
-	public Parser(String path){ this.pathFile = FileSystems.getDefault().getPath(new File("").getAbsolutePath()+path); }
+	public Parser(String path){
+		this.absolutePath = new File("").getAbsolutePath();
+		this.pathFile = FileSystems.getDefault().getPath(this.absolutePath + path);
+	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
 	/*-----GETTER------------------------------------------------------------------------------------*/
@@ -122,6 +131,14 @@ public class Parser {
 		try{ type = obj.getString("type"); }
 		catch(NullPointerException e){ type = ""; }
 		
+		String url_img = this.absolutePath + "/data/picture/imacs/";
+		try{ url_img += obj.getString("image"); }
+		catch(NullPointerException e){ url_img += "default.png"; }
+		
+		float precision;
+		try{ precision = Float.parseFloat(obj.getString("precision")); }
+		catch(NullPointerException e){ precision = 1; }
+		
 		float life = Float.parseFloat(obj.getString("life"));
 		String phrase = obj.getString("catchPhrase");
 		
@@ -133,7 +150,7 @@ public class Parser {
 			attacks[i++] = this.newAttack(jO);
 		}
 
-		return new Imac(id, name, type, life, phrase, attacks);
+		return new Imac(id, name, type, life, url_img, phrase, attacks, precision);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -143,34 +160,47 @@ public class Parser {
 
 		String name = obj.getString("name");
 		
-		
-		/*
-		 * Temp 
-		 */
-		
-		Map<String, Float> bonus = new HashMap <String, Float>();
-		bonus.put("Type 1", (float)10);
-		bonus.put("Type 2", (float)-10);
+		float downPrecision;
+		try{ downPrecision = Float.parseFloat(obj.getString("downPrecision")); }
+		catch(NullPointerException e){ downPrecision = 0; }
 		
 		Type type;
 		try{
 			switch(obj.getString("type")){
-				case "Type 1":
-					type = new Type("Type 1",bonus);
+				case "Atcoum":
+					type = new Atchoum();
+					break;
+				case "Prof":
+					type = new Prof();
+					break;
+				case "Dormeur":
+					type = new Dormeur();
+					break;
+				case "Grincheux":
+					type = new Grincheux();
+					break;
+				case "Joyeux":
+					type = new Joyeux();
+					break;
+				case "Timide":
+					type = new Timide();
+					break;
+				case "Simplet":
+					type = new Simplet();
 					break;
 				default :
-					type = new Type("Type 1",bonus);
+					type = new Type();
 					break;
 			}
 		}
 		catch(NullPointerException e){
-			type = new Type("Default",bonus);
+			type = new Type();
 		}
 		
 		
 		float power = Float.parseFloat(obj.getString("power"));
-		
-		return new Attack(power, name, type);
+		return new Attack(power, downPrecision, name, type);
+		//return new Attack(power, name, type);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -178,17 +208,4 @@ public class Parser {
 	public String toString(){
 		return "Parser : [ pathFile = "+this.pathFile+" ]";
 	}
-	/*
-	public static void main(String[] args) {
-		String path = "/data/setting/Imac_List.json";
-		Parser parse = new Parser(path);
-		
-		System.out.println(parse);
-		ArrayList<ImacHeader> imacs = parse.parseFile();
-		System.out.println(imacs);
-		
-		System.out.println(parse.find(1));
-		
-	}
-	*/
 }

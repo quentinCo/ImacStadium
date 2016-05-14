@@ -1,89 +1,90 @@
 {
 	"imacs" : [
 		{
-			"name" : "Imac 1",
-			"type" : "Type 1",
-			"life" : "12",
+			"name" : "DorianB",
+			"type" : "Atchoum",
+			"life" : "150",
+			"image" : "DorianB.png",
 			"catchPhrase" : "Coucou",
-			"precision" : "0.5",
+			"precision" : "0.6",
 			"attacks" :[
 				{
 					"name" : "attack 1",
-					"type" : "Type 1",
+					"type" : "Atchoum",
 					"power" : "12.5"
 				},
 				{
 					"name" : "attack 2",
-					"type" : "Type 1",
 					"power" : "25.75"
 				},
 				{
 					"name" : "attack 3",
-					"type" : "Type 2",
-					"power" : "5"
+					"power" : "35"
 				},
 				{
 					"name" : "attack 4",
-					"type" : "Type 4",
+					"type" : "Grincheux",
+					"downPrecision" : "0.1",
 					"power" : "50"
 				}
 			]
 		},
 		{
-			"name" : "Imac 2",
-			"type" : "Type 2",
-			"life" : "20",
+			"name" : "QuentinG",
+			"type" : "Timide",
+			"life" : "100",
+			"image" : "QuentinG.png",
 			"catchPhrase" : "Yop",
 			"precision" : "0.95",
 			"attacks" :[
 				{
 					"name" : "attack 1",
-					"type" : "Type 1",
+					"type" : "Timide",
 					"power" : "12.5"
 				},
 				{
 					"name" : "attack 2",
-				
+					"type" : "Timide",
 					"power" : "25.75"
 				},
 				{
 					"name" : "attack 3",
-					"type" : "Type 2",
-					"power" : "5"
+					"type" : "Timide",
+					"power" : "15"
 				},
 				{
 					"name" : "attack 4",
-					"type" : "Type 4",
+					"downPrecision" : "0.28",
 					"power" : "50"
 				}
 			]
 		},
 		{
-			"name" : "Imac 3",
-			"type" : "Type 2",
-			"life" : "100",
-			"catchPhrase" : "Hello World",
-			"precision" : "0.5",
+			"name" : "QuentinC",
+			"life" : "125",
+			"image" : "QuentinC.png",
+			"catchPhrase" : "J'ai pas de phrase à mettre.",
+			"type" : "Grincheux",
 			"attacks" :[
 				{
-					"name" : "attack 1",
-					"type" : "Type 1",
+					"name" : "Charge",
 					"power" : "12.5"
 				},
 				{
-					"name" : "attack 2",
-					"type" : "Type 1",
+					"name" : "Matin",
+					"type" : "Grincheux",
 					"power" : "25.75"
 				},
 				{
-					"name" : "attack 3",
-					"type" : "Type 2",
-					"power" : "5"
+					"name" : "Manger",
+					"type" : "Joyeux",
+					"power" : "25"
 				},
 				{
-					"name" : "attack 4",
-					"type" : "Type 4",
-					"power" : "50"
+					"name" : "Rendu de projet",
+					"type" : "Grincheux",
+					"downPrecision" : "0.3",
+					"power" : "100"
 				}
 			]
 		}

@@ -4,18 +4,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
+import javax.swing.SwingWorker;
+
+import imacstadium.game.state.StateAttack;
+import imacstadium.game.state.StateAttacked;
+import imacstadium.game.state.StateChoiceAttack;
+import imacstadium.game.state.StateDead;
+import imacstadium.game.state.StateDefeat;
+import imacstadium.game.state.StateFailAttack;
+import imacstadium.game.state.StateTrainer;
+import imacstadium.game.state.StateChangeImac;
+import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
+import imacstadium.imac.exception.AttackFailExeception;
 
 public class Trainer extends Observable{
 
-	protected Imac[] imacs;
+	protected ArrayList<Imac> imacs;
 	protected ArrayList<Imac> validImacs;
 	protected String name;
 	protected Imac currentImac;
 	protected int score;
+	protected StateTrainer state;
 	
-	public static enum State{
-		ATTACK, ATTACKED, DEAD, CHOICE_ATTACK, DEFEAT, CHANGE_IMAC
+	protected static final int waitTime = 1000;
+	
+	
+	public static enum TypeNotification{
+		ATTACKED, CHANGE_IMAC
 	}
 	
 	/*-----CONSTRUCTOR-------------------------------------------------------------------------------*/
@@ -23,14 +39,7 @@ public class Trainer extends Observable{
 	public Trainer (){
 		this.name = "Esipe";
 		
-		this.imacs = new Imac[3];
-		this.validImacs = new ArrayList<Imac>();
-		score = 0;		
-	}
-	public Trainer (String name){
-		this.name = name;
-		
-		this.imacs = new Imac[3];
+		this.imacs = new ArrayList<Imac>();
 		this.validImacs = new ArrayList<Imac>();
 		score = 0;		
 	}
@@ -43,16 +52,22 @@ public class Trainer extends Observable{
 	 * Return the trainer imacs
 	 * @return The array that contains the different trainer imac
 	 */
-	public Imac[] getImacs(){ return Arrays.copyOf(this.imacs, 3); }
+	public ArrayList<Imac> getImacs(){ return new ArrayList<Imac>(this.imacs); }
 	/**
 	 * Set the trainer imacs, the valids imacs and the current imac used.
 	 * @param imacs
 	 * 	An array of Imac.
 	 */
-	public void setImacs(Imac[] imacs){
+	public void setImacs(ArrayList<Imac> imacs){
 		this.imacs = imacs;
-		this.validImacs = new ArrayList<Imac>(Arrays.asList(imacs));
-		this.currentImac = this.validImacs.get(0);
+		if(imacs != null){
+			this.validImacs = new ArrayList<Imac>(imacs);
+			this.currentImac = this.validImacs.get(0);
+		}
+		else{
+			this.validImacs = null;
+			this.currentImac = null;
+		}
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -114,17 +129,63 @@ public class Trainer extends Observable{
 	public void setCurrentImac(Imac imac){ this.currentImac = imac; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------GET CURRENT IMAC ATTACK------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the current imac attack at an index.
+	 * 
+	 * @param id
+	 * 	The index of the current imac attack.
+	 * @return attack at index id
+	 * 	The current imac attack at the id.
+	 */
+	public Attack getCurrentImacAttack(int id){ return this.currentImac.getAttack(id); }
+	/*-----------------------------------------------------------------------------------------------*/
+	
+	/*------------GET CURRENT IMAC IMAGE-------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the current imac url image at an index.
+	 * @return The url of the image that illustrate the current imac
+	 * 	A Strin, that is the url of the image that illustrate the current imac.
+	 */
+	public String getCurrentImacImage(){ return this.currentImac.getUrlImg(); }
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*------------GET SCORE--------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
 	 * Return the trainer score.
-	 * @return score
-	 * 	The number of defeated opponent.
+	 * @return The number of defeated opponent.
 	 */
 	public int getScore(){ return this.score; }
 	/*-----------------------------------------------------------------------------------------------*/
 	
+	/*------------GET STATE--------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Return the trainer state.
+	 * @return The current state of the trainer.
+	 */
+	public StateTrainer getState(){ return this.state; }
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*-----OTHER FUNCTIONS---------------------------------------------------------------------------*/
+	/*------------ADD IMAC--------------------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	/**
+	 * Add an imac at the imac list trainer.
+	 * @param imac
+	 * 	The new imac to add at the imac trainer list.
+	 */
+	public void addImac(Imac imac){
+		if(this.imacs == null)this.imacs = new ArrayList<Imac>();
+		this.imacs.add(imac);
+		this.validImacs = new ArrayList<Imac>(imacs);
+		if(imacs.size() == 1) this.currentImac = this.validImacs.get(0);
+	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	/*------------PLAY-------------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
@@ -133,7 +194,8 @@ public class Trainer extends Observable{
 	 * 	The trainer who is the opponent.
 	 */
 	public void play(Trainer opponent){
-		this.notify(State.CHOICE_ATTACK);
+		state = new StateChoiceAttack(this,opponent);
+		this.notifyArena();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -141,18 +203,51 @@ public class Trainer extends Observable{
 	/*-----------------------------------------------------------------------------------------------*/
 	/**
 	 * Throw a notification to display the attack text.And change the imac life opponent in function of the current imac attack value.
-	 * @param otherPlayer
+	 * @param opponent
 	 * 	The opponent.
 	 * @param attackId
 	 * 	The index of the imac attack used.
-	 * @return True if the opponent is not dead, or False in the other case.
-	 * @see Imac#attack(int, String)
+	 * @see Imac#attack(int, Imac)
 	 */
-	public boolean imacAttack(Trainer otherPlayer, int attackId){
-		this.notify(State.ATTACK);
-		return otherPlayer.imacDamage(currentImac.attack(attackId, otherPlayer.currentType()));
+	public void imacAttack(Trainer opponent, int attackId){
+		state = new StateAttack(name);
+		SwingWorker worker = new SwingWorker() {
+			// Ce traitement sera exécuté dans un autre thread :
+			protected Object doInBackground() throws Exception {
+				notifyArena();
+				Thread.sleep(waitTime);
+				
+				return null;
+			}
+
+			// Ce traitement sera exécuté à la fin dans l'EDT 
+			protected void done() {
+				continuAttackPhase(opponent, attackId);
+			}
+		};
+
+		// On lance l'exécution de la tâche:
+		worker.execute();
 	}
 	/*-----------------------------------------------------------------------------------------------*/
+	
+	
+	/*------------CONTINU ATTACK PHASE---------------------------------------------------------------*/
+	/*-----------------------------------------------------------------------------------------------*/
+	private boolean continuAttackPhase(Trainer opponent, int attackId){
+		boolean live = true;
+		try{
+			live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
+			if(!live)score++;
+		}
+		catch(AttackFailExeception e){
+			state = new StateFailAttack(name);
+			notifyArena();
+		}
+		return live;
+	}
+	/*-----------------------------------------------------------------------------------------------*/
+	
 	
 	/*------------IMAC DAMAGE------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -164,15 +259,18 @@ public class Trainer extends Observable{
 	 */
 	public boolean imacDamage(float damage){
 		boolean live;
+		
 		currentImac.damage(damage);
 		
 		live = currentImac.isAlive();
 		if(!live){
 			validImacs.remove(currentImac);
-			this.notify(State.DEAD);
+			state = new StateDead(name);
+			this.notifyArena(TypeNotification.ATTACKED);
 		}
 		else{
-			this.notify(State.ATTACKED);
+			state = new StateAttacked(name, currentImac.getLife());
+			this.notifyArena(TypeNotification.ATTACKED);
 		}
 		return live;
 	}
@@ -185,17 +283,18 @@ public class Trainer extends Observable{
 	 * @return True if the trainer defeat, and false in the other case.
 	 */
 	public boolean defeated(){
+		//System.out.println("DEFEATED --> "+name);
 		if( validImacs.size() <= 0){
-			this.notify(State.DEFEAT);
+			state = new StateDefeat(name,score);
+			this.notifyArena();
 			return true;
+		}
+		else if(validImacs.size() > 0 && !this.currentImac.isAlive()){
+			this.changeImac();
 		}
 		return false;
 	}
 	/*-----------------------------------------------------------------------------------------------*/
-	
-	/*public boolean currentAlive(){
-		return currentImac.isAlive();
-	}*/
 	
 	/*------------CURRENT TYPE-----------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
@@ -217,20 +316,13 @@ public class Trainer extends Observable{
 	
 	/*------------CHANGE IMAC------------------------------------------------------------------------*/
 	/*-----------------------------------------------------------------------------------------------*/
-	/*public void changeImac(Imac imac){
-		if(imac.isAlive()){
-			this.currentImac = imac;
-			this.notify(State.CHANGE_IMAC);
-		}
-	}*/
 	/**
 	 * Change the current imac by the first imac of the valids imac.
 	 */
 	public void changeImac(){
-		if(!this.defeated()){
-			this.currentImac = validImacs.get(0);
-			this.notify(State.CHANGE_IMAC);
-		}
+		this.currentImac = validImacs.get(0);
+		state = new StateChangeImac(name, currentImac.getName(),currentImac.getCatchPhrase());
+		this.notifyArena(TypeNotification.CHANGE_IMAC);
 	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
@@ -241,22 +333,31 @@ public class Trainer extends Observable{
 	 * @param arg
 	 * 	The type of notification.
 	 */
-	public void notify(State arg){
+	public void notifyArena(TypeNotification arg){
 		this.setChanged();
 		this.notifyObservers(arg);
 		this.clearChanged();
 	}
+	
+	/**
+	 * Notify the observer.
+	 */
+	public void notifyArena(){
+		this.setChanged();
+		this.notifyObservers(null);
+		this.clearChanged();
+	}
 	/*-----------------------------------------------------------------------------------------------*/
 	
-	/* Dream Team Functions */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((currentImac == null) ? 0 : currentImac.hashCode());
-		result = prime * result + Arrays.hashCode(imacs);
+		result = prime * result + ((imacs == null) ? 0 : imacs.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + score;
+		result = prime * result + ((state == null) ? 0 : state.hashCode());
 		result = prime * result + ((validImacs == null) ? 0 : validImacs.hashCode());
 		return result;
 	}
@@ -275,7 +376,10 @@ public class Trainer extends Observable{
 				return false;
 		} else if (!currentImac.equals(other.currentImac))
 			return false;
-		if (!Arrays.equals(imacs, other.imacs))
+		if (imacs == null) {
+			if (other.imacs != null)
+				return false;
+		} else if (!imacs.equals(other.imacs))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -283,6 +387,11 @@ public class Trainer extends Observable{
 		} else if (!name.equals(other.name))
 			return false;
 		if (score != other.score)
+			return false;
+		if (state == null) {
+			if (other.state != null)
+				return false;
+		} else if (!state.equals(other.state))
 			return false;
 		if (validImacs == null) {
 			if (other.validImacs != null)
@@ -294,8 +403,8 @@ public class Trainer extends Observable{
 
 	@Override
 	public String toString() {
-		return "Trainer [\n\timacs=" + Arrays.toString(imacs) + "\n\tvalidImacs=" + validImacs + "\n\tname=" + name
-				+ "\n\tcurrentImac=" + currentImac + "\n\tscore=" + score + "\n]";
+		return "Trainer [\n\timacs=" + imacs + "\n\tvalidImacs=" + validImacs + "\n\tname=" + name + "\n\tcurrentImac="
+				+ currentImac + "\n\tscore=" + score + "\n\tstate=" + state + "\n]";
 	}
 	
 	
