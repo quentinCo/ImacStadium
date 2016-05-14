@@ -162,21 +162,21 @@ public class BattleScreen extends JFrame implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		
-			Trainer source = (Trainer)o;
-			StateTrainer state = source.getState();
-	
-			//System.out.println(state);
-			
-			toolBarPanel.removeAll();
-			this.addTrainerMenu(state.getContent());
-			toolBarPanel.revalidate();
-			
-			if(state.getContinu()){
-				if(!source.defeated() || (source instanceof IA)){
-					this.changeCurrentTrainer();
-					this.fight();
-				}
+		Trainer source = (Trainer)o;
+		StateTrainer state = source.getState();
+
+		//System.out.println(state);
+		
+		toolBarPanel.removeAll();
+		this.addTrainerMenu(state.getContent());
+		toolBarPanel.revalidate();
+		
+		if(state.getContinu()){
+			if(!source.defeated() || (source instanceof IA)){
+				this.changeCurrentTrainer();
+				this.fight();
 			}
+		}
 	}
 
 }

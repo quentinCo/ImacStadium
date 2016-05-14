@@ -16,7 +16,7 @@ import imacstadium.game.state.StateTrainer;
 import imacstadium.game.state.StateChangeImac;
 import imacstadium.imac.Attack;
 import imacstadium.imac.Imac;
-import imacstadium.imac.exception.AttackFailExeception;
+import imacstadium.imac.exception.AttackFailException;
 
 public class Trainer extends Observable{
 
@@ -240,7 +240,7 @@ public class Trainer extends Observable{
 			live = opponent.imacDamage(currentImac.attack(attackId, opponent.getCurrentImac()));
 			if(!live)score++;
 		}
-		catch(AttackFailExeception e){
+		catch(AttackFailException e){
 			state = new StateFailAttack(name);
 			notifyArena();
 		}
@@ -333,7 +333,7 @@ public class Trainer extends Observable{
 	 * @param arg
 	 * 	The type of notification.
 	 */
-	public void notifyArena(TypeNotification arg){
+	protected void notifyArena(TypeNotification arg){
 		this.setChanged();
 		this.notifyObservers(arg);
 		this.clearChanged();
@@ -342,7 +342,7 @@ public class Trainer extends Observable{
 	/**
 	 * Notify the observer.
 	 */
-	public void notifyArena(){
+	protected void notifyArena(){
 		this.setChanged();
 		this.notifyObservers(null);
 		this.clearChanged();
