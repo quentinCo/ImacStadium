@@ -34,28 +34,28 @@
 			"type" : "Timide",
 			"life" : "100",
 			"image" : "QuentinG.png",
-			"catchPhrase" : "Yop",
+			"catchPhrase" : "Je m'appelle Quentin Guittard",
 			"precision" : "0.95",
 			"attacks" :[
 				{
-					"name" : "attack 1",
+					"name" : "Force Cachée",
 					"type" : "Timide",
-					"power" : "12.5"
-				},
-				{
-					"name" : "attack 2",
-					"type" : "Timide",
-					"power" : "25.75"
-				},
-				{
-					"name" : "attack 3",
-					"type" : "Timide",
-					"power" : "15"
-				},
-				{
-					"name" : "attack 4",
-					"downPrecision" : "0.28",
 					"power" : "50"
+				},
+				{
+					"name" : "Silence de mort",
+					"type" : "Timide",
+					"power" : "20"
+				},
+				{
+					"name" : "Esquive",
+					"type" : "Timide",
+					"power" : "10"
+				},
+				{
+					"name" : "Choc mental",
+					"downPrecision" : "0.20",
+					"power" : "20"
 				}
 			]
 		},
