@@ -4,7 +4,7 @@
 			"name" : "DorianB",
 			"type" : "Atchoum",
 			"life" : "150",
-			"image" : "DorianB.png",
+			"image" : "Dorian_Belhaj.jpg",
 			"catchPhrase" : "Coucou",
 			"precision" : "0.6",
 			"attacks" :[
@@ -33,7 +33,7 @@
 			"name" : "QuentinG",
 			"type" : "Timide",
 			"life" : "100",
-			"image" : "QuentinG.png",
+			"image" : "Quentin_Guittard.jpg",
 			"catchPhrase" : "Yop",
 			"precision" : "0.95",
 			"attacks" :[
@@ -62,7 +62,7 @@
 		{
 			"name" : "QuentinC",
 			"life" : "125",
-			"image" : "QuentinC.png",
+			"image" : "Quentin_couillard.jpg",
 			"catchPhrase" : "J'ai pas de phrase à mettre.",
 			"type" : "Grincheux",
 			"attacks" :[
