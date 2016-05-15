@@ -54,6 +54,7 @@
 				},
 				{
 					"name" : "Choc mental",
+					"type" : "Prof",
 					"downPrecision" : "0.20",
 					"power" : "20"
 				}
