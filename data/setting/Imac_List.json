@@ -9,6 +9,7 @@
 			"precision" : "0.6",
 			"attacks" :[
 				{
+<<<<<<< HEAD
 					"name" : "attack 1",
 					"type" : "Atchoum",
 					"power" : "12.5"
@@ -23,6 +24,24 @@
 				},
 				{
 					"name" : "attack 4",
+=======
+					"name" : "Rire strident",
+					"type" : "Joyeux",
+					"power" : "12.5"
+				},
+				{
+					"name" : "Vanne pourrie",
+					"type" : "Simplet",
+					"power" : "25.75"
+				},
+				{
+					"name" : "Coud'Krâne",
+					"type" : "Grincheux",
+					"power" : "35"
+				},
+				{
+					"name" : "Lancer d'exception",
+>>>>>>> fb05e591feb2182d9df92f62aabe58d7a382b57a
 					"type" : "Grincheux",
 					"downPrecision" : "0.1",
 					"power" : "50"

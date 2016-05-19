@@ -237,7 +237,11 @@ public class Imac extends ImacHeader {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Return the damage of the chosen attack that will be inflicted and down the opponent Imac's precision. 
+=======
+	 * Return the damage of the chosen attack that will be inflicted and down the opponent Imac's precisionb. 
+>>>>>>> fb05e591feb2182d9df92f62aabe58d7a382b57a
 	 * 
 	 * @param id
 	 * 		The unique identifier of the Imac's attack used.
