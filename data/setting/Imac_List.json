@@ -1,0 +1,93 @@
+{
+	"imacs" : [
+		{
+			"name" : "DorianB",
+			"type" : "Atchoum",
+			"life" : "150",
+			"image" : "DorianB.png",
+			"catchPhrase" : "Coucou",
+			"precision" : "0.6",
+			"attacks" :[
+				{
+					"name" : "attack 1",
+					"type" : "Atchoum",
+					"power" : "12.5"
+				},
+				{
+					"name" : "attack 2",
+					"power" : "25.75"
+				},
+				{
+					"name" : "attack 3",
+					"power" : "35"
+				},
+				{
+					"name" : "attack 4",
+					"type" : "Grincheux",
+					"downPrecision" : "0.1",
+					"power" : "50"
+				}
+			]
+		},
+		{
+			"name" : "QuentinG",
+			"type" : "Timide",
+			"life" : "100",
+			"image" : "QuentinG.png",
+			"catchPhrase" : "Je m'appelle Quentin Guittard",
+			"precision" : "0.95",
+			"attacks" :[
+				{
+					"name" : "Force Cachée",
+					"type" : "Timide",
+					"power" : "50"
+				},
+				{
+					"name" : "Silence de mort",
+					"type" : "Timide",
+					"power" : "20"
+				},
+				{
+					"name" : "Esquive",
+					"type" : "Timide",
+					"power" : "10"
+				},
+				{
+					"name" : "Choc mental",
+					"type" : "Prof",
+					"downPrecision" : "0.20",
+					"power" : "20"
+				}
+			]
+		},
+		{
+			"name" : "QuentinC",
+			"life" : "125",
+			"image" : "QuentinC.png",
+			"catchPhrase" : "J'ai pas de phrase à mettre.",
+			"type" : "Grincheux",
+			"attacks" :[
+				{
+					"name" : "Charge",
+					"power" : "12.5"
+				},
+				{
+					"name" : "Matin",
+					"type" : "Grincheux",
+					"power" : "25.75"
+				},
+				{
+					"name" : "Manger",
+					"type" : "Joyeux",
+					"power" : "25"
+				},
+				{
+					"name" : "Rendu de projet",
+					"type" : "Grincheux",
+					"downPrecision" : "0.3",
+					"power" : "100"
+				}
+			]
+		}
+	]
+}
